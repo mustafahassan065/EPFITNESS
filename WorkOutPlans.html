@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EP Fitness - Workout Plans | Personalized Training Programs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#e53935', // Red
+                        secondary: '#212121', // Black
+                        accent: '#f5f5f5', // Light gray
+                        dark: '#1a1a1a',
+                        light: '#ffffff',
+                    },
+                    fontFamily: {
+                        heading: ['Bebas Neue', 'sans-serif'],
+                        body: ['Montserrat', 'sans-serif'],
+                    },
+                    screens: {
+                        'xs': '480px',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(229, 57, 53, 0.8)), url('https://images.unsplash.com/photo-1574680178050-55c6a6a96e0a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHdvbWFuJTIwZ3ltfGVufDB8fDB8fHww');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .mobile-menu.open {
+            max-height: 500px;
+            transition: max-height 0.5s ease-in;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #e53935;
+        }
+        
+        .workout-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .workout-card:hover {
+            border-left-color: #e53935;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .phase-card {
+            transition: transform 0.3s ease;
+        }
+        
+        .phase-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .exercise-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        .exercise-table th {
+            background-color: #e53935;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .exercise-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        
+        .exercise-table tr:hover {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="bg-white text-secondary shadow-lg sticky top-0 z-50 border-b-2 border-primary">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                
+            </div>
+            <div class="hidden md:flex space-x-8 font-semibold">
+                <a href="index.html" class="hover:text-primary transition transform hover:scale-105">HOME</a>
+                <!-- ABOUT with Dropdown -->
+    <div class="relative group">
+        <button class="hover:text-primary transition transform hover:scale-105 flex items-center focus:outline-none">
+            ABOUT
+            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+        </button>
+        
+        <!-- Dropdown Menu -->
+        <div class="absolute left-0 mt-2 w-64 bg-white shadow-lg rounded-lg py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 border border-gray-200">
+            <a href="index.html#about" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition flex items-center">
+               
+                <div>
+                    <div class="font-semibold">About us</div>
+                    
+                </div>
+            </a>
+            <div class="border-t border-gray-100 my-1"></div>
+            <a href="index.html#coaches" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition flex items-center">
+               
+                <div>
+                    <div class="font-semibold">Meet the Coaches</div>
+                    
+                </div>
+            </a>
+            
+            <div class="border-t border-gray-100 my-1"></div>
+            
+            <a href="personaltrainingsection.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition flex items-center">
+                
+                <div>
+                    <div class="font-semibold">Personal Training Gallery</div>
+                    
+                </div>
+            </a>
+        </div>
+    </div>
+                <a href="index.html#services" class="hover:text-primary transition transform hover:scale-105">SERVICES</a>
+                <a href="EmmanResults.html" class="hover:text-primary transition transform hover:scale-105">RESULTS</a>
+                <a href="index.html#packages" class="hover:text-primary transition transform hover:scale-105">PACKAGES</a>
+                <a href="WorkOutPlans.html" class="hover:text-primary transition transform hover:scale-105">WORKOUT PLANS</a>
+                <a href="faqs.html" class="hover:text-primary transition transform hover:scale-105">FAQS</a>
+                <a href="index.html#contact" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-red-700 transition">CONTACT</a>
+            </div>
+            <button class="md:hidden text-secondary focus:outline-none" id="mobile-menu-button">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu md:hidden bg-white px-4 border-t border-gray-200" id="mobile-menu">
+            <div class="flex flex-col space-y-3 py-3">
+                <a href="index.html" class="hover:text-primary transition py-2 font-semibold">HOME</a>
+                <div class="relative group">
+        <button class="hover:text-primary transition py-2 font-semibold">
+            ABOUT
+            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+        </button>
+        
+        <!-- Dropdown Menu -->
+        <div class="absolute left-0 mt-2 w-64 bg-white shadow-lg rounded-lg py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 border border-gray-200">
+            <a href="index.html#about" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition flex items-center">
+               
+                <div>
+                    <div class="font-semibold">About us</div>
+                    
+                </div>
+            </a>
+            <div class="border-t border-gray-100 my-1"></div>
+            <a href="index.html#coaches" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition flex items-center">
+               
+                <div>
+                    <div class="font-semibold">Meet the Coaches</div>
+                    
+                </div>
+            </a>
+            
+            <div class="border-t border-gray-100 my-1"></div>
+            
+            <a href="personaltrainingsection.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition flex items-center">
+                
+                <div>
+                    <div class="font-semibold">Personal Training Gallery</div>
+                    
+                </div>
+            </a>
+        </div>
+    </div>
+                <a href="index.html#services" class="hover:text-primary transition py-2 font-semibold">SERVICES</a>
+                <a href="EmmanResults.html" class="hover:text-primary transition py-2 font-semibold">RESULTS</a>
+                <a href="index.html#packages" class="hover:text-primary transition py-2 font-semibold">PACKAGES</a>
+                <a href="WorkOutPlans.html" class="hover:text-primary transition py-2 font-semibold">WORK OUT PLANS</a>
+                <a href="faqs.html" class="hover:text-primary transition py-2 font-semibold">FAQS</a>
+                <a href="index.html#contact" class="hover:text-primary transition py-2 font-semibold">CONTACT</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg py-24 md:py-40 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl xs:text-5xl md:text-7xl font-bold mb-6 font-heading">WORKOUT PROGRAMS</h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">Professional workout programs designed to help you build your dream physique</p>
+            <div class="mt-10">
+                <a href="#workout-programs" class="bg-primary hover:bg-red-700 text-white font-bold py-4 px-8 rounded-full text-lg transition transform hover:scale-105 shadow-lg inline-block">
+                    <i class="fas fa-dumbbell mr-2"></i> VIEW PROGRAMS
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workout Programs Section -->
+    <section id="workout-programs" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4">
+            
+            <!-- Disclaimer Section -->
+            <div class="mb-12 p-6 bg-yellow-50 border-l-4 border-yellow-500 rounded-lg">
+                <div class="flex items-start">
+                    <i class="fas fa-exclamation-triangle text-yellow-500 text-2xl mr-4 mt-1"></i>
+                    <div>
+                        <h3 class="text-lg font-bold text-secondary mb-2">Important Notice</h3>
+                        <p class="text-gray-700">
+                            <strong>Disclaimer:</strong> The workout structures displayed on this page are provided as <strong>examples only</strong> to demonstrate the type of programming we create. These are NOT ready-to-use generic workout plans. All EP Fitness workout programs are <strong>customized and personalized</strong> based on individual assessments, fitness levels, goals, equipment availability, and specific needs. The actual workout plan you receive will be tailored specifically for you after a comprehensive consultation with your coach.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Phase Overview -->
+            <div class="bg-accent rounded-2xl p-8 mb-12">
+                <h3 class="text-2xl font-bold text-secondary mb-6">PRE-PHASE OVERVIEW (WEEKS 1-4)</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="phase-card bg-white p-6 rounded-xl shadow-lg">
+                        <div class="text-primary text-3xl font-bold mb-3">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-secondary mb-2">OBJECTIVE</h4>
+                        <p class="text-gray-600">Build overall strength and muscle, accumulate enough muscle mass to aid in weight loss, and prepare for Phase I.</p>
+                    </div>
+                    
+                    <div class="phase-card bg-white p-6 rounded-xl shadow-lg">
+                        <div class="text-primary text-3xl font-bold mb-3">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-secondary mb-2">WHAT TO EXPECT</h4>
+                        <p class="text-gray-600">Better coordination, increased strength, correction of muscle imbalances and improvement in exercise form.</p>
+                    </div>
+                    
+                    <div class="phase-card bg-white p-6 rounded-xl shadow-lg">
+                        <div class="text-primary text-3xl font-bold mb-3">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-secondary mb-2">LENGTH OF PHASE</h4>
+                        <p class="text-2xl font-bold text-primary">4 weeks</p>
+                    </div>
+                    
+                    <div class="phase-card bg-white p-6 rounded-xl shadow-lg">
+                        <div class="text-primary text-3xl font-bold mb-3">
+                            <i class="fas fa-dumbbell"></i>
+                        </div>
+                        <h4 class="font-bold text-lg text-secondary mb-2">WORKOUT FREQUENCY</h4>
+                        <p class="text-2xl font-bold text-primary">3 times/week</p>
+                    </div>
+                </div>
+                
+                <!-- Purchase Button -->
+               
+            </div>
+            
+            <!-- How The Program Is Structured - ONLY THIS SECTION -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-secondary mb-6 text-center">HOW THE PROGRAM IS STRUCTURED</h3>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                    <div class="workout-card bg-white p-8 rounded-xl shadow-lg">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-primary text-white p-4 rounded-full mr-4">
+                                <i class="fas fa-calendar-check text-xl"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-secondary">Weekly Schedule</h4>
+                        </div>
+                        <p class="text-gray-700 mb-4">You'll train 3x per week, alternating between:</p>
+                        <ul class="space-y-3 text-gray-700 mb-6">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-primary mr-3 mt-1"></i>
+                                <span><span class="font-bold">DAY A:</span> Upper Body Strength + Core</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-primary mr-3 mt-1"></i>
+                                <span><span class="font-bold">DAY B:</span> Lower Body Strength + Glutes</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-primary mr-3 mt-1"></i>
+                                <span><span class="font-bold">DAY C:</span> Mobility & Recovery Focus</span>
+                            </li>
+                        </ul>
+                        <p class="text-gray-700">Each day has a clear structure: <span class="font-bold text-primary">Warm-Up → Main Workout → Core Finisher</span></p>
+                    </div>
+                    
+                    <div class="workout-card bg-white p-8 rounded-xl shadow-lg">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-primary text-white p-4 rounded-full mr-4">
+                                <i class="fas fa-chart-line text-xl"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-secondary">Weekly Progression</h4>
+                        </div>
+                        <p class="text-gray-700 mb-6">Each week, we progress the training slightly to keep your body adapting:</p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <div class="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 font-bold">1</div>
+                                <div>
+                                    <h5 class="font-bold text-gray-800">Week 1</h5>
+                                    <p class="text-gray-600">Build foundation, learn form, lighter loads</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 font-bold">2</div>
+                                <div>
+                                    <h5 class="font-bold text-gray-800">Week 2</h5>
+                                    <p class="text-gray-600">Improve endurance, slightly increase volume</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 font-bold">3</div>
+                                <div>
+                                    <h5 class="font-bold text-gray-800">Week 3</h5>
+                                    <p class="text-gray-600">Peak volume, more reps and challenge</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center mr-4 font-bold">4</div>
+                                <div>
+                                    <h5 class="font-bold text-gray-800">Week 4</h5>
+                                    <p class="text-gray-600">Deload in reps, but increase resistance</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Additional Purchase Button -->
+                <div class="text-center mt-12">
+                    <a href="index.html#contact" class="bg-primary hover:bg-red-700 text-white font-bold py-4 px-10 rounded-full text-xl transition transform hover:scale-105 shadow-lg inline-block">
+                        <i class="fas fa-shopping-cart mr-2"></i> GET YOUR CUSTOMIZED WORKOUT PROGRAM
+                    </a>
+                    <p class="text-gray-600 mt-4">Start your transformation journey with a professionally designed workout plan!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 md:py-20 bg-secondary text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl xs:text-4xl md:text-5xl font-bold mb-6 font-heading">READY FOR YOUR TRANSFORMATION?</h2>
+            <p class="text-xl mb-10 max-w-2xl mx-auto opacity-90">Join hundreds of successful clients who have transformed their bodies and lives with EP Fitness</p>
+            <div class="flex flex-col xs:flex-row justify-center gap-6">
+                <a href="index.html#contact" class="bg-primary hover:bg-red-700 text-white font-bold py-4 px-8 rounded-full text-lg transition transform hover:scale-105 shadow-lg">
+                    <i class="fas fa-calendar-check mr-2"></i> BOOK FREE CONSULTATION
+                </a>
+                <a href="index.html#packages" class="bg-transparent hover:bg-white hover:text-secondary border-2 border-white text-white font-bold py-4 px-8 rounded-full text-lg transition transform hover:scale-105">
+                    <i class="fas fa-box-open mr-2"></i> VIEW PACKAGES
+                </a>
+            </div>
+           
+        </div>
+    </section>
+
+    <!-- Footer -->
+<footer class="bg-secondary text-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col lg:flex-row justify-between items-start mb-10">
+            <div class="mb-10 lg:mb-0">
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="h-14 w-14 rounded-full bg-primary flex items-center justify-center">
+                        <span class="text-white font-heading text-2xl">EP</span>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-bold text-white font-heading">EP FITNESS</span>
+                        <p class="text-gray-400 text-sm">by Coach Emman</p>
+                    </div>
+                </div>
+                <p class="text-gray-400 max-w-md mb-6">
+                    Transforming bodies and lives through personalized fitness training and nutrition guidance.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="https://www.facebook.com/EPFITNESSPH" target="_blank" class="bg-gray-800 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/ep_fitness?fbclid=IwY2xjawPp39xleHRuA2FlbQIxMABicmlkETFmeGhpcDlFcGk3YTJPVUFjc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHkAUgf4wea68iDTybiDRktUsl6_xBuzp67CnkvjpZ7nGGIeVHjFC6l90kqD8_aem_8tOEmyL4NgoiTEyb_Zgrcw" target="_blank" class="bg-gray-800 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-10">
+                <div>
+                    <h4 class="font-bold text-lg mb-6">QUICK LINKS</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="index.html#about" class="text-gray-400 hover:text-white transition">About</a></li>
+                        <li><a href="index.html#services" class="text-gray-400 hover:text-white transition">Services</a></li>
+                        <li><a href="EmmanResults.html" class="text-gray-400 hover:text-white transition">RESULTS</a></li>
+                        <li><a href="index.html#packages" class="text-gray-400 hover:text-white transition">Packages</a></li>
+                        <li><a href="termsconditions.html" class="text-primary hover:text-white transition">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6">SERVICES</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Personal Training</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Online Coaching</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Nutrition Coaching</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Meal Planning</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6">CONTACT INFO</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-primary mr-3"></i>
+                            <span>+63-906-279-6854 (Coach Emman)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-primary mr-3"></i>
+                            <span>+63-906-333-1003 (Coach EJ)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-primary mr-3"></i>
+                            <span>epfitness24@gmail.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fab fa-instagram text-primary mr-3"></i>
+                            <span>@ep_fitness</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+            <p>&copy; 2023 EP Fitness by Coach Emman. All rights reserved.</p>
+            <p class="mt-2 text-sm">you can check <a style="text-decoration: underline;" href="termsconditions.html">Terms and Conditions</a> here.</p>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add active state to nav links on scroll
+        const sections = document.querySelectorAll('section[id]');
+        
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY + 100;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    document.querySelectorAll('nav a').forEach(link => {
+                        link.classList.remove('text-primary');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('text-primary');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
