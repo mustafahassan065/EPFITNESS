@@ -2436,10 +2436,12 @@
 
 <!-- ========== MASTER SCRIPT - EP FITNESS EMAIL INTEGRATION ========== -->
 <!-- Yeh script contact aur package dono forms handle karegi -->
+<!-- ========== MASTER SCRIPT - EP FITNESS EMAIL INTEGRATION ========== -->
+<!-- Yeh script contact aur package dono forms handle karegi -->
 <script>
     // ============================================
     // EP FITNESS - PRODUCTION VERSION
-    // API Endpoint: https://ep-fitness.com/api/sendMail
+    // API Endpoint: /api/sendMail (relative URL - no CORS issues)
     // ============================================
 
     const API_URL = '/api/sendMail';
@@ -2551,6 +2553,13 @@
         // ---------- CONTACT FORM ----------
         const contactForm = document.getElementById('contactForm');
         if (contactForm) {
+            // Add IDs to contact button
+            const contactBtn = contactForm.querySelector('button[type="submit"]');
+            if (contactBtn) {
+                contactBtn.id = 'contactSubmitBtn';
+                contactBtn.innerHTML = '<span id="contactBtnText">SEND MESSAGE</span><span id="contactBtnLoader" class="hidden ml-3"><span class="loading-spinner"></span></span><i id="contactBtnIcon" class="fas fa-paper-plane ml-2"></i>';
+            }
+
             contactForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
@@ -2576,7 +2585,7 @@
                     showNotification('✅ Message sent! Coach Emman will contact you within 24 hours.', 'success');
                     contactForm.reset();
                 } else {
-                    showNotification('❌ Failed to send. Please email epfitness24@gmail.com directly', 'error');
+                    showNotification('❌ ' + result.error, 'error');
                 }
             });
         }
@@ -2591,7 +2600,7 @@
         const nameError = document.getElementById('nameError');
         const termsError = document.getElementById('termsError');
 
-        // PACKAGE BUTTONS - Sabhi package select buttons ke liye
+        // Package selection buttons
         document.querySelectorAll('.package-select-btn').forEach(button => {
             button.addEventListener('click', function() {
                 const packageName = this.dataset.package;
@@ -2617,7 +2626,7 @@
             });
         });
 
-        // CLOSE MODAL FUNCTIONS
+        // Close modal functions
         function closePackageModal() {
             packageModal.classList.add('hidden');
             document.body.style.overflow = 'auto';
@@ -2634,10 +2643,17 @@
 
         // ---------- PACKAGE FORM SUBMISSION ----------
         if (packageForm) {
+            // Add IDs to package button
+            const packageBtn = packageForm.querySelector('button[type="submit"]');
+            if (packageBtn) {
+                packageBtn.id = 'packageSubmitBtn';
+                packageBtn.innerHTML = '<span id="packageBtnText">SUBMIT FORM</span><span id="packageBtnLoader" class="hidden ml-3"><span class="loading-spinner"></span></span><i id="packageBtnIcon" class="fas fa-paper-plane ml-2"></i>';
+            }
+
             packageForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
-                // ✅ FULL NAME VALIDATION - "Enter the full name" error fix
+                // Full Name Validation
                 const fullName = fullNameInput?.value.trim();
                 
                 if (!fullName || fullName === '') {
@@ -2649,7 +2665,7 @@
                     if (nameError) nameError.classList.add('hidden');
                 }
 
-                // ✅ CHECKBOX VALIDATION - Agr tick na ho tou form submit na ho
+                // Terms checkbox validation
                 if (!termsCheckbox?.checked) {
                     if (termsError) termsError.classList.remove('hidden');
                     showNotification('You must agree to the terms and conditions', 'error');
@@ -2679,12 +2695,12 @@
                     return;
                 }
 
-                // Form data prepare karo
+                // Form data
                 const formData = {
                     formType: 'package',
+                    fullName: fullName,
                     firstName: fullName.split(' ')[0] || fullName,
                     lastName: fullName.split(' ').slice(1).join(' ') || ' ',
-                    fullName: fullName, // Puri name bhejo
                     email: email,
                     phone: phone,
                     age: document.getElementById('userAge')?.value || 'Not provided',
@@ -2706,7 +2722,7 @@
                     packageForm.reset();
                     closePackageModal();
                 } else {
-                    showNotification('❌ Submission failed. Please email epfitness24@gmail.com', 'error');
+                    showNotification('❌ ' + result.error, 'error');
                 }
             });
         }
@@ -2737,18 +2753,12 @@
                 }
             });
         });
-
-        // ---------- CONTACT SUBMIT BUTTON (Agr exist karta hai) ----------
-        const contactBtn = document.querySelector('#contactForm button[type="submit"]');
-        if (contactBtn && !contactBtn.id) {
-            contactBtn.id = 'contactSubmitBtn';
-            const btnHtml = contactBtn.innerHTML;
-            contactBtn.innerHTML = '<span id="contactBtnText">SEND MESSAGE</span><span id="contactBtnLoader" class="hidden ml-3"><span class="loading-spinner"></span></span><i id="contactBtnIcon" class="fas fa-paper-plane ml-2"></i>';
-        }
     });
 </script>
+<!-- ========== END MASTER SCRIPT ========== -->
 <!-- ========== END MASTER SCRIPT ========== -->
 </body>
 
 </html>
+
 
