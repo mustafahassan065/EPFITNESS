@@ -1,9 +1,11 @@
 // api/sendMail.js
 export default async function handler(req, res) {
-  // ✅ CORS headers for your domain
+  // ✅ CORS headers - DONO domains ke liye
+  res.setHeader('Access-Control-Allow-Origin', 'https://www.ep-fitness.com');
   res.setHeader('Access-Control-Allow-Origin', 'https://ep-fitness.com');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
 
   // ✅ Handle preflight OPTIONS request
   if (req.method === 'OPTIONS') {
@@ -20,6 +22,7 @@ export default async function handler(req, res) {
     name, 
     firstName, 
     lastName, 
+    fullName,
     email, 
     phone, 
     service, 
@@ -118,6 +121,9 @@ export default async function handler(req, res) {
     
     // 📦 PACKAGE FORM EMAIL
     else if (formType === 'package') {
+      // Use fullName if available, otherwise combine firstName + lastName
+      const clientName = fullName || `${firstName || ''} ${lastName || ''}`.trim();
+      
       emailSubject = `💪 New Package Sign-Up - EP Fitness`;
       emailHtml = `
         <!DOCTYPE html>
@@ -160,7 +166,7 @@ export default async function handler(req, res) {
               <div class="info-grid">
                 <div class="info-item">
                   <div class="info-label">Full Name</div>
-                  <div class="info-value">${firstName || ''} ${lastName || ''}</div>
+                  <div class="info-value">${clientName || ''}</div>
                 </div>
                 <div class="info-item">
                   <div class="info-label">Age</div>
@@ -209,7 +215,7 @@ export default async function handler(req, res) {
     // ✅ Send to EP Fitness email
     await transporter.sendMail({
       from: `"EP Fitness Website" <${process.env.EMAIL_USER}>`,
-      to: "epfitness24@gmail.com",  // Your EP Fitness email
+      to: "epfitness24@gmail.com",
       replyTo: email,
       subject: emailSubject,
       html: emailHtml
@@ -252,6 +258,8 @@ export default async function handler(req, res) {
     }
 
     if (formType === 'package') {
+      const clientName = fullName || `${firstName || ''} ${lastName || ''}`.trim();
+      
       await transporter.sendMail({
         from: `"EP Fitness by Coach Emman" <${process.env.EMAIL_USER}>`,
         to: email,
@@ -260,7 +268,7 @@ export default async function handler(req, res) {
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
             <div style="background: #e53935; padding: 30px; text-align: center;">
               <h1 style="color: white; margin: 0; font-size: 28px;">💪 EP FITNESS</h1>
-              <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0;">Thanks for choosing us, ${firstName}!</p>
+              <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0;">Thanks for choosing us, ${clientName}!</p>
             </div>
             
             <div style="padding: 40px;">
