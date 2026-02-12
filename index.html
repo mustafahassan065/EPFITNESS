@@ -2572,112 +2572,216 @@
 </script>
 
 <!-- Add this JavaScript at the end of your body tag -->
+<!-- Replace your existing <script> section with this -->
+
 <script>
-    // Package Selection Modal Script
+    // ============================================
+    // EP FITNESS - LIVE PRODUCTION VERSION
+    // API Endpoint: https://ep-fitness.com/api/sendMail
+    // ============================================
+
+    const API_URL = 'https://ep-fitness.com/api/sendMail';
+
+    // Notification System
+    function showNotification(message, type = 'success') {
+        const existing = document.querySelector('.form-notification');
+        if (existing) existing.remove();
+
+        const notification = document.createElement('div');
+        notification.className = `form-notification fixed top-5 right-5 z-[9999] p-4 rounded-lg shadow-xl border-l-4 max-w-md ${
+            type === 'success' 
+                ? 'bg-green-50 border-green-500 text-green-800' 
+                : 'bg-red-50 border-red-500 text-red-800'
+        }`;
+        
+        notification.innerHTML = `
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} text-xl"></i>
+                </div>
+                <div class="ml-3 flex-1">
+                    <p class="text-sm font-medium">${message}</p>
+                </div>
+                <button class="ml-4 text-gray-400 hover:text-gray-600" onclick="this.parentElement.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        setTimeout(() => notification?.remove(), 6000);
+    }
+
+    // Loading State
+    function setLoading(buttonId, isLoading) {
+        const btn = document.getElementById(buttonId);
+        if (!btn) return;
+        
+        const btnText = document.getElementById(buttonId + 'Text');
+        const btnLoader = document.getElementById(buttonId + 'Loader');
+        const btnIcon = document.getElementById(buttonId + 'Icon');
+        
+        if (isLoading) {
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+            if (btnText) btnText.textContent = 'PROCESSING...';
+            if (btnLoader) btnLoader.classList.remove('hidden');
+            if (btnIcon) btnIcon.classList.add('hidden');
+        } else {
+            btn.disabled = false;
+            btn.classList.remove('opacity-75', 'cursor-not-allowed');
+            if (btnText) btnText.textContent = buttonId.includes('contact') ? 'SEND MESSAGE' : 'SUBMIT FORM';
+            if (btnLoader) btnLoader.classList.add('hidden');
+            if (btnIcon) btnIcon.classList.remove('hidden');
+        }
+    }
+
+    // Form Submission
+    async function submitForm(formData) {
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+            
+            if (!response.ok) throw new Error(data.error || 'Submission failed');
+            return { success: true, data };
+        } catch (error) {
+            console.error('Form Error:', error);
+            return { success: false, error: error.message };
+        }
+    }
+
+    // Initialize everything when DOM is ready
     document.addEventListener('DOMContentLoaded', function() {
-        // Get modal elements
+        
+        // ========== CONTACT FORM ==========
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = {
+                    formType: 'contact',
+                    name: document.getElementById('name')?.value,
+                    email: document.getElementById('email')?.value,
+                    phone: document.getElementById('phone')?.value || 'Not provided',
+                    service: document.getElementById('service')?.value,
+                    message: document.getElementById('message')?.value
+                };
+
+                if (!formData.name || !formData.email || !formData.service || !formData.message) {
+                    showNotification('Please fill in all required fields', 'error');
+                    return;
+                }
+
+                setLoading('contactSubmitBtn', true);
+                const result = await submitForm(formData);
+                setLoading('contactSubmitBtn', false);
+                
+                if (result.success) {
+                    showNotification('✅ Message sent! Coach Emman will contact you within 24 hours.', 'success');
+                    contactForm.reset();
+                } else {
+                    showNotification('❌ Failed to send. Please email epfitness24@gmail.com directly', 'error');
+                }
+            });
+        }
+
+        // ========== PACKAGE MODAL ==========
         const packageModal = document.getElementById('packageModal');
         const closeModal = document.getElementById('closeModal');
         const cancelForm = document.getElementById('cancelForm');
         const packageForm = document.getElementById('packageForm');
-        
-        // Get display elements
-        const selectedPackageEl = document.getElementById('selectedPackage');
-        const packagePriceEl = document.getElementById('packagePrice');
-        const packageDetailsEl = document.getElementById('packageDetails');
-        
-        // Add event listeners to ALL package buttons with class 'package-select-btn'
+
+        // Package selection buttons
         document.querySelectorAll('.package-select-btn').forEach(button => {
             button.addEventListener('click', function() {
-                // Get package details from data attributes
-                const packageName = this.getAttribute('data-package');
-                const packagePrice = this.getAttribute('data-price');
-                const packageCurrency = this.getAttribute('data-currency');
-                const packageDetails = this.getAttribute('data-details');
+                const packageName = this.dataset.package;
+                const packagePrice = this.dataset.price;
+                const packageCurrency = this.dataset.currency;
+                const packageDetails = this.dataset.details;
                 
-                // Format the price based on currency
-                let formattedPrice = '';
-                if (packageCurrency === 'USD') {
-                    formattedPrice = `$${packagePrice} USD`;
-                } else {
-                    formattedPrice = `₱${parseInt(packagePrice).toLocaleString()} PHP`;
-                }
+                let formattedPrice = packageCurrency === 'USD' 
+                    ? `$${packagePrice} USD` 
+                    : `₱${parseInt(packagePrice).toLocaleString()} PHP`;
                 
-                // Update modal content
-                selectedPackageEl.textContent = packageName;
-                packagePriceEl.textContent = formattedPrice;
-                packageDetailsEl.textContent = packageDetails;
+                document.getElementById('selectedPackage').textContent = packageName;
+                document.getElementById('packagePrice').textContent = formattedPrice;
+                document.getElementById('packageDetails').textContent = packageDetails;
                 
-                // Show modal
                 packageModal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden'; // Prevent scrolling
+                document.body.style.overflow = 'hidden';
             });
         });
-        
-        // Close modal functions
+
+        // Close modal
         function closePackageModal() {
             packageModal.classList.add('hidden');
-            document.body.style.overflow = 'auto'; // Restore scrolling
+            document.body.style.overflow = 'auto';
         }
+
+        if (closeModal) closeModal.addEventListener('click', closePackageModal);
+        if (cancelForm) cancelForm.addEventListener('click', closePackageModal);
         
-        // Event listeners for closing modal
-        closeModal.addEventListener('click', closePackageModal);
-        cancelForm.addEventListener('click', closePackageModal);
-        
-        // Close modal when clicking outside
-        packageModal.addEventListener('click', function(event) {
-            if (event.target === packageModal) {
-                closePackageModal();
-            }
-        });
-        
-        // Form submission
-        packageForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            // Get form data
-            const formData = {
-                package: selectedPackageEl.textContent,
-                price: packagePriceEl.textContent,
-                name: document.getElementById('fullName').value,
-                email: document.getElementById('userEmail').value,
-                phone: document.getElementById('userPhone').value,
-                age: document.getElementById('userAge').value,
-                location: document.getElementById('trainingLocation').value,
-                goal: document.getElementById('primaryGoal').value,
-                healthConditions: document.getElementById('healthConditions').value,
-                notes: document.getElementById('additionalNotes').value
-            };
-            
-            // Here you would typically send this data to a server
-            // For now, just log it and show a success message
-            console.log('Package Sign-Up Form Data:', formData);
-            
-            // Show success message
-            alert('Thank you for your interest! We will contact you shortly with payment instructions.');
-            
-            // Close modal and reset form
-            closePackageModal();
-            packageForm.reset();
-        });
-        
-        // Add smooth scrolling for anchor links in this section
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+        if (packageModal) {
+            packageModal.addEventListener('click', (e) => {
+                if (e.target === packageModal) closePackageModal();
+            });
+        }
+
+        // ========== PACKAGE FORM ==========
+        if (packageForm) {
+            packageForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
+                const firstName = document.getElementById('firstName')?.value;
+                const lastName = document.getElementById('lastName')?.value;
                 
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+                if (!firstName || !lastName) {
+                    showNotification('Please enter your full name', 'error');
+                    return;
+                }
+
+                const formData = {
+                    formType: 'package',
+                    firstName,
+                    lastName,
+                    email: document.getElementById('userEmail')?.value,
+                    phone: document.getElementById('userPhone')?.value,
+                    age: document.getElementById('userAge')?.value || 'Not provided',
+                    location: document.getElementById('trainingLocation')?.value || 'Not specified',
+                    goal: document.getElementById('primaryGoal')?.value,
+                    healthConditions: document.getElementById('healthConditions')?.value || 'None reported',
+                    notes: document.getElementById('additionalNotes')?.value || 'No additional notes',
+                    package: document.getElementById('selectedPackage')?.textContent,
+                    price: document.getElementById('packagePrice')?.textContent,
+                    details: document.getElementById('packageDetails')?.textContent
+                };
+
+                if (!formData.email || !formData.phone || !formData.goal) {
+                    showNotification('Please fill in all required fields', 'error');
+                    return;
+                }
+
+                setLoading('packageSubmitBtn', true);
+                const result = await submitForm(formData);
+                setLoading('packageSubmitBtn', false);
+                
+                if (result.success) {
+                    showNotification('✅ Package request submitted! Check your email for confirmation.', 'success');
+                    packageForm.reset();
+                    closePackageModal();
+                } else {
+                    showNotification('❌ Submission failed. Please email epfitness24@gmail.com', 'error');
                 }
             });
-        });
+        }
     });
 </script>
 </body>
+
 </html>
