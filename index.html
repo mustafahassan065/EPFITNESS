@@ -452,15 +452,15 @@
             </div>
         </div>
     </section>
-
-   <section id="coaches" class="py-16 md:py-24 bg-white">
+<section id="coaches" class="py-16 md:py-24 bg-white">
     <div class="container mx-auto px-4">
         <div class="text-center mb-16">
             <h2 class="text-3xl xs:text-4xl md:text-5xl font-bold text-secondary mb-4 font-heading section-title">MEET THE COACHES</h2>
             <p class="text-gray-600 mt-12 max-w-4xl mx-auto text-lg">Your dedicated team of fitness and nutrition professionals</p>
         </div>
         
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <!-- TOP SECTION: Image Left + Mission Right -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
             <!-- Left Side - Coaches Image -->
             <div>
                 <div class="rounded-2xl overflow-hidden shadow-2xl h-[400px] lg:h-[650px]">
@@ -483,83 +483,90 @@
                     <p class="text-2xl font-bold text-primary mt-8">
                         At EP Fitness, we're more than just coaches — we're your partners in progress.
                     </p>
-
-                    <!-- ===== COACH CONTACT SECTION ===== -->
-                    <div class="mt-12 pt-8 border-t-2 border-gray-200">
-                        <!-- Nutrition Services Note -->
-                        <div class="bg-blue-50 border-l-4 border-blue-500 p-5 rounded-lg mb-8">
-                            <div class="flex items-start">
-                                <div class="bg-blue-500 text-white p-2 rounded-full mr-4 flex-shrink-0">
-                                    <i class="fas fa-utensils text-lg"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-secondary text-lg mb-1">🍽️ Nutrition Services with Coach EJ</h4>
-                                    <p class="text-gray-700">
-                                        For personalized nutrition coaching, meal planning, and dietary guidance, you can connect directly with <span class="font-semibold text-primary">Coach EJ Patricio</span>, our Registered Nutritionist Dietitian.
-                                    </p>
-                                    <p class="text-gray-600 text-sm mt-2 italic">
-                                        Click the button below to email Coach EJ directly for nutrition consultations.
-                                    </p>
-                                </div>
-                            </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== BOTTOM SECTION: 3 COLUMNS HORIZONTAL ===== -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12 pt-8 border-t-2 border-gray-200">
+            
+            <!-- COLUMN 1: Nutrition Services Note -->
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-xl shadow-md h-full">
+                <div class="flex flex-col h-full">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-500 text-white p-3 rounded-full mr-4 flex-shrink-0">
+                            <i class="fas fa-utensils text-xl"></i>
                         </div>
-
-                        <!-- Coach Contact Buttons Grid -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                            <!-- Coach Emman Button -->
-                            <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition transform hover:scale-[1.02] duration-300">
-                                <div class="flex items-center mb-4">
-                                    <div class="bg-primary text-white p-3 rounded-full mr-4">
-                                        <i class="fas fa-dumbbell text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-bold text-white text-lg">COACH EMMAN</h4>
-                                        <p class="text-gray-300 text-sm">Strength & Conditioning</p>
-                                    </div>
-                                </div>
-                                <p class="text-gray-300 text-sm mb-4 flex items-center">
-                                    <i class="fas fa-envelope mr-2 text-primary"></i>
-                                    epfitness24@gmail.com
-                                </p>
-                                <a href="mailto:epfitness24@gmail.com?subject=Personal%20Training%20Inquiry%20-%20EP%20Fitness&body=Hi%20Coach%20Emman%2C%0A%0AI'm%20interested%20in%20learning%20more%20about%20your%20personal%20training%20services.%0A%0A%0A%0AName%3A%0AGoal%3A%0APreferred%20training%20location%3A" 
-                                   class="inline-flex items-center justify-center w-full bg-primary hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition transform hover:scale-105 shadow-md">
-                                    <i class="fas fa-paper-plane mr-2"></i>
-                                    CONTACT COACH EMMAN
-                                </a>
-                            </div>
-                            
-                            <!-- Coach EJ Button -->
-                            <div class="bg-gradient-to-br from-green-900 to-green-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition transform hover:scale-[1.02] duration-300">
-                                <div class="flex items-center mb-4">
-                                    <div class="bg-green-500 text-white p-3 rounded-full mr-4">
-                                        <i class="fas fa-user-tie text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-bold text-white text-lg">COACH EJ PATRICIO</h4>
-                                        <p class="text-gray-200 text-sm">Registered Nutritionist Dietitian</p>
-                                    </div>
-                                </div>
-                                <p class="text-gray-200 text-sm mb-4 flex items-center">
-                                    <i class="fas fa-envelope mr-2 text-green-300"></i>
-                                    ejukulele@gmail.com
-                                </p>
-                                <a href="mailto:ejukulele@gmail.com?subject=Nutrition%20Coaching%20Inquiry%20-%20EP%20Fitness&body=Hi%20Coach%20EJ%2C%0A%0AI'm%20interested%20in%20learning%20more%20about%20your%20nutrition%20coaching%20services.%0A%0A%0A%0AName%3A%0AGoal%3A%0ASpecific%20nutrition%20concerns%3A" 
-                                   class="inline-flex items-center justify-center w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition transform hover:scale-105 shadow-md">
-                                    <i class="fas fa-paper-plane mr-2"></i>
-                                    CONTACT COACH EJ
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Additional Note -->
-                        <div class="mt-6 text-center">
-                            <p class="text-gray-500 text-sm">
-                                <i class="fas fa-clock text-primary mr-1"></i>
-                                Both coaches typically respond within 24 hours. For urgent inquiries, please call.
-                            </p>
-                        </div>
+                        <h4 class="font-bold text-secondary text-xl">🍽️ Nutrition Services</h4>
+                    </div>
+                    <div class="flex-grow">
+                        <p class="text-gray-700 mb-3">
+                            For personalized nutrition coaching, meal planning, and dietary guidance, connect directly with <span class="font-semibold text-primary">Coach EJ Patricio</span>, our Registered Nutritionist Dietitian.
+                        </p>
+                        <p class="text-gray-600 text-sm italic flex items-center">
+                            <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+                            Click the button below to email Coach EJ directly for nutrition consultations.
+                        </p>
                     </div>
                 </div>
+            </div>
+            
+            <!-- COLUMN 2: Coach Emman Button -->
+            <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition transform hover:scale-[1.02] duration-300 h-full flex flex-col">
+                <div class="flex items-center mb-4">
+                    <div class="bg-primary text-white p-3 rounded-full mr-4">
+                        <i class="fas fa-dumbbell text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">COACH EMMAN</h4>
+                        <p class="text-gray-300 text-sm">Strength & Conditioning</p>
+                    </div>
+                </div>
+                <div class="flex-grow">
+                    <p class="text-gray-300 text-sm mb-4 flex items-center">
+                        <i class="fas fa-envelope mr-2 text-primary"></i>
+                        epfitness24@gmail.com
+                    </p>
+                </div>
+                <a href="mailto:epfitness24@gmail.com?subject=Personal%20Training%20Inquiry%20-%20EP%20Fitness&body=Hi%20Coach%20Emman%2C%0A%0AI'm%20interested%20in%20learning%20more%20about%20your%20personal%20training%20services.%0A%0A%0A%0AName%3A%0AGoal%3A%0APreferred%20training%20location%3A" 
+                   class="inline-flex items-center justify-center w-full bg-primary hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition transform hover:scale-105 shadow-md mt-auto">
+                    <i class="fas fa-paper-plane mr-2"></i>
+                    CONTACT COACH EMMAN
+                </a>
+            </div>
+            
+            <!-- COLUMN 3: Coach EJ Button -->
+            <div class="bg-gradient-to-br from-green-900 to-green-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition transform hover:scale-[1.02] duration-300 h-full flex flex-col">
+                <div class="flex items-center mb-4">
+                    <div class="bg-green-500 text-white p-3 rounded-full mr-4">
+                        <i class="fas fa-user-tie text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">COACH EJ PATRICIO</h4>
+                        <p class="text-gray-200 text-sm">Registered Nutritionist Dietitian</p>
+                    </div>
+                </div>
+                <div class="flex-grow">
+                    <p class="text-gray-200 text-sm mb-4 flex items-center">
+                        <i class="fas fa-envelope mr-2 text-green-300"></i>
+                        ejukulele@gmail.com
+                    </p>
+                </div>
+                <a href="mailto:ejukulele@gmail.com?subject=Nutrition%20Coaching%20Inquiry%20-%20EP%20Fitness&body=Hi%20Coach%20EJ%2C%0A%0AI'm%20interested%20in%20learning%20more%20about%20your%20nutrition%20coaching%20services.%0A%0A%0A%0AName%3A%0AGoal%3A%0ASpecific%20nutrition%20concerns%3A" 
+                   class="inline-flex items-center justify-center w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition transform hover:scale-105 shadow-md mt-auto">
+                    <i class="fas fa-paper-plane mr-2"></i>
+                    CONTACT COACH EJ
+                </a>
+            </div>
+        </div>
+        
+        <!-- Response Time Note - Full Width Below -->
+        <div class="mt-8 text-center">
+            <div class="inline-flex items-center bg-gray-100 px-6 py-3 rounded-full">
+                <i class="fas fa-clock text-primary mr-2"></i>
+                <p class="text-gray-700 text-sm">
+                    <span class="font-semibold">24-hour response time:</span> Both coaches typically respond within 24 hours. For urgent inquiries, please call.
+                </p>
             </div>
         </div>
     </div>
@@ -3549,6 +3556,7 @@ if (assessmentForm) {
 </body>
 
 </html>
+
 
 
 
