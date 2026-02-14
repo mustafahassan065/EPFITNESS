@@ -2326,7 +2326,7 @@
     </div>
     
     <!-- Payment Options Modal -->
-    <!-- Payment Options Modal -->
+   <!-- Payment Options Modal -->
 <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4 modal-transition">
     <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full">
         <div class="p-8">
@@ -2353,7 +2353,7 @@
             <!-- Payment QR Codes Grid - 3 Options -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <!-- BDO Transfer QR Code -->
-                <div class="border-2 border-gray-200 rounded-xl p-4 text-center hover:border-primary transition cursor-pointer payment-option" onclick="selectPayment('BDO')">
+                <div class="border-2 border-gray-200 rounded-xl p-4 text-center">
                     <div class="bg-gray-100 p-2 rounded-lg mb-3 flex justify-center items-center h-36">
                         <!-- QR CODE IMAGE FOR BDO - INSERT HERE -->
                         <div class="text-gray-400 text-sm">BDO QR Code</div>
@@ -2364,7 +2364,7 @@
                 </div>
                 
                 <!-- GCash QR Code -->
-                <div class="border-2 border-gray-200 rounded-xl p-4 text-center hover:border-primary transition cursor-pointer payment-option" onclick="selectPayment('GCash')">
+                <div class="border-2 border-gray-200 rounded-xl p-4 text-center">
                     <div class="bg-gray-100 p-2 rounded-lg mb-3 flex justify-center items-center h-36">
                         <!-- QR CODE IMAGE FOR GCASH - INSERT HERE -->
                         <div class="text-gray-400 text-sm">GCash QR Code</div>
@@ -2375,7 +2375,7 @@
                 </div>
                 
                 <!-- PayPal QR Code -->
-                <div class="border-2 border-gray-200 rounded-xl p-4 text-center hover:border-primary transition cursor-pointer payment-option" onclick="selectPayment('PayPal')">
+                <div class="border-2 border-gray-200 rounded-xl p-4 text-center">
                     <div class="bg-gray-100 p-2 rounded-lg mb-3 flex justify-center items-center h-36">
                         <!-- QR CODE IMAGE FOR PAYPAL - INSERT HERE -->
                         <div class="text-gray-400 text-sm">PayPal QR Code</div>
@@ -2383,21 +2383,6 @@
                     </div>
                     <p class="font-bold text-gray-800">PayPal</p>
                     <p class="text-xs text-gray-600">Send payment via PayPal</p>
-                </div>
-            </div>
-            
-            <!-- Selected Payment Details (Shows when a QR code is clicked) -->
-            <div id="selectedPaymentDetails" class="mb-6 p-5 bg-gray-50 border-2 border-primary rounded-xl hidden">
-                <div class="flex items-center justify-between mb-3">
-                    <h5 class="font-bold text-lg" id="selectedPaymentTitle">Payment Method</h5>
-                    <button onclick="clearSelection()" class="text-gray-500 hover:text-gray-700">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                
-                <div class="mt-3 p-2 bg-blue-50 rounded-lg text-sm">
-                    <i class="fas fa-camera text-blue-600 mr-2"></i>
-                    <span>Scan the QR code above to make payment</span>
                 </div>
             </div>
             
@@ -2420,6 +2405,63 @@
         </div>
     </div>
 </div>
+
+<!-- Simple JavaScript - Only for closing modal and agree button -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const paymentModal = document.getElementById('paymentModal');
+        const closePaymentModal = document.getElementById('closePaymentModal');
+        const cancelPaymentBtn = document.getElementById('cancelPaymentBtn');
+        const agreePaymentBtn = document.getElementById('agreePaymentBtn');
+        const assessmentSection = document.getElementById('assessment');
+        
+        // Close modal functions
+        function closeModal() {
+            paymentModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        if (closePaymentModal) {
+            closePaymentModal.addEventListener('click', closeModal);
+        }
+        
+        if (cancelPaymentBtn) {
+            cancelPaymentBtn.addEventListener('click', closeModal);
+        }
+        
+        if (paymentModal) {
+            paymentModal.addEventListener('click', function(e) {
+                if (e.target === paymentModal) {
+                    closeModal();
+                }
+            });
+        }
+        
+        // Agree button - directly shows assessment form
+        if (agreePaymentBtn) {
+            agreePaymentBtn.addEventListener('click', function() {
+                // Close payment modal
+                paymentModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+                
+                // Show assessment form
+                if (assessmentSection) {
+                    assessmentSection.classList.remove('hidden');
+                    
+                    setTimeout(() => {
+                        assessmentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 300);
+                    
+                    if (typeof showNotification === 'function') {
+                        showNotification('✅ Please complete the assessment form to finalize your registration.', 'success');
+                    } else {
+                        alert('✅ Please complete the assessment form to finalize your registration.');
+                    }
+                }
+            });
+        }
+    });
+</script>
 
 <!-- JavaScript for Payment Selection -->
 
