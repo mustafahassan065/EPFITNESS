@@ -2326,7 +2326,8 @@
     </div>
     
     <!-- Payment Options Modal -->
-    <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4 modal-transition">
+    <!-- Payment Options Modal -->
+<div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4 modal-transition">
     <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full">
         <div class="p-8">
             <div class="flex justify-between items-center mb-4">
@@ -2349,49 +2350,56 @@
                 <p class="text-gray-700"><span class="font-bold">Amount:</span> <span id="paymentAmount"></span></p>
             </div>
             
-            <!-- Payment QR Codes Grid -->
+            <!-- Payment QR Codes Grid - 3 Options -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <!-- BDO QR Code -->
-                <div class="border-2 border-gray-200 rounded-xl p-4 text-center hover:border-primary transition cursor-pointer" onclick="selectPayment('BDO')">
-                    <div class="bg-gray-100 p-2 rounded-lg mb-3 flex justify-center">
-                        <!-- Replace with actual BDO QR code image -->
-                        <img src="bdo-qr-code.png" alt="BDO QR Code" class="w-32 h-32 object-contain">
+                <!-- BDO Transfer QR Code -->
+                <div class="border-2 border-gray-200 rounded-xl p-4 text-center hover:border-primary transition cursor-pointer payment-option" onclick="selectPayment('BDO')">
+                    <div class="bg-gray-100 p-2 rounded-lg mb-3 flex justify-center items-center h-36">
+                        <!-- QR CODE IMAGE FOR BDO - INSERT HERE -->
+                        <div class="text-gray-400 text-sm">BDO QR Code</div>
+                        <!-- <img src="bdo-qr-code.png" alt="BDO QR Code" class="w-32 h-32 object-contain"> -->
                     </div>
-                    <p class="font-bold text-gray-800">BDO</p>
+                    <p class="font-bold text-gray-800">BDO Transfer</p>
                     <p class="text-xs text-gray-600">BDO Unibank</p>
                 </div>
                 
                 <!-- GCash QR Code -->
-                <div class="border-2 border-gray-200 rounded-xl p-4 text-center hover:border-primary transition cursor-pointer" onclick="selectPayment('GCash')">
-                    <div class="bg-gray-100 p-2 rounded-lg mb-3 flex justify-center">
-                        <!-- Replace with actual GCash QR code image -->
-                        <img src="gcash-qr-code.png" alt="GCash QR Code" class="w-32 h-32 object-contain">
+                <div class="border-2 border-gray-200 rounded-xl p-4 text-center hover:border-primary transition cursor-pointer payment-option" onclick="selectPayment('GCash')">
+                    <div class="bg-gray-100 p-2 rounded-lg mb-3 flex justify-center items-center h-36">
+                        <!-- QR CODE IMAGE FOR GCASH - INSERT HERE -->
+                        <div class="text-gray-400 text-sm">GCash QR Code</div>
+                        <!-- <img src="gcash-qr-code.png" alt="GCash QR Code" class="w-32 h-32 object-contain"> -->
                     </div>
                     <p class="font-bold text-gray-800">GCash</p>
-                    <p class="text-xs text-gray-600">0917-123-4567</p>
+                    <p class="text-xs text-gray-600">Scan to pay</p>
                 </div>
                 
-                <!-- BPI QR Code -->
-                <div class="border-2 border-gray-200 rounded-xl p-4 text-center hover:border-primary transition cursor-pointer" onclick="selectPayment('BPI')">
-                    <div class="bg-gray-100 p-2 rounded-lg mb-3 flex justify-center">
-                        <!-- Replace with actual BPI QR code image -->
-                        <img src="bpi-qr-code.png" alt="BPI QR Code" class="w-32 h-32 object-contain">
+                <!-- PayPal QR Code -->
+                <div class="border-2 border-gray-200 rounded-xl p-4 text-center hover:border-primary transition cursor-pointer payment-option" onclick="selectPayment('PayPal')">
+                    <div class="bg-gray-100 p-2 rounded-lg mb-3 flex justify-center items-center h-36">
+                        <!-- QR CODE IMAGE FOR PAYPAL - INSERT HERE -->
+                        <div class="text-gray-400 text-sm">PayPal QR Code</div>
+                        <!-- <img src="paypal-qr-code.png" alt="PayPal QR Code" class="w-32 h-32 object-contain"> -->
                     </div>
-                    <p class="font-bold text-gray-800">BPI</p>
-                    <p class="text-xs text-gray-600">Bank of the Philippine Islands</p>
+                    <p class="font-bold text-gray-800">PayPal</p>
+                    <p class="text-xs text-gray-600">Send payment via PayPal</p>
                 </div>
             </div>
             
             <!-- Selected Payment Details (Shows when a QR code is clicked) -->
             <div id="selectedPaymentDetails" class="mb-6 p-5 bg-gray-50 border-2 border-primary rounded-xl hidden">
                 <div class="flex items-center justify-between mb-3">
-                    <h5 class="font-bold text-lg" id="selectedPaymentTitle">BDO</h5>
+                    <h5 class="font-bold text-lg" id="selectedPaymentTitle">Payment Method</h5>
                     <button onclick="clearSelection()" class="text-gray-500 hover:text-gray-700">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
-                <div id="paymentDetailsContent" class="space-y-2">
+                <div id="paymentDetailsContent" class="space-y-2 text-gray-700">
                     <!-- Dynamic content will appear here -->
+                </div>
+                <div class="mt-3 p-2 bg-blue-50 rounded-lg text-sm">
+                    <i class="fas fa-camera text-blue-600 mr-2"></i>
+                    <span>Scan the QR code above to make payment</span>
                 </div>
             </div>
             
@@ -2414,6 +2422,133 @@
         </div>
     </div>
 </div>
+
+<!-- JavaScript for Payment Selection -->
+<script>
+    function selectPayment(method) {
+        const detailsDiv = document.getElementById('selectedPaymentDetails');
+        const titleEl = document.getElementById('selectedPaymentTitle');
+        const contentEl = document.getElementById('paymentDetailsContent');
+        
+        let content = '';
+        
+        if (method === 'BDO') {
+            titleEl.textContent = 'BDO Transfer';
+            content = `
+                <p><span class="font-semibold">Bank:</span> BDO Unibank</p>
+                <p><span class="font-semibold">Account Name:</span> EP FITNESS</p>
+                <p><span class="font-semibold">Account Number:</span> 002-1234-56789</p>
+                <p><span class="font-semibold">Branch:</span> BGC Taguig</p>
+                <p class="text-green-600 text-sm mt-2"><i class="fas fa-check-circle"></i> BDO to BDO transfers are free</p>
+            `;
+        } else if (method === 'GCash') {
+            titleEl.textContent = 'GCash';
+            content = `
+                <p><span class="font-semibold">Mobile Number:</span> 0917-123-4567</p>
+                <p><span class="font-semibold">Account Name:</span> Emman Pilapil</p>
+                <p><span class="font-semibold">GCash Name:</span> EP Fitness</p>
+                <p class="text-sm text-gray-600 mt-2">Scan QR code or send to mobile number</p>
+            `;
+        } else if (method === 'PayPal') {
+            titleEl.textContent = 'PayPal';
+            content = `
+                <p><span class="font-semibold">PayPal Email:</span> epfitness24@gmail.com</p>
+                <p><span class="font-semibold">Account Name:</span> EP Fitness</p>
+                <p><span class="font-semibold">Country:</span> Philippines</p>
+                <p class="text-sm text-gray-600 mt-2">Scan QR code or send via PayPal email</p>
+            `;
+        }
+        
+        contentEl.innerHTML = content;
+        detailsDiv.classList.remove('hidden');
+        
+        // Remove selected class from all options
+        document.querySelectorAll('.payment-option').forEach(opt => {
+            opt.classList.remove('border-primary', 'bg-red-50');
+        });
+        
+        // Add selected class to clicked option (based on the onclick parameter)
+        if (method === 'BDO') {
+            document.querySelectorAll('.payment-option')[0].classList.add('border-primary', 'bg-red-50');
+        } else if (method === 'GCash') {
+            document.querySelectorAll('.payment-option')[1].classList.add('border-primary', 'bg-red-50');
+        } else if (method === 'PayPal') {
+            document.querySelectorAll('.payment-option')[2].classList.add('border-primary', 'bg-red-50');
+        }
+    }
+    
+    function clearSelection() {
+        document.getElementById('selectedPaymentDetails').classList.add('hidden');
+        
+        // Remove selected class from all options
+        document.querySelectorAll('.payment-option').forEach(opt => {
+            opt.classList.remove('border-primary', 'bg-red-50');
+        });
+    }
+    
+    // Update agree button validation
+    document.addEventListener('DOMContentLoaded', function() {
+        const agreeBtn = document.getElementById('agreePaymentBtn');
+        if (agreeBtn) {
+            agreeBtn.addEventListener('click', function() {
+                const detailsVisible = !document.getElementById('selectedPaymentDetails').classList.contains('hidden');
+                
+                if (!detailsVisible) {
+                    showNotification('Please select a payment method by clicking on a QR code', 'error');
+                    return;
+                }
+                
+                // Close payment modal
+                document.getElementById('paymentModal')?.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+                clearSelection();
+                
+                // Show assessment form
+                const assessmentSection = document.getElementById('assessment');
+                if (assessmentSection) {
+                    assessmentSection.classList.remove('hidden');
+                    
+                    setTimeout(() => {
+                        assessmentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 300);
+                    
+                    showNotification('✅ Please complete the assessment form to finalize your registration.', 'success');
+                }
+            });
+        }
+        
+        // Close modal functions
+        const closePaymentModal = document.getElementById('closePaymentModal');
+        const cancelPaymentBtn = document.getElementById('cancelPaymentBtn');
+        const paymentModal = document.getElementById('paymentModal');
+        
+        if (closePaymentModal) {
+            closePaymentModal.addEventListener('click', function() {
+                paymentModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+                clearSelection();
+            });
+        }
+        
+        if (cancelPaymentBtn) {
+            cancelPaymentBtn.addEventListener('click', function() {
+                paymentModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+                clearSelection();
+            });
+        }
+        
+        if (paymentModal) {
+            paymentModal.addEventListener('click', function(e) {
+                if (e.target === paymentModal) {
+                    paymentModal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                    clearSelection();
+                }
+            });
+        }
+    });
+</script>
 </section>
 
 <!-- Assessment Form Section -->
