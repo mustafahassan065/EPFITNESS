@@ -2327,120 +2327,93 @@
     
     <!-- Payment Options Modal -->
     <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4 modal-transition">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full">
-            <div class="p-8">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-2xl font-bold text-secondary">Payment Instructions</h3>
-                    <button id="closePaymentModal" class="text-gray-500 hover:text-gray-700 text-2xl">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full">
+        <div class="p-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-secondary">Payment methods</h3>
+                <button id="closePaymentModal" class="text-gray-500 hover:text-gray-700 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="mb-4 text-sm text-gray-600">
+                BDO to BDO transfers are free. Fees may apply for non-BDO transfers.
+            </div>
+            
+            <div class="mb-6 font-semibold text-lg">
+                EP FITNESS
+            </div>
+            
+            <div class="mb-6 p-5 bg-primary bg-opacity-10 rounded-xl">
+                <h4 class="font-bold text-lg text-primary mb-2" id="paymentPackageName">Package Name</h4>
+                <p class="text-gray-700"><span class="font-bold">Amount:</span> <span id="paymentAmount"></span></p>
+            </div>
+            
+            <!-- Payment QR Codes Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- BDO QR Code -->
+                <div class="border-2 border-gray-200 rounded-xl p-4 text-center hover:border-primary transition cursor-pointer" onclick="selectPayment('BDO')">
+                    <div class="bg-gray-100 p-2 rounded-lg mb-3 flex justify-center">
+                        <!-- Replace with actual BDO QR code image -->
+                        <img src="bdo-qr-code.png" alt="BDO QR Code" class="w-32 h-32 object-contain">
+                    </div>
+                    <p class="font-bold text-gray-800">BDO</p>
+                    <p class="text-xs text-gray-600">BDO Unibank</p>
+                </div>
+                
+                <!-- GCash QR Code -->
+                <div class="border-2 border-gray-200 rounded-xl p-4 text-center hover:border-primary transition cursor-pointer" onclick="selectPayment('GCash')">
+                    <div class="bg-gray-100 p-2 rounded-lg mb-3 flex justify-center">
+                        <!-- Replace with actual GCash QR code image -->
+                        <img src="gcash-qr-code.png" alt="GCash QR Code" class="w-32 h-32 object-contain">
+                    </div>
+                    <p class="font-bold text-gray-800">GCash</p>
+                    <p class="text-xs text-gray-600">0917-123-4567</p>
+                </div>
+                
+                <!-- BPI QR Code -->
+                <div class="border-2 border-gray-200 rounded-xl p-4 text-center hover:border-primary transition cursor-pointer" onclick="selectPayment('BPI')">
+                    <div class="bg-gray-100 p-2 rounded-lg mb-3 flex justify-center">
+                        <!-- Replace with actual BPI QR code image -->
+                        <img src="bpi-qr-code.png" alt="BPI QR Code" class="w-32 h-32 object-contain">
+                    </div>
+                    <p class="font-bold text-gray-800">BPI</p>
+                    <p class="text-xs text-gray-600">Bank of the Philippine Islands</p>
+                </div>
+            </div>
+            
+            <!-- Selected Payment Details (Shows when a QR code is clicked) -->
+            <div id="selectedPaymentDetails" class="mb-6 p-5 bg-gray-50 border-2 border-primary rounded-xl hidden">
+                <div class="flex items-center justify-between mb-3">
+                    <h5 class="font-bold text-lg" id="selectedPaymentTitle">BDO</h5>
+                    <button onclick="clearSelection()" class="text-gray-500 hover:text-gray-700">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
-                
-                <div class="mb-6 p-5 bg-primary bg-opacity-10 rounded-xl">
-                    <h4 class="font-bold text-lg text-primary mb-2" id="paymentPackageName">Package Name</h4>
-                    <p class="text-gray-700"><span class="font-bold">Amount:</span> <span id="paymentAmount"></span></p>
+                <div id="paymentDetailsContent" class="space-y-2">
+                    <!-- Dynamic content will appear here -->
                 </div>
-                
-                <div class="mb-6">
-                    <h4 class="font-bold text-lg text-secondary mb-4">Select Payment Method:</h4>
-                    
-                    <div class="space-y-4">
-                        <!-- BPI Account -->
-                        <div class="payment-option-card border-2 border-gray-200 rounded-xl p-4 hover:border-primary" data-payment-method="bpi">
-                            <div class="flex items-center">
-                                <input type="radio" name="paymentMethod" id="bpiRadio" value="BPI" class="mr-4 h-5 w-5 text-primary">
-                                <label for="bpiRadio" class="flex-1 cursor-pointer">
-                                    <div class="flex items-center">
-                                        <div class="bg-blue-600 text-white p-2 rounded-lg mr-4">
-                                            <i class="fas fa-university"></i>
-                                        </div>
-                                        <div>
-                                            <span class="font-bold text-lg">BPI Bank</span>
-                                            <p class="text-sm text-gray-600">Account Name: EP Fitness</p>
-                                            <p class="text-sm text-gray-600">Account Number: 1234-5678-90</p>
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <!-- BDO Account -->
-                        <div class="payment-option-card border-2 border-gray-200 rounded-xl p-4 hover:border-primary" data-payment-method="bdo">
-                            <div class="flex items-center">
-                                <input type="radio" name="paymentMethod" id="bdoRadio" value="BDO" class="mr-4 h-5 w-5 text-primary">
-                                <label for="bdoRadio" class="flex-1 cursor-pointer">
-                                    <div class="flex items-center">
-                                        <div class="bg-blue-600 text-white p-2 rounded-lg mr-4">
-                                            <i class="fas fa-university"></i>
-                                        </div>
-                                        <div>
-                                            <span class="font-bold text-lg">BDO Bank</span>
-                                            <p class="text-sm text-gray-600">Account Name: EP Fitness</p>
-                                            <p class="text-sm text-gray-600">Account Number: 0987-6543-21</p>
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <!-- GCash -->
-                        <div class="payment-option-card border-2 border-gray-200 rounded-xl p-4 hover:border-primary" data-payment-method="gcash">
-                            <div class="flex items-center">
-                                <input type="radio" name="paymentMethod" id="gcashRadio" value="GCash" class="mr-4 h-5 w-5 text-primary">
-                                <label for="gcashRadio" class="flex-1 cursor-pointer">
-                                    <div class="flex items-center">
-                                        <div class="bg-blue-500 text-white p-2 rounded-lg mr-4">
-                                            <i class="fas fa-mobile-alt"></i>
-                                        </div>
-                                        <div>
-                                            <span class="font-bold text-lg">GCash</span>
-                                            <p class="text-sm text-gray-600">Mobile Number: 0917-123-4567</p>
-                                            <p class="text-sm text-gray-600">Name: Emman Pilapil</p>
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <!-- PayPal -->
-                        <div class="payment-option-card border-2 border-gray-200 rounded-xl p-4 hover:border-primary" data-payment-method="paypal">
-                            <div class="flex items-center">
-                                <input type="radio" name="paymentMethod" id="paypalRadio" value="PayPal" class="mr-4 h-5 w-5 text-primary">
-                                <label for="paypalRadio" class="flex-1 cursor-pointer">
-                                    <div class="flex items-center">
-                                        <div class="bg-blue-700 text-white p-2 rounded-lg mr-4">
-                                            <i class="fab fa-paypal"></i>
-                                        </div>
-                                        <div>
-                                            <span class="font-bold text-lg">PayPal</span>
-                                            <p class="text-sm text-gray-600">Email: epfitness24@gmail.com</p>
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mb-6 p-4 bg-yellow-50 border-l-4 border-yellow-500 rounded">
-                    <p class="text-sm text-gray-700">
-                        <i class="fas fa-info-circle text-yellow-600 mr-2"></i>
-                        After making the payment, please click the "I AGREE" button below to proceed to the assessment form.
-                    </p>
-                </div>
-                
-                <div class="flex flex-col xs:flex-row gap-4">
-                    <button id="agreePaymentBtn" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-4 rounded-lg transition transform hover:scale-105 shadow-lg flex items-center justify-center">
-                        <i class="fas fa-check-circle mr-2"></i>
-                        I AGREE - PROCEED TO ASSESSMENT
-                    </button>
-                    <button id="cancelPaymentBtn" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-lg transition">
-                        CANCEL
-                    </button>
-                </div>
+            </div>
+            
+            <div class="mb-6 p-4 bg-yellow-50 border-l-4 border-yellow-500 rounded">
+                <p class="text-sm text-gray-700">
+                    <i class="fas fa-info-circle text-yellow-600 mr-2"></i>
+                    After making the payment, please click the "I AGREE" button below to proceed to the assessment form.
+                </p>
+            </div>
+            
+            <div class="flex flex-col xs:flex-row gap-4">
+                <button id="agreePaymentBtn" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-4 rounded-lg transition transform hover:scale-105 shadow-lg flex items-center justify-center">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    I AGREE - PROCEED TO ASSESSMENT
+                </button>
+                <button id="cancelPaymentBtn" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-lg transition">
+                    CANCEL
+                </button>
             </div>
         </div>
     </div>
+</div>
 </section>
 
 <!-- Assessment Form Section -->
