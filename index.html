@@ -3892,12 +3892,7 @@
         if (agreePaymentBtn) {
             agreePaymentBtn.addEventListener('click', function() {
                 // Check if payment method selected
-                const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
                 
-                if (!selectedPayment) {
-                    showNotification('Please select a payment method', 'error');
-                    return;
-                }
                 
                 // Close payment modal
                 paymentModal.classList.add('hidden');
