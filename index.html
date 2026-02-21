@@ -151,10 +151,14 @@
         .modal-transition {
             transition: all 0.3s ease;
         }
+
+        .form-section-hidden {
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-light">
-    <!-- Navigation -->
+    <!-- Navigation (unchanged - keeping your existing navigation) -->
     <nav class="bg-white text-secondary shadow-lg sticky top-0 z-50 border-b-2 border-primary">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-2">
@@ -261,7 +265,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section (unchanged) -->
     <section id="home" class="hero-bg min-h-screen flex items-center justify-center text-white">
         <div class="container mx-auto px-4 py-20 text-center">
             <div class="mb-8">
@@ -311,7 +315,7 @@
         </div>
     </section>
 
-    <!-- About Section -->
+    <!-- About Section (unchanged) -->
     <section id="about" class="py-16 md:py-24 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
@@ -398,7 +402,7 @@
         </div>
     </section>
 
-    <!-- Why EP Fitness Section -->
+    <!-- Why EP Fitness Section (unchanged) -->
     <section id="why-ep" class="py-16 md:py-24 bg-accent">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
@@ -414,7 +418,6 @@
                 <!-- Left Side - Image -->
                 <div class="lg:w-1/2">
                     <div class="rounded-2xl overflow-hidden shadow-2xl h-[500px]">
-                        <!-- UPDATED IMAGE -->
                         <img src="THANKYOU3.jpg" 
                              alt="EP Fitness Training Philosophy" 
                              class="w-full h-full object-cover">
@@ -472,7 +475,9 @@
             </div>
         </div>
     </section>
-<section id="coaches" class="py-16 md:py-24 bg-white">
+    
+    <!-- Coaches Section (unchanged) -->
+    <section id="coaches" class="py-16 md:py-24 bg-white">
     <div class="container mx-auto px-4">
         <div class="text-center mb-16">
             <h2 class="text-3xl xs:text-4xl md:text-5xl font-bold text-secondary mb-4 font-heading section-title">MEET THE COACHES</h2>
@@ -591,7 +596,8 @@
         </div>
     </div>
 </section>
-    <!-- Services Section -->
+    
+    <!-- Services Section (unchanged) -->
     <section id="services" class="py-16 md:py-24 bg-accent">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
@@ -810,7 +816,7 @@
                 </div>
             </div>
             
-            <!-- Online Fitness Coaching Section -->
+            <!-- Online Fitness Coaching Section (unchanged) -->
             <div class="mb-20">
                 <h3 class="text-2xl xs:text-3xl font-bold text-secondary mb-10 text-center font-heading">ONLINE FITNESS COACHING (1-ON-1)</h3>
                 <p class="text-gray-600 mb-10 text-center max-w-4xl mx-auto text-lg">Structured, personalized coaching — wherever you are. Designed for clients who want guidance, accountability, and results without in-person sessions.</p>
@@ -888,7 +894,7 @@
         </div>
     </section>
 
-    <!-- Packages Section -->
+    <!-- Packages Section (unchanged - keeping your complete packages section) -->
     <section id="packages" class="py-16 md:py-24 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-16">
@@ -951,7 +957,7 @@
                 </div>
             </div>
             
-            <!-- Nutrition Coaching Packages Section -->
+            <!-- Nutrition Coaching Packages Section (unchanged) -->
             <div class="mb-20">
                 <h3 class="text-2xl xs:text-3xl font-bold text-secondary mb-10 text-center font-heading">NUTRITION COACHING PACKAGES</h3>
                 
@@ -1220,7 +1226,7 @@
                 <p class="text-gray-600 max-w-3xl mx-auto">Choose from our in-person or online training options</p>
             </div>
             
-            <!-- ONLINE COACHING PDF & SPUR.FIT PACKAGES -->
+            <!-- ONLINE COACHING PDF & SPUR.FIT PACKAGES (unchanged) -->
             <div class="mb-20">
                 <h3 class="text-2xl xs:text-3xl font-bold text-secondary mb-10 text-center">ONLINE COACHING PDF & SPUR.FIT PACKAGES</h3>
                 <p class="text-gray-600 mb-6 text-center max-w-4xl mx-auto">Structured, app-based coaching with accountability and progress tracking</p>
@@ -1351,7 +1357,7 @@
                 </div>
             </div>
             
-            <!-- USD Online Coaching Packages -->
+            <!-- USD Online Coaching Packages (unchanged) -->
             <div class="mb-20">
                 <h3 class="text-2xl xs:text-3xl font-bold text-secondary mb-10 text-center">1-ON-1 ONLINE COACHING (USD)</h3>
                 <p class="text-gray-600 mb-6 text-center max-w-4xl mx-auto">Live Training via Zoom / Google Meet</p>
@@ -1548,7 +1554,7 @@
                 </div>
             </div>
             
-            <!-- PHP Online Coaching Packages -->
+            <!-- PHP Online Coaching Packages (unchanged) -->
             <div class="mb-20">
                 <h3 class="text-2xl xs:text-3xl font-bold text-secondary mb-10 text-center">1-ON-1 ONLINE COACHING (PHP)</h3>
                 <p class="text-gray-600 mb-6 text-center max-w-4xl mx-auto">Live Training via Zoom / Google Meet</p>
@@ -1733,7 +1739,7 @@
                 </div>
             </div>
             
-            <!-- City-Based Personal Training Packages - REORDERED AS SPECIFIED -->
+            <!-- City-Based Personal Training Packages (unchanged) -->
             <div class="mb-20">
                 <h3 class="text-2xl xs:text-3xl font-bold text-secondary mb-10 text-center font-heading">IN-PERSON PERSONAL TRAINING BY CITY</h3>
                 <p class="text-gray-600 mb-10 text-center max-w-4xl mx-auto">All-inclusive rates for premium personal training sessions in each location</p>
@@ -2221,7 +2227,7 @@
         </div>
     </div>
     
-    <!-- Package Form Modal -->
+    <!-- Package Form Modal (unchanged) -->
     <div id="packageModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4 modal-transition">
         <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div class="p-8">
@@ -2325,7 +2331,7 @@
         </div>
     </div>
     
-    <!-- Payment Options Modal -->
+    <!-- Payment Options Modal (unchanged) -->
    <!-- Payment Options Modal -->
 <div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4 modal-transition">
     <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full">
@@ -2409,7 +2415,6 @@
         const closePaymentModal = document.getElementById('closePaymentModal');
         const cancelPaymentBtn = document.getElementById('cancelPaymentBtn');
         const agreePaymentBtn = document.getElementById('agreePaymentBtn');
-        const assessmentSection = document.getElementById('assessment');
         
         // Close modal functions
         function closeModal() {
@@ -2433,38 +2438,14 @@
             });
         }
         
-        // Agree button - directly shows assessment form
-        if (agreePaymentBtn) {
-            agreePaymentBtn.addEventListener('click', function() {
-                // Close payment modal
-                paymentModal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
-                
-                // Show assessment form
-                if (assessmentSection) {
-                    assessmentSection.classList.remove('hidden');
-                    
-                    setTimeout(() => {
-                        assessmentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 300);
-                    
-                    if (typeof showNotification === 'function') {
-                        showNotification('✅ Please complete the assessment form to finalize your registration.', 'success');
-                    } else {
-                        alert('✅ Please complete the assessment form to finalize your registration.');
-                    }
-                }
-            });
-        }
+        // Agree button - will be handled in master script
     });
 </script>
 
-<!-- JavaScript for Payment Selection -->
-
 </section>
 
-<!-- Assessment Form Section -->
-<section id="assessment" class="py-16 md:py-24 bg-white hidden">
+<!-- Original Training Assessment Form (for non-nutrition packages) -->
+<section id="assessment-original" class="py-16 md:py-24 bg-white form-section-hidden">
     <div class="container mx-auto px-4">
         <div class="text-center mb-16">
             <h2 class="text-3xl xs:text-4xl md:text-5xl font-bold text-secondary mb-4 font-heading section-title">CLIENT ASSESSMENT FORM</h2>
@@ -2473,7 +2454,7 @@
 
         <div class="max-w-4xl mx-auto">
             <div class="bg-white p-8 md:p-12 rounded-2xl shadow-xl border border-gray-200">
-                <form id="assessmentForm" class="space-y-8">
+                <form id="originalAssessmentForm" class="space-y-8">
                     
                     <!-- PERSONAL INFORMATION -->
                     <div class="space-y-6">
@@ -2482,24 +2463,24 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-gray-700 font-semibold mb-2">Full Name *</label>
-                                <input type="text" id="assessmentFullName" name="assessmentFullName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <input type="text" id="originalFullName" name="originalFullName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                             </div>
                             
                             <div>
                                 <label class="block text-gray-700 font-semibold mb-2">Email Address *</label>
-                                <input type="email" id="assessmentEmail" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <input type="email" id="originalEmail" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                             </div>
                         </div>
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-gray-700 font-semibold mb-2">Phone Number *</label>
-                                <input type="tel" id="assessmentPhone" name="phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <input type="tel" id="originalPhone" name="phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                             </div>
                             
                             <div>
                                 <label class="block text-gray-700 font-semibold mb-2">Gender</label>
-                                <select id="gender" name="gender" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <select id="originalGender" name="gender" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                                     <option value="">Select gender</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
@@ -2512,29 +2493,29 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div>
                                 <label class="block text-gray-700 font-semibold mb-2">Date of Birth</label>
-                                <input type="date" id="dateOfBirth" name="dateOfBirth" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <input type="date" id="originalDateOfBirth" name="dateOfBirth" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                             </div>
                             
                             <div>
                                 <label class="block text-gray-700 font-semibold mb-2">Age</label>
-                                <input type="number" id="assessmentAge" name="assessmentAge" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <input type="number" id="originalAge" name="originalAge" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                             </div>
                             
                             <div>
                                 <label class="block text-gray-700 font-semibold mb-2">Height (cm/ft)</label>
-                                <input type="text" id="height" name="height" placeholder="e.g., 175cm or 5'9&quot;" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <input type="text" id="originalHeight" name="height" placeholder="e.g., 175cm or 5'9&quot;" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                             </div>
                         </div>
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-gray-700 font-semibold mb-2">Weight (kg/lbs)</label>
-                                <input type="text" id="weight" name="weight" placeholder="e.g., 70kg or 154lbs" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <input type="text" id="originalWeight" name="weight" placeholder="e.g., 70kg or 154lbs" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                             </div>
                             
                             <div>
                                 <label class="block text-gray-700 font-semibold mb-2">If you are a Fiverr client, please indicate your username</label>
-                                <input type="text" id="fiverrUsername" name="fiverrUsername" placeholder="Fiverr username" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <input type="text" id="originalFiverrUsername" name="fiverrUsername" placeholder="Fiverr username" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                             </div>
                         </div>
                     </div>
@@ -2545,12 +2526,12 @@
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">What do you do for a living?</label>
-                            <input type="text" id="occupation" name="occupation" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <input type="text" id="originalOccupation" name="occupation" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">What's the activity level at your job?</label>
-                            <select id="activityLevel" name="activityLevel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <select id="originalActivityLevel" name="activityLevel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                                 <option value="">Select activity level</option>
                                 <option value="sedentary">Sedentary (desk job, minimal movement)</option>
                                 <option value="light">Light activity (standing, walking occasionally)</option>
@@ -2561,12 +2542,12 @@
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">Do you follow a regular working schedule? (Days/Afternoons/Nights)</label>
-                            <input type="text" id="workSchedule" name="workSchedule" placeholder="e.g., Monday-Friday 9am-5pm" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <input type="text" id="originalWorkSchedule" name="workSchedule" placeholder="e.g., Monday-Friday 9am-5pm" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">How often do you travel?</label>
-                            <select id="travelFrequency" name="travelFrequency" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <select id="originalTravelFrequency" name="travelFrequency" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                                 <option value="">Select frequency</option>
                                 <option value="never">Rarely/Never</option>
                                 <option value="occasional">Occasionally (few times a year)</option>
@@ -2578,7 +2559,7 @@
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">Please list the physical activities that you participate in outside of the gym and outside of work:</label>
-                            <textarea id="outsideActivities" name="outsideActivities" rows="3" placeholder="e.g., basketball, running, yoga, swimming, hiking..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalOutsideActivities" name="outsideActivities" rows="3" placeholder="e.g., basketball, running, yoga, swimming, hiking..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                     </div>
                     
@@ -2588,37 +2569,37 @@
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">If you have any diagnosed health problems, list the condition(s):</label>
-                            <textarea id="diagnosedConditions" name="diagnosedConditions" rows="2" placeholder="e.g., PCOS, diabetes, hypertension, asthma..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalDiagnosedConditions" name="diagnosedConditions" rows="2" placeholder="e.g., PCOS, diabetes, hypertension, asthma..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">If you are on any medications, please list them:</label>
-                            <textarea id="medications" name="medications" rows="2" placeholder="Medication names and dosages if known" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalMedications" name="medications" rows="2" placeholder="Medication names and dosages if known" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">What additional therapies are being undertaken for the given health problem(s)?</label>
-                            <textarea id="conditionTherapies" name="conditionTherapies" rows="2" placeholder="e.g., physical therapy, acupuncture, counseling..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalConditionTherapies" name="conditionTherapies" rows="2" placeholder="e.g., physical therapy, acupuncture, counseling..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">Do you have any existing injuries or conditions that I should be aware of while building your training plan?</label>
-                            <textarea id="existingInjuries" name="existingInjuries" rows="2" placeholder="e.g., knee pain, lower back issues, shoulder injury..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalExistingInjuries" name="existingInjuries" rows="2" placeholder="e.g., knee pain, lower back issues, shoulder injury..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">What additional therapies are being undertaken for the given injury?</label>
-                            <textarea id="injuryTherapies" name="injuryTherapies" rows="2" placeholder="e.g., physiotherapy, chiropractic, massage..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalInjuryTherapies" name="injuryTherapies" rows="2" placeholder="e.g., physiotherapy, chiropractic, massage..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">Are you experiencing any stresses or motivational problems?</label>
-                            <textarea id="stressMotivation" name="stressMotivation" rows="2" placeholder="Please share if you're comfortable" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalStressMotivation" name="stressMotivation" rows="2" placeholder="Please share if you're comfortable" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">Has anyone of your immediate family developed heart disease before the age of 60?</label>
-                            <select id="familyHeartDisease" name="familyHeartDisease" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <select id="originalFamilyHeartDisease" name="familyHeartDisease" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                                 <option value="">Select</option>
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
@@ -2628,25 +2609,25 @@
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">Do any diseases run in your family?</label>
-                            <textarea id="familyDiseases" name="familyDiseases" rows="2" placeholder="e.g., diabetes, heart disease, cancer..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalFamilyDiseases" name="familyDiseases" rows="2" placeholder="e.g., diabetes, heart disease, cancer..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">Do you suffer from diabetes, asthma, high or low blood pressure?</label>
-                            <textarea id="chronicConditions" name="chronicConditions" rows="2" placeholder="Please specify" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalChronicConditions" name="chronicConditions" rows="2" placeholder="Please specify" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">Are you a current cigarette smoker?</label>
                             <div class="flex space-x-6">
                                 <label class="inline-flex items-center">
-                                    <input type="radio" name="smoker" value="yes" class="mr-2"> Yes
+                                    <input type="radio" name="originalSmoker" value="yes" class="mr-2"> Yes
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" name="smoker" value="no" class="mr-2"> No
+                                    <input type="radio" name="originalSmoker" value="no" class="mr-2"> No
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" name="smoker" value="occasional" class="mr-2"> Occasional
+                                    <input type="radio" name="originalSmoker" value="occasional" class="mr-2"> Occasional
                                 </label>
                             </div>
                         </div>
@@ -2658,7 +2639,7 @@
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">Your current diet could be best characterized as:</label>
-                            <select id="currentDiet" name="currentDiet" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <select id="originalCurrentDiet" name="currentDiet" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                                 <option value="">Select diet type</option>
                                 <option value="standard">Standard American/Western Diet</option>
                                 <option value="vegetarian">Vegetarian</option>
@@ -2673,22 +2654,22 @@
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">Do you have any food allergies or intolerances?</label>
-                            <textarea id="foodAllergies" name="foodAllergies" rows="2" placeholder="e.g., lactose intolerance, gluten sensitivity, nut allergy..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalFoodAllergies" name="foodAllergies" rows="2" placeholder="e.g., lactose intolerance, gluten sensitivity, nut allergy..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">Which foods do you enjoy the most?</label>
-                            <textarea id="favoriteFoods" name="favoriteFoods" rows="2" placeholder="Your favorite foods..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalFavoriteFoods" name="favoriteFoods" rows="2" placeholder="Your favorite foods..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">Which foods do you have a strong dislike for?</label>
-                            <textarea id="dislikedFoods" name="dislikedFoods" rows="2" placeholder="Foods you don't eat..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalDislikedFoods" name="dislikedFoods" rows="2" placeholder="Foods you don't eat..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">Have you experimented with any specific diets or eating approaches in the past? If so, why do you believe they were not successful for you?</label>
-                            <textarea id="pastDiets" name="pastDiets" rows="3" placeholder="e.g., Keto, Paleo, Weight Watchers - why they didn't work..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalPastDiets" name="pastDiets" rows="3" placeholder="e.g., Keto, Paleo, Weight Watchers - why they didn't work..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                     </div>
                     
@@ -2698,7 +2679,7 @@
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">How would you describe your fitness level?</label>
-                            <select id="fitnessLevel" name="fitnessLevel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <select id="originalFitnessLevel" name="fitnessLevel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                                 <option value="">Select fitness level</option>
                                 <option value="beginner">Beginner - New to exercise</option>
                                 <option value="novice">Novice - Some experience, inconsistent</option>
@@ -2713,43 +2694,43 @@
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div>
                                     <label class="text-sm text-gray-600">Squat</label>
-                                    <input type="text" id="squat" name="compoundLifts" placeholder="e.g., 100kg" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                    <input type="text" id="originalSquat" name="compoundLifts" placeholder="e.g., 100kg" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                                 </div>
                                 <div>
                                     <label class="text-sm text-gray-600">Bench Press</label>
-                                    <input type="text" id="bench" name="compoundLifts" placeholder="e.g., 80kg" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                    <input type="text" id="originalBench" name="compoundLifts" placeholder="e.g., 80kg" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                                 </div>
                                 <div>
                                     <label class="text-sm text-gray-600">Deadlift</label>
-                                    <input type="text" id="deadlift" name="compoundLifts" placeholder="e.g., 120kg" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                    <input type="text" id="originalDeadlift" name="compoundLifts" placeholder="e.g., 120kg" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                                 </div>
                             </div>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">As we begin our coaching journey together, what specific changes or improvements would you like to see in yourself 3-6 months from now in order for you to consider it a successful experience?</label>
-                            <textarea id="specificGoals" name="specificGoals" rows="4" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalSpecificGoals" name="specificGoals" rows="4" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">What are your expectations of me as your fitness coach? How can I provide you with the best support? (Communication preferences, feedback methods, etc.)</label>
-                            <textarea id="coachExpectations" name="coachExpectations" rows="4" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalCoachExpectations" name="coachExpectations" rows="4" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">If you have previously made unsuccessful attempts to achieve these goals, what factors or circumstances do you believe will be different this time around?</label>
-                            <textarea id="previousAttempts" name="previousAttempts" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalPreviousAttempts" name="previousAttempts" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">Please rate your readiness for change (1-10):</label>
-                            <input type="range" id="readinessChange" name="readinessChange" min="1" max="10" step="1" value="5" class="w-full" oninput="this.nextElementSibling.value = this.value">
+                            <input type="range" id="originalReadinessChange" name="readinessChange" min="1" max="10" step="1" value="5" class="w-full" oninput="this.nextElementSibling.value = this.value">
                             <output class="block text-center text-primary font-bold mt-2">5</output>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">Which following goals best fit with your goals?</label>
-                            <select id="goalCategory" name="goalCategory" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <select id="originalGoalCategory" name="goalCategory" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                                 <option value="">Select primary goal</option>
                                 <option value="weight-loss">Weight Loss / Fat Loss</option>
                                 <option value="muscle-gain">Muscle Gain / Hypertrophy</option>
@@ -2763,7 +2744,7 @@
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">What is your goal with your training? What do you want to specifically achieve?</label>
-                            <textarea id="trainingGoal" name="trainingGoal" rows="3" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalTrainingGoal" name="trainingGoal" rows="3" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                     </div>
                     
@@ -2775,22 +2756,22 @@
                             <label class="block text-gray-700 font-semibold mb-2">Which gym equipment do you have access to?</label>
                             <div class="space-y-2">
                                 <label class="flex items-center">
-                                    <input type="checkbox" name="gymEquipment" value="full-gym" class="mr-3"> Full commercial gym
+                                    <input type="checkbox" name="originalGymEquipment" value="full-gym" class="mr-3"> Full commercial gym
                                 </label>
                                 <label class="flex items-center">
-                                    <input type="checkbox" name="gymEquipment" value="home-gym" class="mr-3"> Home gym (bench, rack, barbell)
+                                    <input type="checkbox" name="originalGymEquipment" value="home-gym" class="mr-3"> Home gym (bench, rack, barbell)
                                 </label>
                                 <label class="flex items-center">
-                                    <input type="checkbox" name="gymEquipment" value="dumbbells" class="mr-3"> Dumbbells only
+                                    <input type="checkbox" name="originalGymEquipment" value="dumbbells" class="mr-3"> Dumbbells only
                                 </label>
                                 <label class="flex items-center">
-                                    <input type="checkbox" name="gymEquipment" value="bodyweight" class="mr-3"> Bodyweight only
+                                    <input type="checkbox" name="originalGymEquipment" value="bodyweight" class="mr-3"> Bodyweight only
                                 </label>
                                 <label class="flex items-center">
-                                    <input type="checkbox" name="gymEquipment" value="resistance-bands" class="mr-3"> Resistance bands
+                                    <input type="checkbox" name="originalGymEquipment" value="resistance-bands" class="mr-3"> Resistance bands
                                 </label>
                                 <label class="flex items-center">
-                                    <input type="checkbox" name="gymEquipment" value="kettlebells" class="mr-3"> Kettlebells
+                                    <input type="checkbox" name="originalGymEquipment" value="kettlebells" class="mr-3"> Kettlebells
                                 </label>
                             </div>
                         </div>
@@ -2799,29 +2780,29 @@
                             <label class="block text-gray-700 font-semibold mb-2">Do you have any of these essentials available?</label>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 <label class="flex items-center">
-                                    <input type="checkbox" name="essentials" value="foam-roller" class="mr-3"> Foam Roller
+                                    <input type="checkbox" name="originalEssentials" value="foam-roller" class="mr-3"> Foam Roller
                                 </label>
                                 <label class="flex items-center">
-                                    <input type="checkbox" name="essentials" value="yoga-mat" class="mr-3"> Yoga Mat
+                                    <input type="checkbox" name="originalEssentials" value="yoga-mat" class="mr-3"> Yoga Mat
                                 </label>
                                 <label class="flex items-center">
-                                    <input type="checkbox" name="essentials" value="jump-rope" class="mr-3"> Jump Rope
+                                    <input type="checkbox" name="originalEssentials" value="jump-rope" class="mr-3"> Jump Rope
                                 </label>
                                 <label class="flex items-center">
-                                    <input type="checkbox" name="essentials" value="resistance-bands" class="mr-3"> Resistance Bands
+                                    <input type="checkbox" name="originalEssentials" value="resistance-bands" class="mr-3"> Resistance Bands
                                 </label>
                                 <label class="flex items-center">
-                                    <input type="checkbox" name="essentials" value="pull-up-bar" class="mr-3"> Pull-up Bar
+                                    <input type="checkbox" name="originalEssentials" value="pull-up-bar" class="mr-3"> Pull-up Bar
                                 </label>
                                 <label class="flex items-center">
-                                    <input type="checkbox" name="essentials" value="dumbbells" class="mr-3"> Dumbbells
+                                    <input type="checkbox" name="originalEssentials" value="dumbbells" class="mr-3"> Dumbbells
                                 </label>
                             </div>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">Timeline for achieving your goal:</label>
-                            <select id="goalTimeline" name="goalTimeline" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <select id="originalGoalTimeline" name="goalTimeline" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                                 <option value="">Select timeline</option>
                                 <option value="1-3-months">1-3 months</option>
                                 <option value="3-6-months">3-6 months</option>
@@ -2832,7 +2813,7 @@
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">How often are you willing to train per week to reach your goal?</label>
-                            <select id="trainingFrequency" name="trainingFrequency" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <select id="originalTrainingFrequency" name="trainingFrequency" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                                 <option value="">Select frequency</option>
                                 <option value="2x">2 times per week</option>
                                 <option value="3x">3 times per week</option>
@@ -2844,7 +2825,7 @@
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">Please rate your motivational level to do what it takes to reach your goal (1-10):</label>
-                            <input type="range" id="motivationLevel" name="motivationLevel" min="1" max="10" step="1" value="8" class="w-full" oninput="this.nextElementSibling.value = this.value">
+                            <input type="range" id="originalMotivationLevel" name="motivationLevel" min="1" max="10" step="1" value="8" class="w-full" oninput="this.nextElementSibling.value = this.value">
                             <output class="block text-center text-primary font-bold mt-2">8</output>
                         </div>
                         
@@ -2852,13 +2833,13 @@
                             <label class="block text-gray-700 font-semibold mb-2">Are you currently exercising regularly (at least 3x per week)?</label>
                             <div class="flex space-x-6">
                                 <label class="inline-flex items-center">
-                                    <input type="radio" name="currentlyExercising" value="yes" class="mr-2"> Yes
+                                    <input type="radio" name="originalCurrentlyExercising" value="yes" class="mr-2"> Yes
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" name="currentlyExercising" value="no" class="mr-2"> No
+                                    <input type="radio" name="originalCurrentlyExercising" value="no" class="mr-2"> No
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" name="currentlyExercising" value="inconsistent" class="mr-2"> Inconsistent
+                                    <input type="radio" name="originalCurrentlyExercising" value="inconsistent" class="mr-2"> Inconsistent
                                 </label>
                             </div>
                         </div>
@@ -2867,22 +2848,22 @@
                             <label class="block text-gray-700 font-semibold mb-2">Have you trained with a personal trainer before?</label>
                             <div class="flex space-x-6">
                                 <label class="inline-flex items-center">
-                                    <input type="radio" name="trainedBefore" value="yes" class="mr-2" id="trainedYes"> Yes
+                                    <input type="radio" name="originalTrainedBefore" value="yes" class="mr-2" id="originalTrainedYes"> Yes
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" name="trainedBefore" value="no" class="mr-2" id="trainedNo"> No
+                                    <input type="radio" name="originalTrainedBefore" value="no" class="mr-2" id="originalTrainedNo"> No
                                 </label>
                             </div>
                         </div>
                         
-                        <div id="previousTrainingSection" class="hidden">
+                        <div id="originalPreviousTrainingSection" class="hidden">
                             <label class="block text-gray-700 font-semibold mb-2">If yes, what kind of training did you do?</label>
-                            <textarea id="previousTrainingType" name="previousTrainingType" rows="2" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalPreviousTrainingType" name="previousTrainingType" rows="2" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">At what times during the day would you prefer to train?</label>
-                            <select id="preferredTrainingTime" name="preferredTrainingTime" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <select id="originalPreferredTrainingTime" name="preferredTrainingTime" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                                 <option value="">Select preferred time</option>
                                 <option value="early-morning">Early Morning (5am-8am)</option>
                                 <option value="morning">Morning (8am-11am)</option>
@@ -2895,7 +2876,7 @@
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">How much time do you want to workout? (per session)</label>
-                            <select id="workoutDuration" name="workoutDuration" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <select id="originalWorkoutDuration" name="workoutDuration" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                                 <option value="">Select duration</option>
                                 <option value="30min">30 minutes</option>
                                 <option value="45min">45 minutes</option>
@@ -2907,7 +2888,7 @@
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">How often do you want to do Personal Training per week?</label>
-                            <select id="personalTrainingFrequency" name="personalTrainingFrequency" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <select id="originalPersonalTrainingFrequency" name="personalTrainingFrequency" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                                 <option value="">Select frequency</option>
                                 <option value="1x">1 session per week</option>
                                 <option value="2x">2 sessions per week</option>
@@ -2923,7 +2904,7 @@
                         
                         <div>
                             <label class="block text-gray-700 font-semibold mb-2">Share three aspects about you that you would like me to know. (Hobbies, trips, life goals, fears, etc.)</label>
-                            <textarea id="threeAspects" name="threeAspects" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <textarea id="originalThreeAspects" name="threeAspects" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                     </div>
                     
@@ -2935,10 +2916,10 @@
                             <label class="block text-gray-700 font-semibold mb-2">Are you capable, willing, and prepared to provide a completed WEEKLY check-in form to demonstrate your progress on a regular basis?</label>
                             <div class="flex space-x-6">
                                 <label class="inline-flex items-center">
-                                    <input type="radio" name="weeklyCheckinCommitment" value="yes" required class="mr-2"> Yes
+                                    <input type="radio" name="originalWeeklyCheckinCommitment" value="yes" required class="mr-2"> Yes
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" name="weeklyCheckinCommitment" value="no" class="mr-2"> No
+                                    <input type="radio" name="originalWeeklyCheckinCommitment" value="no" class="mr-2"> No
                                 </label>
                             </div>
                         </div>
@@ -2947,10 +2928,10 @@
                             <label class="block text-gray-700 font-semibold mb-2">Are you capable, willing, and prepared to provide your Progress Photo & Body Measurements on a monthly basis?</label>
                             <div class="flex space-x-6">
                                 <label class="inline-flex items-center">
-                                    <input type="radio" name="monthlyPhotosCommitment" value="yes" required class="mr-2"> Yes
+                                    <input type="radio" name="originalMonthlyPhotosCommitment" value="yes" required class="mr-2"> Yes
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" name="monthlyPhotosCommitment" value="no" class="mr-2"> No
+                                    <input type="radio" name="originalMonthlyPhotosCommitment" value="no" class="mr-2"> No
                                 </label>
                             </div>
                         </div>
@@ -2959,10 +2940,10 @@
                             <label class="block text-gray-700 font-semibold mb-2">Are you willing to commit to showing up even during challenging times when unexpected obstacles arise in life?</label>
                             <div class="flex space-x-6">
                                 <label class="inline-flex items-center">
-                                    <input type="radio" name="commitmentDuringChallenges" value="yes" required class="mr-2"> Yes
+                                    <input type="radio" name="originalCommitmentDuringChallenges" value="yes" required class="mr-2"> Yes
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="radio" name="commitmentDuringChallenges" value="no" class="mr-2"> No
+                                    <input type="radio" name="originalCommitmentDuringChallenges" value="no" class="mr-2"> No
                                 </label>
                             </div>
                         </div>
@@ -2971,17 +2952,17 @@
                     <!-- TERMS AND SUBMIT -->
                     <div class="space-y-6 pt-6">
                         <div class="flex items-start">
-                            <input type="checkbox" id="assessmentTermsAgree" required class="mr-3 mt-1">
-                            <label for="assessmentTermsAgree" class="text-gray-700 text-sm">I confirm that all information provided is accurate and complete to the best of my knowledge. I understand that this information will be used to create a personalized training program.</label>
+                            <input type="checkbox" id="originalTermsAgree" required class="mr-3 mt-1">
+                            <label for="originalTermsAgree" class="text-gray-700 text-sm">I confirm that all information provided is accurate and complete to the best of my knowledge. I understand that this information will be used to create a personalized training program.</label>
                         </div>
                         
                         <div class="flex flex-col xs:flex-row gap-4 pt-6">
-                            <button type="submit" id="assessmentSubmitBtn" class="flex-1 bg-primary hover:bg-red-700 text-white font-bold py-4 px-4 rounded-lg transition transform hover:scale-105 shadow-lg flex items-center justify-center">
-                                <span id="assessmentBtnText">SUBMIT ASSESSMENT FORM</span>
-                                <span id="assessmentBtnLoader" class="hidden ml-3">
+                            <button type="submit" id="originalAssessmentSubmitBtn" class="flex-1 bg-primary hover:bg-red-700 text-white font-bold py-4 px-4 rounded-lg transition transform hover:scale-105 shadow-lg flex items-center justify-center">
+                                <span id="originalAssessmentBtnText">SUBMIT ASSESSMENT FORM</span>
+                                <span id="originalAssessmentBtnLoader" class="hidden ml-3">
                                     <span class="loading-spinner"></span>
                                 </span>
-                                <i id="assessmentBtnIcon" class="fas fa-paper-plane ml-2"></i>
+                                <i id="originalAssessmentBtnIcon" class="fas fa-paper-plane ml-2"></i>
                             </button>
                             <button type="reset" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-lg transition">
                                 CLEAR FORM
@@ -2994,46 +2975,360 @@
     </div>
 </section>
 
-<script>
-    // Show/hide previous training section
-    document.addEventListener('DOMContentLoaded', function() {
-        const trainedYes = document.getElementById('trainedYes');
-        const trainedNo = document.getElementById('trainedNo');
-        const previousTrainingSection = document.getElementById('previousTrainingSection');
-        
-        if (trainedYes && trainedNo && previousTrainingSection) {
-            trainedYes.addEventListener('change', function() {
-                if (this.checked) {
-                    previousTrainingSection.classList.remove('hidden');
-                }
-            });
-            
-            trainedNo.addEventListener('change', function() {
-                if (this.checked) {
-                    previousTrainingSection.classList.add('hidden');
-                }
-            });
-        }
-        
-        // Update range output
-        const readinessRange = document.getElementById('readinessChange');
-        const motivationRange = document.getElementById('motivationLevel');
-        
-        if (readinessRange) {
-            readinessRange.addEventListener('input', function() {
-                this.nextElementSibling.value = this.value;
-            });
-        }
-        
-        if (motivationRange) {
-            motivationRange.addEventListener('input', function() {
-                this.nextElementSibling.value = this.value;
-            });
-        }
-    });
-</script>
+<!-- New Nutrition Assessment Form (for nutrition packages) -->
+<section id="assessment-nutrition" class="py-16 md:py-24 bg-white form-section-hidden">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl xs:text-4xl md:text-5xl font-bold text-secondary mb-4 font-heading section-title">NUTRITION ASSESSMENT FORM</h2>
+            <p class="text-gray-600 mt-12 max-w-3xl mx-auto">Please complete this comprehensive nutrition assessment form so Coach EJ can create a personalized nutrition plan tailored specifically for you.</p>
+        </div>
 
-<!-- Contact Section -->
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white p-8 md:p-12 rounded-2xl shadow-xl border border-gray-200">
+                <form id="nutritionAssessmentForm" class="space-y-8">
+                    
+                    <!-- PART 1: PERSONAL INFORMATION -->
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">📌 PART 1: PERSONAL INFORMATION</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Full Name *</label>
+                                <input type="text" id="nutritionFullName" name="nutritionFullName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Email Address *</label>
+                                <input type="email" id="nutritionEmail" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Phone Number *</label>
+                                <input type="tel" id="nutritionPhone" name="phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Gender</label>
+                                <select id="nutritionGender" name="gender" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                    <option value="">Select gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                    <option value="prefer-not">Prefer not to say</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Date of Birth</label>
+                                <input type="date" id="nutritionDateOfBirth" name="dateOfBirth" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Age</label>
+                                <input type="number" id="nutritionAge" name="age" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Height</label>
+                                <input type="text" id="nutritionHeight" name="height" placeholder="e.g., 175cm or 5'9&quot;" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Weight</label>
+                                <input type="text" id="nutritionWeight" name="weight" placeholder="e.g., 70kg or 154lbs" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">If you are a Fiverr client, please indicate your username</label>
+                            <input type="text" id="nutritionFiverrUsername" name="fiverrUsername" placeholder="Fiverr username" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                    </div>
+                    
+                    <!-- PART 2: LIFESTYLE INFORMATION -->
+                    <div class="space-y-6 pt-4">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">🏃 PART 2: LIFESTYLE INFORMATION</h3>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">What do you do for a living?</label>
+                            <input type="text" id="nutritionOccupation" name="occupation" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">What's the activity level at your job?</label>
+                            <select id="nutritionActivityLevel" name="activityLevel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select activity level</option>
+                                <option value="sedentary">Sedentary (desk job, minimal movement)</option>
+                                <option value="light">Light activity (standing, walking occasionally)</option>
+                                <option value="moderate">Moderate activity (active job, frequent movement)</option>
+                                <option value="heavy">Heavy activity (manual labor, constant movement)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Do you follow a regular working schedule? (Days/Afternoons/Nights)</label>
+                            <input type="text" id="nutritionWorkSchedule" name="workSchedule" placeholder="e.g., Monday-Friday 9am-5pm" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">How often do you travel?</label>
+                            <select id="nutritionTravelFrequency" name="travelFrequency" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select frequency</option>
+                                <option value="never">Rarely/Never</option>
+                                <option value="occasional">Occasionally (few times a year)</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="frequently">Frequently (several times a week)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Please list the physical activities that you participate in outside of the gym and outside of work:</label>
+                            <textarea id="nutritionOutsideActivities" name="outsideActivities" rows="3" placeholder="e.g., basketball, running, yoga, swimming, hiking..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- PART 3: EATING HABITS -->
+                    <div class="space-y-6 pt-4">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">🥗 PART 3: EATING HABITS</h3>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">How many meals and snacks do you typically eat per day?</label>
+                            <input type="text" id="nutritionMealsPerDay" name="mealsPerDay" placeholder="e.g., 3 meals + 2 snacks" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Describe your typical daily eating pattern (e.g., breakfast, lunch, dinner, snacks):</label>
+                            <textarea id="nutritionEatingPattern" name="eatingPattern" rows="3" placeholder="e.g., Breakfast at 8am, Lunch at 1pm, Snack at 4pm, Dinner at 8pm" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Do you follow any specific diet or eating plan (e.g., vegetarian, keto, low-carb)?</label>
+                            <input type="text" id="nutritionSpecificDiet" name="specificDiet" placeholder="e.g., Vegetarian, Keto, No specific diet" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-4">How often do you consume the following:</label>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="text-sm text-gray-600">Fruits and vegetables</label>
+                                    <select id="nutritionFruitsVeggies" name="fruitsVeggies" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                        <option value="">Select frequency</option>
+                                        <option value="rarely">Rarely</option>
+                                        <option value="1-2">1-2 times per day</option>
+                                        <option value="3-4">3-4 times per day</option>
+                                        <option value="5+">5+ times per day</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="text-sm text-gray-600">Whole grains</label>
+                                    <select id="nutritionWholeGrains" name="wholeGrains" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                        <option value="">Select frequency</option>
+                                        <option value="rarely">Rarely</option>
+                                        <option value="1-2">1-2 times per day</option>
+                                        <option value="3-4">3-4 times per day</option>
+                                        <option value="5+">5+ times per day</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="text-sm text-gray-600">Lean proteins</label>
+                                    <select id="nutritionLeanProteins" name="leanProteins" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                        <option value="">Select frequency</option>
+                                        <option value="rarely">Rarely</option>
+                                        <option value="1-2">1-2 times per day</option>
+                                        <option value="3-4">3-4 times per day</option>
+                                        <option value="5+">5+ times per day</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="text-sm text-gray-600">Dairy products</label>
+                                    <select id="nutritionDairy" name="dairy" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                        <option value="">Select frequency</option>
+                                        <option value="rarely">Rarely</option>
+                                        <option value="1-2">1-2 times per day</option>
+                                        <option value="3-4">3-4 times per day</option>
+                                        <option value="5+">5+ times per day</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="text-sm text-gray-600">Processed foods</label>
+                                    <select id="nutritionProcessed" name="processed" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                        <option value="">Select frequency</option>
+                                        <option value="rarely">Rarely</option>
+                                        <option value="1-2">1-2 times per day</option>
+                                        <option value="3-4">3-4 times per day</option>
+                                        <option value="5+">5+ times per day</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="text-sm text-gray-600">Sugary beverages</label>
+                                    <select id="nutritionSugaryBeverages" name="sugaryBeverages" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                        <option value="">Select frequency</option>
+                                        <option value="rarely">Rarely</option>
+                                        <option value="1-2">1-2 times per day</option>
+                                        <option value="3-4">3-4 times per day</option>
+                                        <option value="5+">5+ times per day</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">How often do you eat out or order takeout?</label>
+                            <select id="nutritionEatOut" name="eatOut" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select frequency</option>
+                                <option value="rarely">Rarely (1-2 times per month)</option>
+                                <option value="weekly">Weekly (1-2 times per week)</option>
+                                <option value="several">Several times per week (3-5 times)</option>
+                                <option value="daily">Daily</option>
+                                <option value="multiple">Multiple times per day</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- PART 4: HYDRATION -->
+                    <div class="space-y-6 pt-4">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">💧 PART 4: HYDRATION</h3>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">How much water do you drink daily?</label>
+                            <select id="nutritionWater" name="water" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select amount</option>
+                                <option value="less-1">Less than 1 liter (4 cups)</option>
+                                <option value="1-2">1-2 liters (4-8 cups)</option>
+                                <option value="2-3">2-3 liters (8-12 cups)</option>
+                                <option value="3+">3+ liters (12+ cups)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Do you consume other beverages regularly (e.g., coffee, tea, soft drinks)?</label>
+                            <div class="mb-2">
+                                <label class="inline-flex items-center mr-6">
+                                    <input type="radio" name="nutritionOtherBeverages" value="yes" class="mr-2" id="nutritionBeveragesYes"> Yes
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="nutritionOtherBeverages" value="no" class="mr-2" id="nutritionBeveragesNo"> No
+                                </label>
+                            </div>
+                            <div id="nutritionBeveragesDetails" class="hidden">
+                                <label class="block text-gray-700 font-semibold mb-2">If yes, please specify the type and amount:</label>
+                                <textarea id="nutritionBeveragesSpecify" name="beveragesSpecify" rows="2" placeholder="e.g., 2 cups of coffee per day, 1 can of soda..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Have you experimented with any specific diets or eating approaches in the past? If so, why do you believe they were not successful for you?</label>
+                            <textarea id="nutritionPastDiets" name="pastDiets" rows="4" placeholder="e.g., Keto, Paleo, Weight Watchers - why they didn't work..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- PART 5: PROFESSIONAL PREFERENCES AND BARRIERS -->
+                    <div class="space-y-6 pt-4">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">🎯 PART 5: PROFESSIONAL PREFERENCES AND BARRIERS</h3>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Are there any foods or food groups you particularly enjoy or dislike?</label>
+                            <textarea id="nutritionFoodPreferences" name="foodPreferences" rows="3" placeholder="Foods you enjoy and foods you dislike..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Do you have any dietary restrictions or preferences?</label>
+                            <div class="mb-2">
+                                <label class="inline-flex items-center mr-6">
+                                    <input type="radio" name="nutritionDietaryRestrictions" value="yes" class="mr-2" id="nutritionRestrictionsYes"> Yes
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="nutritionDietaryRestrictions" value="no" class="mr-2" id="nutritionRestrictionsNo"> No
+                                </label>
+                            </div>
+                            <div id="nutritionRestrictionsDetails" class="hidden">
+                                <label class="block text-gray-700 font-semibold mb-2">If yes, please specify:</label>
+                                <textarea id="nutritionRestrictionsSpecify" name="restrictionsSpecify" rows="2" placeholder="e.g., lactose intolerance, gluten-free, vegetarian..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Do you face any challenges or barriers to maintaining a healthy diet (e.g., time, cost, access to food)?</label>
+                            <div class="mb-2">
+                                <label class="inline-flex items-center mr-6">
+                                    <input type="radio" name="nutritionBarriers" value="yes" class="mr-2" id="nutritionBarriersYes"> Yes
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="nutritionBarriers" value="no" class="mr-2" id="nutritionBarriersNo"> No
+                                </label>
+                            </div>
+                            <div id="nutritionBarriersDetails" class="hidden">
+                                <label class="block text-gray-700 font-semibold mb-2">If yes, please describe:</label>
+                                <textarea id="nutritionBarriersSpecify" name="barriersSpecify" rows="3" placeholder="e.g., limited time for meal prep, budget constraints, limited healthy food options nearby..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- PART 6: GOALS AND EXPECTATIONS -->
+                    <div class="space-y-6 pt-4">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">🌟 PART 6: GOALS AND EXPECTATIONS</h3>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-4">How committed are you to doing meal prep on a scale of 1-10? (1 being the lowest, 10 being the highest)</label>
+                            <div class="flex items-center space-x-4">
+                                <input type="range" id="nutritionMealPrepCommitment" name="mealPrepCommitment" min="1" max="10" step="1" value="5" class="w-full" oninput="this.nextElementSibling.value = this.value">
+                                <output class="text-primary font-bold text-xl">5</output>
+                            </div>
+                            <label class="block text-gray-700 font-semibold mt-3 mb-2">Please explain your answer in detail:</label>
+                            <textarea id="nutritionMealPrepExplanation" name="mealPrepExplanation" rows="3" placeholder="Explain your commitment level to meal prep..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">What SPECIFICALLY are your short-term and long-term nutrition and health goals? Please explain in as much detail as possible.</label>
+                            <textarea id="nutritionGoals" name="nutritionGoals" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <p class="text-sm text-gray-500 mt-1">Short-term (3 months): e.g., lose 5kg, reduce sugar intake<br>Long-term (6+ months): e.g., maintain healthy weight, improve energy levels</p>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">What SPECIFICALLY do you hope to achieve from this nutrition assessment and nutrition plan? Please explain in as much detail as possible.</label>
+                            <textarea id="nutritionExpectations" name="nutritionExpectations" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <p class="text-sm text-gray-500 mt-1">e.g., personalized meal plan, understanding portion sizes, learning to eat healthier, managing a health condition</p>
+                        </div>
+                    </div>
+                    
+                    <!-- TERMS AND SUBMIT -->
+                    <div class="space-y-6 pt-6">
+                        <div class="flex items-start">
+                            <input type="checkbox" id="nutritionTermsAgree" required class="mr-3 mt-1">
+                            <label for="nutritionTermsAgree" class="text-gray-700 text-sm">I confirm that all information provided is accurate and complete to the best of my knowledge. I understand that this information will be used to create a personalized nutrition plan.</label>
+                        </div>
+                        
+                        <div class="flex flex-col xs:flex-row gap-4 pt-6">
+                            <button type="submit" id="nutritionSubmitBtn" class="flex-1 bg-primary hover:bg-red-700 text-white font-bold py-4 px-4 rounded-lg transition transform hover:scale-105 shadow-lg flex items-center justify-center">
+                                <span id="nutritionBtnText">SUBMIT NUTRITION ASSESSMENT</span>
+                                <span id="nutritionBtnLoader" class="hidden ml-3">
+                                    <span class="loading-spinner"></span>
+                                </span>
+                                <i id="nutritionBtnIcon" class="fas fa-paper-plane ml-2"></i>
+                            </button>
+                            <button type="reset" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-lg transition">
+                                CLEAR FORM
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section (unchanged) -->
 <section id="contact" class="py-16 md:py-24 bg-accent">
     <div class="container mx-auto px-4">
         <div class="text-center mb-16">
@@ -3162,7 +3457,7 @@
 </section>
 
 
-<!-- Footer -->
+<!-- Footer (unchanged) -->
 <footer class="bg-secondary text-white py-12">
     <div class="container mx-auto px-4">
         <div class="flex flex-col lg:flex-row justify-between items-start mb-10">
@@ -3329,7 +3624,17 @@
         } else {
             btn.disabled = false;
             btn.classList.remove('opacity-75', 'cursor-not-allowed');
-            if (btnText) btnText.textContent = buttonId.includes('contact') ? 'SEND MESSAGE' : (buttonId.includes('assessment') ? 'SUBMIT ASSESSMENT FORM' : 'SUBMIT FORM');
+            if (btnText) {
+                if (buttonId === 'contactSubmitBtn') {
+                    btnText.textContent = 'SEND MESSAGE';
+                } else if (buttonId === 'nutritionSubmitBtn') {
+                    btnText.textContent = 'SUBMIT NUTRITION ASSESSMENT';
+                } else if (buttonId === 'originalAssessmentSubmitBtn') {
+                    btnText.textContent = 'SUBMIT ASSESSMENT FORM';
+                } else {
+                    btnText.textContent = 'SUBMIT FORM';
+                }
+            }
             if (btnLoader) btnLoader.classList.add('hidden');
             if (btnIcon) btnIcon.classList.remove('hidden');
         }
@@ -3411,6 +3716,10 @@
         const termsError = document.getElementById('termsError');
         const agreePaymentBtn = document.getElementById('agreePaymentBtn');
         
+        // Assessment sections
+        const originalAssessmentSection = document.getElementById('assessment-original');
+        const nutritionAssessmentSection = document.getElementById('assessment-nutrition');
+        
         let currentPackageData = null;
 
         // Package selection buttons
@@ -3428,6 +3737,13 @@
                 document.getElementById('selectedPackage').textContent = packageName;
                 document.getElementById('packagePrice').textContent = formattedPrice;
                 document.getElementById('packageDetails').textContent = packageDetails;
+                
+                // Store package info
+                currentPackageData = {
+                    package: packageName,
+                    price: formattedPrice,
+                    isNutritionPackage: packageName.toLowerCase().includes('nutrition')
+                };
                 
                 // Reset form aur errors
                 if (packageForm) packageForm.reset();
@@ -3552,7 +3868,8 @@
                     // Save package data for payment modal
                     currentPackageData = {
                         package: formData.package,
-                        price: formData.price
+                        price: formData.price,
+                        isNutritionPackage: formData.package.toLowerCase().includes('nutrition')
                     };
                     
                     // Update payment modal
@@ -3586,56 +3903,76 @@
                 paymentModal.classList.add('hidden');
                 document.body.style.overflow = 'auto';
                 
-                // Show assessment form
-                const assessmentSection = document.getElementById('assessment');
-                if (assessmentSection) {
-                    assessmentSection.classList.remove('hidden');
-                    
-                    // Scroll to assessment form
-                    setTimeout(() => {
-                        assessmentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 300);
-                    
-                    showNotification('✅ Please complete the assessment form to finalize your registration.', 'success');
+                // Show appropriate assessment form based on package type
+                if (currentPackageData && currentPackageData.isNutritionPackage) {
+                    // Show nutrition assessment for nutrition packages
+                    if (nutritionAssessmentSection) {
+                        // Hide original if visible
+                        if (originalAssessmentSection) originalAssessmentSection.classList.add('form-section-hidden');
+                        // Show nutrition assessment
+                        nutritionAssessmentSection.classList.remove('form-section-hidden');
+                        
+                        // Scroll to nutrition assessment form
+                        setTimeout(() => {
+                            nutritionAssessmentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 300);
+                        
+                        showNotification('✅ Please complete the nutrition assessment form to finalize your registration.', 'success');
+                    }
+                } else {
+                    // Show original assessment for non-nutrition packages
+                    if (originalAssessmentSection) {
+                        // Hide nutrition if visible
+                        if (nutritionAssessmentSection) nutritionAssessmentSection.classList.add('form-section-hidden');
+                        // Show original assessment
+                        originalAssessmentSection.classList.remove('form-section-hidden');
+                        
+                        // Scroll to original assessment form
+                        setTimeout(() => {
+                            originalAssessmentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 300);
+                        
+                        showNotification('✅ Please complete the assessment form to finalize your registration.', 'success');
+                    }
                 }
             });
         }
         
-        // ---------- ASSESSMENT FORM ----------
-        const assessmentForm = document.getElementById('assessmentForm');
-        if (assessmentForm) {
+        // ---------- ORIGINAL ASSESSMENT FORM ----------
+        const originalAssessmentForm = document.getElementById('originalAssessmentForm');
+        if (originalAssessmentForm) {
             // Add IDs to assessment button
-            const assessmentBtn = assessmentForm.querySelector('button[type="submit"]');
+            const assessmentBtn = originalAssessmentForm.querySelector('button[type="submit"]');
             if (assessmentBtn) {
-                assessmentBtn.id = 'assessmentSubmitBtn';
-                assessmentBtn.innerHTML = '<span id="assessmentBtnText">SUBMIT ASSESSMENT FORM</span><span id="assessmentBtnLoader" class="hidden ml-3"><span class="loading-spinner"></span></span><i id="assessmentBtnIcon" class="fas fa-paper-plane ml-2"></i>';
+                assessmentBtn.id = 'originalAssessmentSubmitBtn';
+                assessmentBtn.innerHTML = '<span id="originalAssessmentBtnText">SUBMIT ASSESSMENT FORM</span><span id="originalAssessmentBtnLoader" class="hidden ml-3"><span class="loading-spinner"></span></span><i id="originalAssessmentBtnIcon" class="fas fa-paper-plane ml-2"></i>';
             }
 
-            assessmentForm.addEventListener('submit', async function(e) {
+            originalAssessmentForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
                 // Get all checkbox groups
-                const gymEquipment = Array.from(document.querySelectorAll('input[name="gymEquipment"]:checked')).map(cb => cb.value);
-                const essentials = Array.from(document.querySelectorAll('input[name="essentials"]:checked')).map(cb => cb.value);
+                const gymEquipment = Array.from(document.querySelectorAll('input[name="originalGymEquipment"]:checked')).map(cb => cb.value);
+                const essentials = Array.from(document.querySelectorAll('input[name="originalEssentials"]:checked')).map(cb => cb.value);
                 
                 // Get radio values
-                const smoker = document.querySelector('input[name="smoker"]:checked')?.value || '';
-                const currentlyExercising = document.querySelector('input[name="currentlyExercising"]:checked')?.value || '';
-                const trainedBefore = document.querySelector('input[name="trainedBefore"]:checked')?.value || '';
-                const weeklyCheckin = document.querySelector('input[name="weeklyCheckinCommitment"]:checked')?.value || '';
-                const monthlyPhotos = document.querySelector('input[name="monthlyPhotosCommitment"]:checked')?.value || '';
-                const commitment = document.querySelector('input[name="commitmentDuringChallenges"]:checked')?.value || '';
+                const smoker = document.querySelector('input[name="originalSmoker"]:checked')?.value || '';
+                const currentlyExercising = document.querySelector('input[name="originalCurrentlyExercising"]:checked')?.value || '';
+                const trainedBefore = document.querySelector('input[name="originalTrainedBefore"]:checked')?.value || '';
+                const weeklyCheckin = document.querySelector('input[name="originalWeeklyCheckinCommitment"]:checked')?.value || '';
+                const monthlyPhotos = document.querySelector('input[name="originalMonthlyPhotosCommitment"]:checked')?.value || '';
+                const commitment = document.querySelector('input[name="originalCommitmentDuringChallenges"]:checked')?.value || '';
                 
                 // Validate required fields
-                const fullName = document.getElementById('assessmentFullName')?.value;
-                const email = document.getElementById('assessmentEmail')?.value;
-                const phone = document.getElementById('assessmentPhone')?.value;
-                const specificGoals = document.getElementById('specificGoals')?.value;
-                const coachExpectations = document.getElementById('coachExpectations')?.value;
-                const goalCategory = document.getElementById('goalCategory')?.value;
-                const trainingGoal = document.getElementById('trainingGoal')?.value;
-                const threeAspects = document.getElementById('threeAspects')?.value;
-                const termsAgree = document.getElementById('assessmentTermsAgree')?.checked;
+                const fullName = document.getElementById('originalFullName')?.value;
+                const email = document.getElementById('originalEmail')?.value;
+                const phone = document.getElementById('originalPhone')?.value;
+                const specificGoals = document.getElementById('originalSpecificGoals')?.value;
+                const coachExpectations = document.getElementById('originalCoachExpectations')?.value;
+                const goalCategory = document.getElementById('originalGoalCategory')?.value;
+                const trainingGoal = document.getElementById('originalTrainingGoal')?.value;
+                const threeAspects = document.getElementById('originalThreeAspects')?.value;
+                const termsAgree = document.getElementById('originalTermsAgree')?.checked;
                 
                 if (!fullName || !email || !phone) {
                     showNotification('Please fill in your name, email and phone number', 'error');
@@ -3658,9 +3995,9 @@
                 }
                 
                 // Compound lifts
-                const squat = document.getElementById('squat')?.value || '';
-                const bench = document.getElementById('bench')?.value || '';
-                const deadlift = document.getElementById('deadlift')?.value || '';
+                const squat = document.getElementById('originalSquat')?.value || '';
+                const bench = document.getElementById('originalBench')?.value || '';
+                const deadlift = document.getElementById('originalDeadlift')?.value || '';
                 const compoundLifts = `Squat: ${squat}, Bench: ${bench}, Deadlift: ${deadlift}`;
                 
                 const formData = {
@@ -3669,61 +4006,61 @@
                     assessmentFullName: fullName,
                     email: email,
                     phone: phone,
-                    gender: document.getElementById('gender')?.value || '',
-                    dateOfBirth: document.getElementById('dateOfBirth')?.value || '',
-                    assessmentAge: document.getElementById('assessmentAge')?.value || '',
-                    height: document.getElementById('height')?.value || '',
-                    weight: document.getElementById('weight')?.value || '',
-                    fiverrUsername: document.getElementById('fiverrUsername')?.value || '',
+                    gender: document.getElementById('originalGender')?.value || '',
+                    dateOfBirth: document.getElementById('originalDateOfBirth')?.value || '',
+                    assessmentAge: document.getElementById('originalAge')?.value || '',
+                    height: document.getElementById('originalHeight')?.value || '',
+                    weight: document.getElementById('originalWeight')?.value || '',
+                    fiverrUsername: document.getElementById('originalFiverrUsername')?.value || '',
                     
                     // Lifestyle
-                    occupation: document.getElementById('occupation')?.value || '',
-                    activityLevel: document.getElementById('activityLevel')?.value || '',
-                    workSchedule: document.getElementById('workSchedule')?.value || '',
-                    travelFrequency: document.getElementById('travelFrequency')?.value || '',
-                    outsideActivities: document.getElementById('outsideActivities')?.value || '',
+                    occupation: document.getElementById('originalOccupation')?.value || '',
+                    activityLevel: document.getElementById('originalActivityLevel')?.value || '',
+                    workSchedule: document.getElementById('originalWorkSchedule')?.value || '',
+                    travelFrequency: document.getElementById('originalTravelFrequency')?.value || '',
+                    outsideActivities: document.getElementById('originalOutsideActivities')?.value || '',
                     
                     // Medical
-                    diagnosedConditions: document.getElementById('diagnosedConditions')?.value || '',
-                    medications: document.getElementById('medications')?.value || '',
-                    conditionTherapies: document.getElementById('conditionTherapies')?.value || '',
-                    existingInjuries: document.getElementById('existingInjuries')?.value || '',
-                    injuryTherapies: document.getElementById('injuryTherapies')?.value || '',
-                    stressMotivation: document.getElementById('stressMotivation')?.value || '',
-                    familyHeartDisease: document.getElementById('familyHeartDisease')?.value || '',
-                    familyDiseases: document.getElementById('familyDiseases')?.value || '',
-                    chronicConditions: document.getElementById('chronicConditions')?.value || '',
+                    diagnosedConditions: document.getElementById('originalDiagnosedConditions')?.value || '',
+                    medications: document.getElementById('originalMedications')?.value || '',
+                    conditionTherapies: document.getElementById('originalConditionTherapies')?.value || '',
+                    existingInjuries: document.getElementById('originalExistingInjuries')?.value || '',
+                    injuryTherapies: document.getElementById('originalInjuryTherapies')?.value || '',
+                    stressMotivation: document.getElementById('originalStressMotivation')?.value || '',
+                    familyHeartDisease: document.getElementById('originalFamilyHeartDisease')?.value || '',
+                    familyDiseases: document.getElementById('originalFamilyDiseases')?.value || '',
+                    chronicConditions: document.getElementById('originalChronicConditions')?.value || '',
                     smoker: smoker,
                     
                     // Diet
-                    currentDiet: document.getElementById('currentDiet')?.value || '',
-                    foodAllergies: document.getElementById('foodAllergies')?.value || '',
-                    favoriteFoods: document.getElementById('favoriteFoods')?.value || '',
-                    dislikedFoods: document.getElementById('dislikedFoods')?.value || '',
-                    pastDiets: document.getElementById('pastDiets')?.value || '',
+                    currentDiet: document.getElementById('originalCurrentDiet')?.value || '',
+                    foodAllergies: document.getElementById('originalFoodAllergies')?.value || '',
+                    favoriteFoods: document.getElementById('originalFavoriteFoods')?.value || '',
+                    dislikedFoods: document.getElementById('originalDislikedFoods')?.value || '',
+                    pastDiets: document.getElementById('originalPastDiets')?.value || '',
                     
                     // Goals
-                    fitnessLevel: document.getElementById('fitnessLevel')?.value || '',
+                    fitnessLevel: document.getElementById('originalFitnessLevel')?.value || '',
                     compoundLifts: compoundLifts,
                     specificGoals: specificGoals,
                     coachExpectations: coachExpectations,
-                    previousAttempts: document.getElementById('previousAttempts')?.value || '',
-                    readinessChange: document.getElementById('readinessChange')?.value || '5',
+                    previousAttempts: document.getElementById('originalPreviousAttempts')?.value || '',
+                    readinessChange: document.getElementById('originalReadinessChange')?.value || '5',
                     goalCategory: goalCategory,
                     trainingGoal: trainingGoal,
                     
                     // Training
                     gymEquipment: gymEquipment.join(', '),
                     essentials: essentials.join(', '),
-                    goalTimeline: document.getElementById('goalTimeline')?.value || '',
-                    trainingFrequency: document.getElementById('trainingFrequency')?.value || '',
-                    motivationLevel: document.getElementById('motivationLevel')?.value || '8',
+                    goalTimeline: document.getElementById('originalGoalTimeline')?.value || '',
+                    trainingFrequency: document.getElementById('originalTrainingFrequency')?.value || '',
+                    motivationLevel: document.getElementById('originalMotivationLevel')?.value || '8',
                     currentlyExercising: currentlyExercising,
                     trainedBefore: trainedBefore,
-                    previousTrainingType: document.getElementById('previousTrainingType')?.value || '',
-                    preferredTrainingTime: document.getElementById('preferredTrainingTime')?.value || '',
-                    workoutDuration: document.getElementById('workoutDuration')?.value || '',
-                    personalTrainingFrequency: document.getElementById('personalTrainingFrequency')?.value || '',
+                    previousTrainingType: document.getElementById('originalPreviousTrainingType')?.value || '',
+                    preferredTrainingTime: document.getElementById('originalPreferredTrainingTime')?.value || '',
+                    workoutDuration: document.getElementById('originalWorkoutDuration')?.value || '',
+                    personalTrainingFrequency: document.getElementById('originalPersonalTrainingFrequency')?.value || '',
                     
                     // About
                     threeAspects: threeAspects,
@@ -3740,24 +4077,208 @@
                     formData.packagePrice = currentPackageData.price;
                 }
                 
-                setLoading('assessmentSubmitBtn', true);
+                setLoading('originalAssessmentSubmitBtn', true);
                 const result = await submitForm(formData);
-                setLoading('assessmentSubmitBtn', false);
+                setLoading('originalAssessmentSubmitBtn', false);
                 
                 if (result.success) {
                     showNotification('✅ Assessment form submitted! Coach Emman will review and contact you within 48 hours.', 'success');
-                    assessmentForm.reset();
+                    originalAssessmentForm.reset();
                     // Hide previous training section
-                    const prevSection = document.getElementById('previousTrainingSection');
+                    const prevSection = document.getElementById('originalPreviousTrainingSection');
                     if (prevSection) prevSection.classList.add('hidden');
                     // Reset range outputs
-                    const readinessRange = document.getElementById('readinessChange');
-                    const motivationRange = document.getElementById('motivationLevel');
+                    const readinessRange = document.getElementById('originalReadinessChange');
+                    const motivationRange = document.getElementById('originalMotivationLevel');
                     if (readinessRange) readinessRange.nextElementSibling.value = '5';
                     if (motivationRange) motivationRange.nextElementSibling.value = '8';
                     
                     // Optionally hide assessment section after submission
-                    // assessmentSection.classList.add('hidden');
+                    // originalAssessmentSection.classList.add('form-section-hidden');
+                    
+                    // Clear package data
+                    currentPackageData = null;
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    showNotification('❌ ' + result.error, 'error');
+                }
+            });
+        }
+        
+        // ---------- NUTRITION ASSESSMENT FORM ----------
+        const nutritionAssessmentForm = document.getElementById('nutritionAssessmentForm');
+        if (nutritionAssessmentForm) {
+            // Add IDs to button
+            const nutritionBtn = nutritionAssessmentForm.querySelector('button[type="submit"]');
+            if (nutritionBtn) {
+                nutritionBtn.id = 'nutritionSubmitBtn';
+                nutritionBtn.innerHTML = '<span id="nutritionBtnText">SUBMIT NUTRITION ASSESSMENT</span><span id="nutritionBtnLoader" class="hidden ml-3"><span class="loading-spinner"></span></span><i id="nutritionBtnIcon" class="fas fa-paper-plane ml-2"></i>';
+            }
+
+            // Conditional sections for beverages
+            const beveragesYes = document.getElementById('nutritionBeveragesYes');
+            const beveragesNo = document.getElementById('nutritionBeveragesNo');
+            const beveragesDetails = document.getElementById('nutritionBeveragesDetails');
+            
+            if (beveragesYes && beveragesNo && beveragesDetails) {
+                beveragesYes.addEventListener('change', function() {
+                    if (this.checked) beveragesDetails.classList.remove('hidden');
+                });
+                beveragesNo.addEventListener('change', function() {
+                    if (this.checked) beveragesDetails.classList.add('hidden');
+                });
+            }
+            
+            // Conditional sections for dietary restrictions
+            const restrictionsYes = document.getElementById('nutritionRestrictionsYes');
+            const restrictionsNo = document.getElementById('nutritionRestrictionsNo');
+            const restrictionsDetails = document.getElementById('nutritionRestrictionsDetails');
+            
+            if (restrictionsYes && restrictionsNo && restrictionsDetails) {
+                restrictionsYes.addEventListener('change', function() {
+                    if (this.checked) restrictionsDetails.classList.remove('hidden');
+                });
+                restrictionsNo.addEventListener('change', function() {
+                    if (this.checked) restrictionsDetails.classList.add('hidden');
+                });
+            }
+            
+            // Conditional sections for barriers
+            const barriersYes = document.getElementById('nutritionBarriersYes');
+            const barriersNo = document.getElementById('nutritionBarriersNo');
+            const barriersDetails = document.getElementById('nutritionBarriersDetails');
+            
+            if (barriersYes && barriersNo && barriersDetails) {
+                barriersYes.addEventListener('change', function() {
+                    if (this.checked) barriersDetails.classList.remove('hidden');
+                });
+                barriersNo.addEventListener('change', function() {
+                    if (this.checked) barriersDetails.classList.add('hidden');
+                });
+            }
+
+            // Update range output
+            const mealPrepRange = document.getElementById('nutritionMealPrepCommitment');
+            if (mealPrepRange) {
+                mealPrepRange.addEventListener('input', function() {
+                    this.nextElementSibling.value = this.value;
+                });
+            }
+
+            nutritionAssessmentForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Get radio values
+                const otherBeverages = document.querySelector('input[name="nutritionOtherBeverages"]:checked')?.value || '';
+                const dietaryRestrictions = document.querySelector('input[name="nutritionDietaryRestrictions"]:checked')?.value || '';
+                const barriers = document.querySelector('input[name="nutritionBarriers"]:checked')?.value || '';
+                
+                // Validate required fields
+                const fullName = document.getElementById('nutritionFullName')?.value;
+                const email = document.getElementById('nutritionEmail')?.value;
+                const phone = document.getElementById('nutritionPhone')?.value;
+                const nutritionGoals = document.getElementById('nutritionGoals')?.value;
+                const nutritionExpectations = document.getElementById('nutritionExpectations')?.value;
+                const termsAgree = document.getElementById('nutritionTermsAgree')?.checked;
+                
+                if (!fullName || !email || !phone) {
+                    showNotification('Please fill in your name, email and phone number', 'error');
+                    return;
+                }
+                
+                if (!nutritionGoals || !nutritionExpectations) {
+                    showNotification('Please complete the Goals and Expectations section', 'error');
+                    return;
+                }
+                
+                if (!termsAgree) {
+                    showNotification('You must agree to the terms', 'error');
+                    return;
+                }
+                
+                // Food frequency data
+                const fruitsVeggies = document.getElementById('nutritionFruitsVeggies')?.value || '';
+                const wholeGrains = document.getElementById('nutritionWholeGrains')?.value || '';
+                const leanProteins = document.getElementById('nutritionLeanProteins')?.value || '';
+                const dairy = document.getElementById('nutritionDairy')?.value || '';
+                const processed = document.getElementById('nutritionProcessed')?.value || '';
+                const sugaryBeverages = document.getElementById('nutritionSugaryBeverages')?.value || '';
+                
+                const formData = {
+                    formType: 'nutritionAssessment',
+                    // Personal
+                    nutritionFullName: fullName,
+                    email: email,
+                    phone: phone,
+                    gender: document.getElementById('nutritionGender')?.value || '',
+                    dateOfBirth: document.getElementById('nutritionDateOfBirth')?.value || '',
+                    age: document.getElementById('nutritionAge')?.value || '',
+                    height: document.getElementById('nutritionHeight')?.value || '',
+                    weight: document.getElementById('nutritionWeight')?.value || '',
+                    fiverrUsername: document.getElementById('nutritionFiverrUsername')?.value || '',
+                    
+                    // Lifestyle
+                    occupation: document.getElementById('nutritionOccupation')?.value || '',
+                    activityLevel: document.getElementById('nutritionActivityLevel')?.value || '',
+                    workSchedule: document.getElementById('nutritionWorkSchedule')?.value || '',
+                    travelFrequency: document.getElementById('nutritionTravelFrequency')?.value || '',
+                    outsideActivities: document.getElementById('nutritionOutsideActivities')?.value || '',
+                    
+                    // Eating Habits
+                    mealsPerDay: document.getElementById('nutritionMealsPerDay')?.value || '',
+                    eatingPattern: document.getElementById('nutritionEatingPattern')?.value || '',
+                    specificDiet: document.getElementById('nutritionSpecificDiet')?.value || '',
+                    fruitsVeggies: fruitsVeggies,
+                    wholeGrains: wholeGrains,
+                    leanProteins: leanProteins,
+                    dairy: dairy,
+                    processed: processed,
+                    sugaryBeverages: sugaryBeverages,
+                    eatOut: document.getElementById('nutritionEatOut')?.value || '',
+                    
+                    // Hydration
+                    water: document.getElementById('nutritionWater')?.value || '',
+                    otherBeverages: otherBeverages,
+                    beveragesSpecify: document.getElementById('nutritionBeveragesSpecify')?.value || '',
+                    pastDiets: document.getElementById('nutritionPastDiets')?.value || '',
+                    
+                    // Preferences & Barriers
+                    foodPreferences: document.getElementById('nutritionFoodPreferences')?.value || '',
+                    dietaryRestrictions: dietaryRestrictions,
+                    restrictionsSpecify: document.getElementById('nutritionRestrictionsSpecify')?.value || '',
+                    barriers: barriers,
+                    barriersSpecify: document.getElementById('nutritionBarriersSpecify')?.value || '',
+                    
+                    // Goals
+                    mealPrepCommitment: document.getElementById('nutritionMealPrepCommitment')?.value || '5',
+                    mealPrepExplanation: document.getElementById('nutritionMealPrepExplanation')?.value || '',
+                    nutritionGoals: nutritionGoals,
+                    nutritionExpectations: nutritionExpectations
+                };
+                
+                // Add package info if available
+                if (currentPackageData) {
+                    formData.selectedPackage = currentPackageData.package;
+                    formData.packagePrice = currentPackageData.price;
+                }
+                
+                setLoading('nutritionSubmitBtn', true);
+                const result = await submitForm(formData);
+                setLoading('nutritionSubmitBtn', false);
+                
+                if (result.success) {
+                    showNotification('✅ Nutrition assessment submitted! Coach EJ will review and contact you within 48 hours.', 'success');
+                    nutritionAssessmentForm.reset();
+                    
+                    // Reset conditional sections
+                    if (beveragesDetails) beveragesDetails.classList.add('hidden');
+                    if (restrictionsDetails) restrictionsDetails.classList.add('hidden');
+                    if (barriersDetails) barriersDetails.classList.add('hidden');
+                    
+                    // Reset range output
+                    if (mealPrepRange) mealPrepRange.nextElementSibling.value = '5';
                     
                     // Clear package data
                     currentPackageData = null;
@@ -3796,6 +4317,41 @@
                 }
             });
         });
+
+        // Show/hide previous training section in original assessment
+        const trainedYes = document.getElementById('originalTrainedYes');
+        const trainedNo = document.getElementById('originalTrainedNo');
+        const previousTrainingSection = document.getElementById('originalPreviousTrainingSection');
+        
+        if (trainedYes && trainedNo && previousTrainingSection) {
+            trainedYes.addEventListener('change', function() {
+                if (this.checked) {
+                    previousTrainingSection.classList.remove('hidden');
+                }
+            });
+            
+            trainedNo.addEventListener('change', function() {
+                if (this.checked) {
+                    previousTrainingSection.classList.add('hidden');
+                }
+            });
+        }
+
+        // Update range outputs in original assessment
+        const readinessRange = document.getElementById('originalReadinessChange');
+        const motivationRange = document.getElementById('originalMotivationLevel');
+        
+        if (readinessRange) {
+            readinessRange.addEventListener('input', function() {
+                this.nextElementSibling.value = this.value;
+            });
+        }
+        
+        if (motivationRange) {
+            motivationRange.addEventListener('input', function() {
+                this.nextElementSibling.value = this.value;
+            });
+        }
     });
 </script>
 <!-- ========== END MASTER SCRIPT ========== -->
