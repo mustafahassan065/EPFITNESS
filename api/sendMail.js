@@ -1,368 +1,4359 @@
-// api/sendMail.js
-import nodemailer from "nodemailer";
-
-export default async function handler(req, res) {
-  // ✅ Allow only POST requests
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
-
-  const { 
-    formType,
-    // Contact form
-    name, 
-    email, 
-    phone, 
-    service, 
-    message,
-    
-    // Package form
-    firstName, 
-    lastName, 
-    fullName,
-    age,
-    location,
-    goal,
-    healthConditions,
-    notes,
-    package: selectedPackage,
-    price,
-    details,
-    
-    // Assessment form - Personal Information
-    assessmentFullName,
-    gender,
-    dateOfBirth,
-    assessmentAge,
-    height,
-    weight,
-    fiverrUsername,
-    
-    // Lifestyle Information
-    occupation,
-    activityLevel,
-    workSchedule,
-    travelFrequency,
-    outsideActivities,
-    
-    // Medical & Health
-    diagnosedConditions,
-    medications,
-    conditionTherapies,
-    existingInjuries,
-    injuryTherapies,
-    stressMotivation,
-    familyHeartDisease,
-    familyDiseases,
-    chronicConditions,
-    smoker,
-    
-    // Diet Information
-    currentDiet,
-    foodAllergies,
-    favoriteFoods,
-    dislikedFoods,
-    pastDiets,
-    
-    // Goals & Training
-    fitnessLevel,
-    compoundLifts,
-    specificGoals,
-    coachExpectations,
-    previousAttempts,
-    readinessChange,
-    goalCategory,
-    trainingGoal,
-    gymEquipment,
-    essentials,
-    goalTimeline,
-    trainingFrequency,
-    motivationLevel,
-    currentlyExercising,
-    trainedBefore,
-    previousTrainingType,
-    preferredTrainingTime,
-    workoutDuration,
-    personalTrainingFrequency,
-    
-    // About You
-    threeAspects,
-    
-    // Commitments
-    weeklyCheckinCommitment,
-    monthlyPhotosCommitment,
-    commitmentDuringChallenges
-    
-  } = req.body;
-
-  try {
-    // ✅ Gmail SMTP configuration
-    let transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD
-      }
-    });
-
-    let emailSubject, emailHtml;
-
-    // 📧 CONTACT FORM EMAIL
-    if (formType === 'contact') {
-      emailSubject = `📬 New Contact Form - EP Fitness`;
-      emailHtml = `
-        <h2>New Contact Form Submission</h2>
-        <p><b>Name:</b> ${name}</p>
-        <p><b>Email:</b> ${email}</p>
-        <p><b>Phone:</b> ${phone}</p>
-        <p><b>Service:</b> ${service}</p>
-        <p><b>Message:</b> ${message}</p>
-      `;
-    } 
-    
-    // 📦 PACKAGE FORM EMAIL
-    else if (formType === 'package') {
-      const clientName = fullName || `${firstName || ''} ${lastName || ''}`.trim();
-      
-      emailSubject = `💪 New Package Sign-Up - EP Fitness`;
-      emailHtml = `
-        <h2>New Package Sign-Up Request</h2>
-        <h3 style="color: #e53935;">📦 SELECTED PACKAGE</h3>
-        <p><b>Package:</b> ${selectedPackage}</p>
-        <p><b>Price:</b> ${price}</p>
-        <p><b>Details:</b> ${details}</p>
-        
-        <h3 style="color: #e53935;">👤 CLIENT INFORMATION</h3>
-        <p><b>Full Name:</b> ${clientName}</p>
-        <p><b>Email:</b> ${email}</p>
-        <p><b>Phone:</b> ${phone}</p>
-        <p><b>Age:</b> ${age || 'Not provided'}</p>
-        <p><b>Location:</b> ${location || 'Not specified'}</p>
-        <p><b>Goal:</b> ${goal}</p>
-        <p><b>Health Conditions:</b> ${healthConditions || 'None reported'}</p>
-        <p><b>Notes:</b> ${notes || 'No additional notes'}</p>
-      `;
-    }
-    
-    // 📋 ASSESSMENT FORM EMAIL
-    else if (formType === 'assessment') {
-      emailSubject = `📋 New Client Assessment Form - EP Fitness`;
-      
-      // Format essentials checklist
-      let essentialsList = '';
-      if (essentials) {
-        if (Array.isArray(essentials)) {
-          essentialsList = essentials.join(', ');
-        } else {
-          essentialsList = essentials;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EP Fitness - Transform Your Body Today | Personal Training & Nutrition Coaching</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#e53935', // Red
+                        secondary: '#212121', // Black
+                        accent: '#f5f5f5', // Light gray
+                        dark: '#1a1a1a',
+                        light: '#ffffff',
+                    },
+                    fontFamily: {
+                        heading: ['Bebas Neue', 'sans-serif'],
+                        body: ['Montserrat', 'sans-serif'],
+                    },
+                    screens: {
+                        'xs': '480px',
+                    },
+                }
+            }
         }
-      }
-      
-      emailHtml = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-            .container { max-width: 800px; margin: 0 auto; background: white; }
-            .header { background: #e53935; color: white; padding: 30px; text-align: center; }
-            .section { background: #f9f9f9; padding: 25px; margin: 20px 0; border-radius: 10px; border-left: 5px solid #e53935; }
-            .section-title { color: #e53935; margin-top: 0; border-bottom: 2px solid #e53935; padding-bottom: 10px; }
-            .field { margin-bottom: 15px; }
-            .label { font-weight: bold; color: #212121; }
-            .value { margin-left: 20px; color: #555; }
-            hr { border: 1px solid #ddd; margin: 30px 0; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h1>🏋️ EP FITNESS</h1>
-              <h2>New Client Assessment Form Submission</h2>
-            </div>
-            
-            <!-- PERSONAL INFORMATION -->
-            <div class="section">
-              <h3 class="section-title">📌 PERSONAL INFORMATION</h3>
-              <div class="field"><span class="label">Full Name:</span> <span class="value">${assessmentFullName || ''}</span></div>
-              <div class="field"><span class="label">Gender:</span> <span class="value">${gender || ''}</span></div>
-              <div class="field"><span class="label">Date of Birth:</span> <span class="value">${dateOfBirth || ''}</span></div>
-              <div class="field"><span class="label">Age:</span> <span class="value">${assessmentAge || ''}</span></div>
-              <div class="field"><span class="label">Height:</span> <span class="value">${height || ''}</span></div>
-              <div class="field"><span class="label">Weight:</span> <span class="value">${weight || ''}</span></div>
-              <div class="field"><span class="label">Fiverr Username:</span> <span class="value">${fiverrUsername || 'Not a Fiverr client'}</span></div>
-            </div>
-            
-            <!-- LIFESTYLE INFORMATION -->
-            <div class="section">
-              <h3 class="section-title">🏃 LIFESTYLE INFORMATION</h3>
-              <div class="field"><span class="label">Occupation:</span> <span class="value">${occupation || ''}</span></div>
-              <div class="field"><span class="label">Activity Level at Job:</span> <span class="value">${activityLevel || ''}</span></div>
-              <div class="field"><span class="label">Work Schedule:</span> <span class="value">${workSchedule || ''}</span></div>
-              <div class="field"><span class="label">Travel Frequency:</span> <span class="value">${travelFrequency || ''}</span></div>
-              <div class="field"><span class="label">Outside Physical Activities:</span> <span class="value">${outsideActivities || 'None'}</span></div>
-            </div>
-            
-            <!-- MEDICAL & HEALTH INFORMATION -->
-            <div class="section">
-              <h3 class="section-title">🏥 MEDICAL & HEALTH INFORMATION</h3>
-              <div class="field"><span class="label">Diagnosed Health Conditions:</span> <span class="value">${diagnosedConditions || 'None reported'}</span></div>
-              <div class="field"><span class="label">Current Medications:</span> <span class="value">${medications || 'None'}</span></div>
-              <div class="field"><span class="label">Additional Therapies:</span> <span class="value">${conditionTherapies || 'None'}</span></div>
-              <div class="field"><span class="label">Existing Injuries/Conditions:</span> <span class="value">${existingInjuries || 'None'}</span></div>
-              <div class="field"><span class="label">Injury Therapies:</span> <span class="value">${injuryTherapies || 'None'}</span></div>
-              <div class="field"><span class="label">Stress/Motivational Problems:</span> <span class="value">${stressMotivation || 'None'}</span></div>
-              <div class="field"><span class="label">Family Heart Disease (under 60):</span> <span class="value">${familyHeartDisease || ''}</span></div>
-              <div class="field"><span class="label">Family Diseases:</span> <span class="value">${familyDiseases || 'None'}</span></div>
-              <div class="field"><span class="label">Chronic Conditions:</span> <span class="value">${chronicConditions || 'None'}</span></div>
-              <div class="field"><span class="label">Current Smoker:</span> <span class="value">${smoker || ''}</span></div>
-            </div>
-            
-            <!-- DIET INFORMATION -->
-            <div class="section">
-              <h3 class="section-title">🥗 DIET INFORMATION</h3>
-              <div class="field"><span class="label">Current Diet:</span> <span class="value">${currentDiet || ''}</span></div>
-              <div class="field"><span class="label">Food Allergies/Intolerances:</span> <span class="value">${foodAllergies || 'None'}</span></div>
-              <div class="field"><span class="label">Favorite Foods:</span> <span class="value">${favoriteFoods || ''}</span></div>
-              <div class="field"><span class="label">Disliked Foods:</span> <span class="value">${dislikedFoods || ''}</span></div>
-              <div class="field"><span class="label">Past Diet Experiments:</span> <span class="value">${pastDiets || 'None'}</span></div>
-            </div>
-            
-            <!-- GOALS & TRAINING -->
-            <div class="section">
-              <h3 class="section-title">🎯 GOALS & TRAINING</h3>
-              <div class="field"><span class="label">Fitness Level:</span> <span class="value">${fitnessLevel || ''}</span></div>
-              <div class="field"><span class="label">Compound Lifts (max weight):</span> <span class="value">${compoundLifts || 'Not sure'}</span></div>
-              <div class="field"><span class="label">Specific Goals (3-6 months):</span> <span class="value">${specificGoals || ''}</span></div>
-              <div class="field"><span class="label">Coach Expectations:</span> <span class="value">${coachExpectations || ''}</span></div>
-              <div class="field"><span class="label">Previous Attempts - What will be different?:</span> <span class="value">${previousAttempts || ''}</span></div>
-              <div class="field"><span class="label">Readiness for Change:</span> <span class="value">${readinessChange || ''}</span></div>
-              <div class="field"><span class="label">Goal Category:</span> <span class="value">${goalCategory || ''}</span></div>
-              <div class="field"><span class="label">Specific Training Goal:</span> <span class="value">${trainingGoal || ''}</span></div>
-              <div class="field"><span class="label">Gym Equipment Access:</span> <span class="value">${gymEquipment || ''}</span></div>
-              <div class="field"><span class="label">Essentials Available:</span> <span class="value">${essentialsList || 'None'}</span></div>
-              <div class="field"><span class="label">Goal Timeline:</span> <span class="value">${goalTimeline || ''}</span></div>
-              <div class="field"><span class="label">Training Frequency (per week):</span> <span class="value">${trainingFrequency || ''}</span></div>
-              <div class="field"><span class="label">Motivation Level:</span> <span class="value">${motivationLevel || ''}</span></div>
-              <div class="field"><span class="label">Currently Exercising Regularly:</span> <span class="value">${currentlyExercising || ''}</span></div>
-              <div class="field"><span class="label">Trained with Personal Trainer Before:</span> <span class="value">${trainedBefore || ''}</span></div>
-              <div class="field"><span class="label">Previous Training Type:</span> <span class="value">${previousTrainingType || 'N/A'}</span></div>
-              <div class="field"><span class="label">Preferred Training Time:</span> <span class="value">${preferredTrainingTime || ''}</span></div>
-              <div class="field"><span class="label">Workout Duration:</span> <span class="value">${workoutDuration || ''}</span></div>
-              <div class="field"><span class="label">Personal Training Frequency (per week):</span> <span class="value">${personalTrainingFrequency || ''}</span></div>
-            </div>
-            
-            <!-- ABOUT YOU -->
-            <div class="section">
-              <h3 class="section-title">💭 ABOUT YOU</h3>
-              <div class="field"><span class="label">Three Aspects About You:</span></div>
-              <div class="value" style="white-space: pre-line; background: white; padding: 15px; border-radius: 5px;">${threeAspects || ''}</div>
-            </div>
-            
-            <!-- COMMITMENTS -->
-            <div class="section">
-              <h3 class="section-title">🤝 COMMITMENTS</h3>
-              <div class="field"><span class="label">Weekly Check-in Commitment:</span> <span class="value">${weeklyCheckinCommitment || ''}</span></div>
-              <div class="field"><span class="label">Monthly Photos & Measurements Commitment:</span> <span class="value">${monthlyPhotosCommitment || ''}</span></div>
-              <div class="field"><span class="label">Commitment During Challenges:</span> <span class="value">${commitmentDuringChallenges || ''}</span></div>
-            </div>
-            
-            <hr>
-            <p style="text-align: center; color: #666; font-size: 14px;">
-              Assessment form submitted on ${new Date().toLocaleString()}<br>
-              Client Email: ${email || 'Not provided'}<br>
-              Client Phone: ${phone || 'Not provided'}
-            </p>
-          </div>
-        </body>
-        </html>
-      `;
-    }
+    </script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(229, 57, 53, 0.85), rgba(33, 33, 33, 0.9)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .mobile-menu.open {
+            max-height: 500px;
+            transition: max-height 0.5s ease-in;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #e53935;
+        }
+        
+        .service-card {
+            transition: all 0.3s ease;
+            border-top: 4px solid transparent;
+        }
+        
+        .service-card:hover {
+            border-top-color: #e53935;
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .package-card {
+            transition: all 0.3s ease;
+        }
+        
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .premium-highlight {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .premium-highlight:before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: #e53935;
+            color: white;
+            padding: 5px 40px;
+            font-size: 12px;
+            font-weight: bold;
+            transform: rotate(45deg);
+        }
+        
+        .testimonial-card {
+            transition: transform 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .coach-image-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .coach-image-container img {
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero-logo {
+            max-width: 500px;
+            margin: 0 auto 30px;
+        }
+        
+        .payment-option-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .payment-option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(229, 57, 53, 0.2);
+        }
+        
+        .payment-option-card.selected {
+            border-color: #e53935;
+            background-color: #fff5f5;
+            border-width: 2px;
+        }
+        
+        .modal-transition {
+            transition: all 0.3s ease;
+        }
 
-    // ✅ Send email to EP Fitness
-    await transporter.sendMail({
-      from: `"EP Fitness Website" <${process.env.EMAIL_USER}>`,
-      to: "epfitness24@gmail.com",
-      replyTo: email || (formType === 'assessment' ? assessmentFullName : ''),
-      subject: emailSubject,
-      html: emailHtml
+        .form-section-hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Navigation (unchanged - keeping your existing navigation) -->
+    <nav class="bg-white text-secondary shadow-lg sticky top-0 z-50 border-b-2 border-primary">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                
+            </div>
+            <div class="hidden md:flex space-x-8 font-semibold">
+    <a href="index.html" class="hover:text-primary transition transform hover:scale-105">HOME</a>
+    
+    <!-- ABOUT with Dropdown -->
+    <div class="relative group">
+        <button class="hover:text-primary transition transform hover:scale-105 flex items-center focus:outline-none">
+            ABOUT
+            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+        </button>
+        
+        <!-- Dropdown Menu -->
+        <div class="absolute left-0 mt-2 w-64 bg-white shadow-lg rounded-lg py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 border border-gray-200">
+            <a href="index.html#about" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition flex items-center">
+               
+                <div>
+                    <div class="font-semibold">About us</div>
+                    
+                </div>
+            </a>
+            <div class="border-t border-gray-100 my-1"></div>
+            <a href="index.html#coaches" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition flex items-center">
+               
+                <div>
+                    <div class="font-semibold">Meet the Coaches</div>
+                    
+                </div>
+            </a>
+            
+            <div class="border-t border-gray-100 my-1"></div>
+            
+            <a href="personaltrainingsection.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition flex items-center">
+                
+                <div>
+                    <div class="font-semibold">Personal Training Gallery</div>
+                    
+                </div>
+            </a>
+        </div>
+    </div>
+    
+    <a href="index.html#services" class="hover:text-primary transition transform hover:scale-105">SERVICES</a>
+    <a href="EmmanResults.html" class="hover:text-primary transition transform hover:scale-105">RESULTS</a>
+    <a href="index.html#packages" class="hover:text-primary transition transform hover:scale-105">PACKAGES</a>
+    <a href="WorkOutPlans.html" class="hover:text-primary transition transform hover:scale-105">WORKOUT PLANS</a>
+    <a href="faqs.html" class="hover:text-primary transition transform hover:scale-105">FAQS</a>
+    <a href="index.html#contact" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-red-700 transition">CONTACT</a>
+</div>
+            <button class="md:hidden text-secondary focus:outline-none" id="mobile-menu-button">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu md:hidden bg-white px-4 border-t border-gray-200" id="mobile-menu">
+            <div class="flex flex-col space-y-3 py-3">
+                <a href="index.html" class="hover:text-primary transition py-2 font-semibold">HOME</a>
+                <!-- ABOUT with Dropdown -->
+    <div class="relative group">
+        <button class="hover:text-primary transition py-2 font-semibold">
+            ABOUT
+            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+        </button>
+        
+        <!-- Dropdown Menu -->
+        <div class="absolute left-0 mt-2 w-64 bg-white shadow-lg rounded-lg py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 border border-gray-200">
+            <a href="index.html#about" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition flex items-center">
+               
+                <div>
+                    <div class="font-semibold">About us</div>
+                    
+                </div>
+            </a>
+            <div class="border-t border-gray-100 my-1"></div>
+            <a href="index.html#coaches" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition flex items-center">
+               
+                <div>
+                    <div class="font-semibold">Meet the Coaches</div>
+                    
+                </div>
+            </a>
+            
+            <div class="border-t border-gray-100 my-1"></div>
+            
+            <a href="personaltrainingsection.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition flex items-center">
+                
+                <div>
+                    <div class="font-semibold">Personal Training Gallery</div>
+                    
+                </div>
+            </a>
+        </div>
+    </div>
+                <a href="index.html#services" class="hover:text-primary transition py-2 font-semibold">SERVICES</a>
+                <a href="EmmanResults.html" class="hover:text-primary transition py-2 font-semibold">RESULTS</a>
+                <a href="index.html#packages" class="hover:text-primary transition py-2 font-semibold">PACKAGES</a>
+                <a href="WorkOutPlans.html" class="hover:text-primary transition py-2 font-semibold">WORK OUT PLANS</a>
+                <a href="faqs.html" class="hover:text-primary transition py-2 font-semibold">FAQS</a>
+                <a href="index.html#contact" class="hover:text-primary transition py-2 font-semibold">CONTACT</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (unchanged) -->
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center text-white">
+        <div class="container mx-auto px-4 py-20 text-center">
+            <div class="mb-8">
+                <span class="bg-primary text-white px-4 py-2 rounded-full font-bold text-sm tracking-wider">TRANSFORMATION STARTS HERE</span>
+            </div>
+            
+            <!-- EP Fitness Logo -->
+            <div class="hero-logo">
+                <img src="logobg.png" 
+                     alt="EP Fitness Logo" 
+                     class="w-full h-auto object-contain">
+            </div>
+            
+            <p class="text-xl md:text-2xl lg:text-3xl mb-10 max-w-3xl mx-auto font-semibold">Personalized training & nutrition plans to help you achieve your fitness goals</p>
+           <div class="flex flex-col xs:flex-row justify-center gap-6">
+    <a href="https://calendly.com/ep_fitness/fitness-assessment-consultation" class="bg-primary hover:bg-red-700 text-white font-bold py-4 px-8 rounded-full text-lg transition transform hover:scale-105 shadow-lg">
+        <i class="fas fa-dumbbell mr-2"></i> BOOK A FREE FITNESS CONSULTATION
+    </a>
+    <a href="http://calendly.com/ejpatriciornd" class="bg-transparent hover:bg-white hover:text-secondary border-2 border-white text-white font-bold py-4 px-8 rounded-full text-lg transition transform hover:scale-105">
+        <i class="fas fa-utensils mr-2"></i> BOOK A NUTRITION ASSESSMENT
+    </a>
+</div>
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                <div class="text-center">
+                    <div class="text-3xl font-bold mb-2">150+</div>
+                    <div class="text-sm">HAPPY CLIENTS</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold mb-2">98%</div>
+                    <div class="text-sm">SUCCESS RATE</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold mb-2">5</div>
+                    <div class="text-sm">YEARS PROFESSIONAL EXPERIENCE</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold mb-2">Daily</div>
+                    <div class="text-sm">CHAT SUPPORT</div>
+                </div>
+            </div>
+            <div class="mt-16">
+                <p class="text-lg">
+                    <i class="fas fa-gift text-primary mr-2"></i>
+                    <span class="font-bold">FREE NUTRITION ASSESSMENT</span> from our Registered Nutritionist Dietitian with every sign-up
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section (unchanged) -->
+    <section id="about" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl xs:text-4xl md:text-5xl font-bold text-secondary mb-4 font-heading section-title">ABOUT EP FITNESS</h2>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2 relative">
+                    <div class="rounded-lg overflow-hidden shadow-2xl">
+                        <img src="about.png" 
+                             alt="EP Fitness Training" 
+                             class="w-full h-auto">
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 bg-primary text-white p-6 rounded-lg shadow-xl hidden lg:block">
+                        <div class="text-3xl font-bold">5</div>
+                        <div class="font-semibold text-sm">YEARS PROFESSIONAL EXPERIENCE</div>
+                        
+                    </div>
+                </div>
+                <div class="lg:w-1/2">
+                    <h3 class="text-2xl xs:text-3xl font-bold text-secondary mb-6">BUILD STRENGTH • IMPROVE PERFORMANCE • DEVELOP SUSTAINABLE HABITS</h3>
+                    <p class="text-gray-700 mb-6 text-lg">
+                        EP Fitness is a results-driven fitness brand focused on helping individuals build strength, improve performance, and develop sustainable, long-term habits. EP Fitness combines structured training programs with practical, real-world nutrition guidance from Coach EJ, a registered dietitian, to support real, measurable results.
+                    </p>
+                    <p class="text-gray-700 mb-8">
+                        The brand emphasizes clarity, consistency, and accountability—making fitness approachable, effective, and built to last.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        <div class="flex items-center bg-accent p-4 rounded-lg">
+                            <div class="bg-primary text-white p-3 rounded-full mr-4">
+                                <i class="fas fa-dumbbell"></i>
+                            </div>
+                            <span class="font-semibold">Structured Training Programs</span>
+                        </div>
+                        <div class="flex items-center bg-accent p-4 rounded-lg">
+                            <div class="bg-primary text-white p-3 rounded-full mr-4">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <span class="font-semibold">Practical Nutrition Guidance</span>
+                        </div>
+                        <div class="flex items-center bg-accent p-4 rounded-lg">
+                            <div class="bg-primary text-white p-3 rounded-full mr-4">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <span class="font-semibold">Measurable Results</span>
+                        </div>
+                        <div class="flex items-center bg-accent p-4 rounded-lg">
+                            <div class="bg-primary text-white p-3 rounded-full mr-4">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <span class="font-semibold">Accountability & Support</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Coaches Info -->
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center bg-secondary text-white p-5 rounded-xl">
+                            <div class="mr-5">
+                                <i class="fas fa-dumbbell text-4xl text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">COACH EMMAN</h4>
+                                <p class="opacity-90">Strength and Conditioning Coach</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center bg-secondary text-white p-5 rounded-xl">
+                            <div class="mr-5">
+                                <i class="fas fa-user-tie text-4xl text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">COACH EJ PATRICIO</h4>
+                                <p class="opacity-90">Registered Nutritionist Dietitian</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#contact" class="inline-block bg-primary hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition transform hover:scale-105">
+                        START YOUR JOURNEY <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why EP Fitness Section (unchanged) -->
+    <section id="why-ep" class="py-16 md:py-24 bg-accent">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl xs:text-4xl md:text-5xl font-bold text-secondary mb-4 font-heading section-title">WHY CHOOSE EP FITNESS</h2>
+                <p class="text-gray-600 mt-12 max-w-4xl mx-auto text-lg">More than just workouts — we build sustainable, results-driven fitness lifestyles</p>
+            </div>
+            
+            <div class="mb-16 text-center">
+                <h3 class="text-3xl xs:text-4xl font-bold text-primary mb-6 font-heading">"Train with purpose. Progress with structure."</h3>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <!-- Left Side - Image -->
+                <div class="lg:w-1/2">
+                    <div class="rounded-2xl overflow-hidden shadow-2xl h-[500px]">
+                        <img src="THANKYOU3.jpg" 
+                             alt="EP Fitness Training Philosophy" 
+                             class="w-full h-full object-cover">
+                    </div>
+                </div>
+                
+                <!-- Right Side - Content -->
+                <div class="lg:w-1/2">
+                    <div class="bg-white p-10 rounded-2xl shadow-xl">
+                        <h3 class="text-2xl font-bold text-secondary mb-6">THE EP FITNESS PHILOSOPHY</h3>
+                        <p class="text-gray-700 mb-6 text-lg">
+                            At EP Fitness, we believe real results don't come from extreme programs or shortcuts. They come from structure, consistency, and accountability done the right way.
+                        </p>
+                        <p class="text-gray-700 mb-6 text-lg">
+                            Our coaching is built on a simple principle: train smarter, progress sustainably, and show up consistently.
+                        </p>
+                        <p class="text-gray-700 mb-6 text-lg">
+                            EP Fitness is built for individuals who want more than generic workouts and copy-paste plans. Every program is structured, intentional, and designed around real-life demands — not trends.
+                        </p>
+                        <p class="text-gray-700 mb-6 text-lg">
+                            Training with EP Fitness means working with a coach who values consistency over hype, process over shortcuts, and long-term results over quick fixes. Whether your goal is fat loss, strength, performance, or lifestyle improvement, your plan is tailored to fit your schedule, environment, and capacity — not the other way around.
+                        </p>
+                        <p class="text-gray-700 mb-6 text-lg">
+                            With experience coaching everyday clients, professionals, and individuals in high-responsibility roles, EP Fitness delivers coaching that is focused, discreet, and results-driven.
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+                            <div class="flex items-center bg-primary/10 p-4 rounded-lg">
+                                <div class="bg-primary text-white p-2 rounded-full mr-3">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <span class="font-semibold">Structured & Intentional</span>
+                            </div>
+                            <div class="flex items-center bg-primary/10 p-4 rounded-lg">
+                                <div class="bg-primary text-white p-2 rounded-full mr-3">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <span class="font-semibold">Real-Life Application</span>
+                            </div>
+                            <div class="flex items-center bg-primary/10 p-4 rounded-lg">
+                                <div class="bg-primary text-white p-2 rounded-full mr-3">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <span class="font-semibold">Consistency Over Hype</span>
+                            </div>
+                            <div class="flex items-center bg-primary/10 p-4 rounded-lg">
+                                <div class="bg-primary text-white p-2 rounded-full mr-3">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <span class="font-semibold">Long-Term Results</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Coaches Section (unchanged) -->
+    <section id="coaches" class="py-16 md:py-24 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl xs:text-4xl md:text-5xl font-bold text-secondary mb-4 font-heading section-title">MEET THE COACHES</h2>
+            <p class="text-gray-600 mt-12 max-w-4xl mx-auto text-lg">Your dedicated team of fitness and nutrition professionals</p>
+        </div>
+        
+        <!-- TOP SECTION: Image Left + Mission Right -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
+            <!-- Left Side - Coaches Image -->
+            <div>
+                <div class="rounded-2xl overflow-hidden shadow-2xl h-[400px] lg:h-[650px]">
+                    <img src="coaches3.png" 
+                         alt="Coach Emman and Coach EJ - EP Fitness Coaches" 
+                         class="w-full h-full object-cover">
+                </div>
+            </div>
+            
+            <!-- Right Side - Text Content -->
+            <div>
+                <div class="bg-white p-10 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-secondary mb-6">OUR MISSION</h3>
+                    <p class="text-gray-700 mb-6 text-lg">
+                        We were once students of the game, learning from mentors who dedicated their time and experience to guide us. Fast forward to today, we now stand on the other side — carrying those same lessons, values, and knowledge to help others become stronger, healthier, and more confident versions of themselves.
+                    </p>
+                    <p class="text-gray-700 mb-6 text-lg">
+                        As fitness and dietitian professionals, our mission goes beyond just building muscles or losing weight. We aim to create an experience where each client can grow at their own pace, feel supported every step of the way, and truly enjoy the process. Our goal is to make fitness not just a phase, but a sustainable lifestyle — one that empowers you physically, mentally, and emotionally.
+                    </p>
+                    <p class="text-2xl font-bold text-primary mt-8">
+                        At EP Fitness, we're more than just coaches — we're your partners in progress.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== BOTTOM SECTION: 3 COLUMNS HORIZONTAL ===== -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12 pt-8 border-t-2 border-gray-200">
+            
+            <!-- COLUMN 1: Nutrition Services Note -->
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-xl shadow-md h-full">
+                <div class="flex flex-col h-full">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-500 text-white p-3 rounded-full mr-4 flex-shrink-0">
+                            <i class="fas fa-utensils text-xl"></i>
+                        </div>
+                        <h4 class="font-bold text-secondary text-xl">🍽️ Nutrition Services</h4>
+                    </div>
+                    <div class="flex-grow">
+                        <p class="text-gray-700 mb-3">
+                            For personalized nutrition coaching, meal planning, and dietary guidance, connect directly with <span class="font-semibold text-primary">Coach EJ Patricio</span>, our Registered Nutritionist Dietitian.
+                        </p>
+                        <p class="text-gray-600 text-sm italic flex items-center">
+                            <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+                            Click the button below to email Coach EJ directly for nutrition consultations.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- COLUMN 2: Coach Emman Button -->
+            <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition transform hover:scale-[1.02] duration-300 h-full flex flex-col">
+                <div class="flex items-center mb-4">
+                    <div class="bg-primary text-white p-3 rounded-full mr-4">
+                        <i class="fas fa-dumbbell text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">COACH EMMAN</h4>
+                        <p class="text-gray-300 text-sm">Strength & Conditioning</p>
+                    </div>
+                </div>
+                <div class="flex-grow">
+                    <p class="text-gray-300 text-sm mb-4 flex items-center">
+                        <i class="fas fa-envelope mr-2 text-primary"></i>
+                        epfitness24@gmail.com
+                    </p>
+                </div>
+                <a href="mailto:epfitness24@gmail.com?subject=Personal%20Training%20Inquiry%20-%20EP%20Fitness&body=Hi%20Coach%20Emman%2C%0A%0AI'm%20interested%20in%20learning%20more%20about%20your%20personal%20training%20services.%0A%0A%0A%0AName%3A%0AGoal%3A%0APreferred%20training%20location%3A" 
+                   class="inline-flex items-center justify-center w-full bg-primary hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition transform hover:scale-105 shadow-md mt-auto">
+                    <i class="fas fa-paper-plane mr-2"></i>
+                    CONTACT COACH EMMAN
+                </a>
+            </div>
+            
+            <!-- COLUMN 3: Coach EJ Button -->
+            <div class="bg-gradient-to-br from-green-900 to-green-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition transform hover:scale-[1.02] duration-300 h-full flex flex-col">
+                <div class="flex items-center mb-4">
+                    <div class="bg-green-500 text-white p-3 rounded-full mr-4">
+                        <i class="fas fa-user-tie text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">COACH EJ PATRICIO</h4>
+                        <p class="text-gray-200 text-sm">Registered Nutritionist Dietitian</p>
+                    </div>
+                </div>
+                <div class="flex-grow">
+                    <p class="text-gray-200 text-sm mb-4 flex items-center">
+                        <i class="fas fa-envelope mr-2 text-green-300"></i>
+                        ejukulele@gmail.com
+                    </p>
+                </div>
+                <a href="mailto:ejukulele@gmail.com?subject=Nutrition%20Coaching%20Inquiry%20-%20EP%20Fitness&body=Hi%20Coach%20EJ%2C%0A%0AI'm%20interested%20in%20learning%20more%20about%20your%20nutrition%20coaching%20services.%0A%0A%0A%0AName%3A%0AGoal%3A%0ASpecific%20nutrition%20concerns%3A" 
+                   class="inline-flex items-center justify-center w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition transform hover:scale-105 shadow-md mt-auto">
+                    <i class="fas fa-paper-plane mr-2"></i>
+                    CONTACT COACH EJ
+                </a>
+            </div>
+        </div>
+        
+        <!-- Response Time Note - Full Width Below -->
+        <div class="mt-8 text-center">
+            <div class="inline-flex items-center bg-gray-100 px-6 py-3 rounded-full">
+                <i class="fas fa-clock text-primary mr-2"></i>
+                <p class="text-gray-700 text-sm">
+                    <span class="font-semibold">24-hour response time:</span> Both coaches typically respond within 24 hours. For urgent inquiries, please call.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+    
+    <!-- Services Section (unchanged) -->
+    <section id="services" class="py-16 md:py-24 bg-accent">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl xs:text-4xl md:text-5xl font-bold text-secondary mb-4 font-heading section-title">OUR SERVICES</h2>
+                <p class="text-gray-600 mt-12 max-w-3xl mx-auto">Comprehensive fitness and nutrition services tailored to your individual needs and goals</p>
+            </div>
+            
+            <!-- Nutrition Services -->
+            <div class="mb-20">
+                <h3 class="text-2xl xs:text-3xl font-bold text-secondary mb-10 text-center font-heading">NUTRITION SERVICES</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="service-card bg-white p-8 rounded-xl shadow-lg">
+                        <div class="bg-primary text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-clipboard-check text-xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-secondary mb-4">NUTRITION ASSESSMENT/COUNSELING</h4>
+                        <p class="text-gray-600 mb-6">Personalized evaluation of your dietary habits and nutritional needs to support health goals</p>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <span class="text-sm font-semibold text-primary">INCLUDES:</span>
+                            <ul class="mt-2 text-sm text-gray-600 space-y-1">
+                                <li><i class="fas fa-check text-primary mr-2"></i> Dietary Analysis</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Goal Setting</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Personalized Recommendations</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card bg-white p-8 rounded-xl shadow-lg">
+                        <div class="bg-primary text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-weight-scale text-xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-secondary mb-4">WEIGHT MANAGEMENT</h4>
+                        <p class="text-gray-600 mb-6">Guidance and strategies to help achieve and maintain a healthy body weight (gain, lose, maintain)</p>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <span class="text-sm font-semibold text-primary">INCLUDES:</span>
+                            <ul class="mt-2 text-sm text-gray-600 space-y-1">
+                                <li><i class="fas fa-check text-primary mr-2"></i> Customized Plans</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Progress Tracking</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Behavioral Strategies</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card bg-white p-8 rounded-xl shadow-lg">
+                        <div class="bg-primary text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-heart-pulse text-xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-secondary mb-4">DISEASE MANAGEMENT</h4>
+                        <p class="text-gray-600 mb-6">Specialized nutrition plans for managing health conditions through dietary interventions</p>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <span class="text-sm font-semibold text-primary">INCLUDES:</span>
+                            <ul class="mt-2 text-sm text-gray-600 space-y-1">
+                                <li><i class="fas fa-check text-primary mr-2"></i> Medical Nutrition Therapy</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Condition-Specific Plans</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Lifestyle Modifications</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card bg-white p-8 rounded-xl shadow-lg">
+                        <div class="bg-primary text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-person-running text-xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-secondary mb-4">SPORTS NUTRITION</h4>
+                        <p class="text-gray-600 mb-6">Enhance athletic performance, endurance, and recovery through targeted nutrition strategies</p>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <span class="text-sm font-semibold text-primary">INCLUDES:</span>
+                            <ul class="mt-2 text-sm text-gray-600 space-y-1">
+                                <li><i class="fas fa-check text-primary mr-2"></i> Performance Optimization</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Recovery Protocols</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Competition Preparation</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card bg-white p-8 rounded-xl shadow-lg">
+                        <div class="bg-primary text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-calendar-alt text-xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-secondary mb-4">MEAL PLANNING</h4>
+                        <p class="text-gray-600 mb-6">Balanced and practical meal plans designed to fit your lifestyle, preferences, and needs</p>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <span class="text-sm font-semibold text-primary">INCLUDES:</span>
+                            <ul class="mt-2 text-sm text-gray-600 space-y-1">
+                                <li><i class="fas fa-check text-primary mr-2"></i> Customized Meal Plans</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Grocery Lists</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Recipe Suggestions</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card bg-white p-8 rounded-xl shadow-lg">
+                        <div class="bg-primary text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-hands-helping text-xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-secondary mb-4">SUPPORT & ACCOUNTABILITY</h4>
+                        <p class="text-gray-600 mb-6">Regular check-ins, motivation, and support to keep you on track with your goals</p>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <span class="text-sm font-semibold text-primary">INCLUDES:</span>
+                            <ul class="mt-2 text-sm text-gray-600 space-y-1">
+                                <li><i class="fas fa-check text-primary mr-2"></i> Regular Check-Ins</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Progress Reviews</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Motivational Support</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Personal Training Services -->
+            <div class="mb-20">
+                <h3 class="text-2xl xs:text-3xl font-bold text-secondary mb-10 text-center font-heading">PERSONAL TRAINING SERVICES</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="service-card bg-white p-8 rounded-xl shadow-lg">
+                        <div class="bg-primary text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-clipboard-list text-xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-secondary mb-4">PERSONALIZED TRAINING PROGRAM</h4>
+                        <p class="text-gray-600 mb-6">Tailored training programs based on individual goals, fitness levels, and preferences</p>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <span class="text-sm font-semibold text-primary">TRAINING OPTIONS:</span>
+                            <ul class="mt-2 text-sm text-gray-600 space-y-1">
+                                <li><i class="fas fa-dumbbell text-primary mr-2"></i> One-on-One Personal Training</li>
+                                <li><i class="fas fa-laptop text-primary mr-2"></i> Online Coaching</li>
+                                <li><i class="fas fa-home text-primary mr-2"></i> Home/Condo Gym Training</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card bg-white p-8 rounded-xl shadow-lg">
+                        <div class="bg-primary text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-chart-line text-xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-secondary mb-4">FITNESS ASSESSMENT</h4>
+                        <p class="text-gray-600 mb-6">Comprehensive evaluation of your current fitness level to establish baseline measurements</p>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <span class="text-sm font-semibold text-primary">INCLUDES:</span>
+                            <ul class="mt-2 text-sm text-gray-600 space-y-1">
+                                <li><i class="fas fa-check text-primary mr-2"></i> Strength Assessment</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Mobility Evaluation</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Body Composition Analysis</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card bg-white p-8 rounded-xl shadow-lg">
+                        <div class="bg-primary text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-utensils text-xl"></i>
+                        </div>
+                        <!-- UPDATED: NUTRITION EDUCATION & HABIT COACHING -->
+                        <h4 class="text-xl font-bold text-secondary mb-4">NUTRITION EDUCATION & HABIT COACHING</h4>
+                        <p class="text-gray-600 mb-6">Practical guidance on eating habits, consistency, and lifestyle behaviors that support training performance and recovery.</p>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <span class="text-sm font-semibold text-primary">INCLUDES:</span>
+                            <ul class="mt-2 text-sm text-gray-600 space-y-1">
+                                <li><i class="fas fa-check text-primary mr-2"></i> Nutrition fundamentals (non-medical)</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Meal timing & consistency strategies</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Habit-building frameworks (No meal plans, no prescriptions)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card bg-white p-8 rounded-xl shadow-lg">
+                        <div class="bg-primary text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-user-friends text-xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-secondary mb-4">ONE-ON-ONE TRAINING SESSIONS</h4>
+                        <p class="text-gray-600 mb-6">Monitored & scheduled personal training sessions with your personal trainer</p>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <span class="text-sm font-semibold text-primary">BENEFITS:</span>
+                            <ul class="mt-2 text-sm text-gray-600 space-y-1">
+                                <li><i class="fas fa-check text-primary mr-2"></i> Proper Form Correction</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Personalized Attention</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Safety & Effectiveness</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card bg-white p-8 rounded-xl shadow-lg">
+                        <div class="bg-primary text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-bullseye text-xl"></i>
+                        </div>
+                        <!-- UPDATED: GOAL SETTING & PERFORMANCE TRACKING -->
+                        <h4 class="text-xl font-bold text-secondary mb-4">GOAL SETTING & PERFORMANCE TRACKING</h4>
+                        <p class="text-gray-600 mb-6">Clear short- and long-term goals with measurable performance benchmarks.</p>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <span class="text-sm font-semibold text-primary">INCLUDES:</span>
+                            <ul class="mt-2 text-sm text-gray-600 space-y-1">
+                                <li><i class="fas fa-check text-primary mr-2"></i> SMART goal setting</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Progress photos or performance markers</li>
+                                <li><i class="fas fa-check text-primary mr-2"></i> Training metrics</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card bg-white p-8 rounded-xl shadow-lg">
+                        <div class="bg-primary text-white w-14 h-14 rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-hands-helping text-xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-secondary mb-4">SUPPORT & ACCOUNTABILITY</h4>
+                        <p class="text-gray-600 mb-6">Regular check-ins, motivation, and support to keep you on track with your goals</p>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <!-- UPDATED: TRAINING FOCUS AREAS -->
+                            <span class="text-sm font-semibold text-primary">TRAINING FOCUS AREAS:</span>
+                            <ul class="mt-2 text-sm text-gray-600 space-y-1">
+                                <li><i class="fas fa-fire text-primary mr-2"></i> Fat/Weight Loss</li>
+                                <li><i class="fas fa-weight-hanging text-primary mr-2"></i> Hypertrophy/Muscle Building</li>
+                                <li><i class="fas fa-dumbbell text-primary mr-2"></i> Strength Training</li>
+                                <li><i class="fas fa-running text-primary mr-2"></i> Strength & Conditioning</li>
+                                <li><i class="fas fa-person-walking text-primary mr-2"></i> Functional Fitness</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Online Fitness Coaching Section (unchanged) -->
+            <div class="mb-20">
+                <h3 class="text-2xl xs:text-3xl font-bold text-secondary mb-10 text-center font-heading">ONLINE FITNESS COACHING (1-ON-1)</h3>
+                <p class="text-gray-600 mb-10 text-center max-w-4xl mx-auto text-lg">Structured, personalized coaching — wherever you are. Designed for clients who want guidance, accountability, and results without in-person sessions.</p>
+                
+                <div class="bg-white p-10 rounded-2xl shadow-xl">
+                    <!-- UPDATED: SECTION TITLE -->
+                    <h4 class="text-xl font-bold text-primary mb-6 text-center">HOW ONLINE COACHING WORKS</h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="bg-primary text-white p-3 rounded-full mr-4 flex-shrink-0">
+                                    <i class="fas fa-dumbbell"></i>
+                                </div>
+                                <div>
+                                    <!-- UPDATED: PROGRESSIVE TRAINING PROGRAM -->
+                                    <h5 class="font-bold text-lg text-secondary mb-2">Progressive Training Program</h5>
+                                    <p class="text-gray-600">Structured training built around your goals, experience level, and available equipment. Progressions and adjustments are made based on performance and recovery.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-primary text-white p-3 rounded-full mr-4 flex-shrink-0">
+                                    <i class="fas fa-video"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-lg text-secondary mb-2">Form Review & Technique Coaching</h5>
+                                    <p class="text-gray-600">Real-time cues during live sessions plus optional video reviews between sessions to improve safety and movement quality.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-primary text-white p-3 rounded-full mr-4 flex-shrink-0">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-lg text-secondary mb-2">Progress Tracking & Program Adjustments</h5>
+                                    <p class="text-gray-600">Regular performance reviews with adjustments based on strength progress, recovery, and schedule.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="bg-primary text-white p-3 rounded-full mr-4 flex-shrink-0">
+                                    <i class="fas fa-bullseye"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-lg text-secondary mb-2">Goal Setting & Strategy</h5>
+                                    <p class="text-gray-600">Clear short-term and long-term goals. Action plans that fit real-life routines (work, travel, stress).</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="bg-primary text-white p-3 rounded-full mr-4 flex-shrink-0">
+                                    <i class="fas fa-comments"></i>
+                                </div>
+                                <div>
+                                    <h5 class="font-bold text-lg text-secondary mb-2">Direct Coach Support</h5>
+                                    <p class="text-gray-600">Chat support for questions, guidance, and accountability. Response within working hours.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8 p-6 bg-primary/10 rounded-xl">
+                                <h5 class="font-bold text-lg text-primary mb-2">Ready to Start Your Online Coaching?</h5>
+                                <p class="text-gray-700">Check out our online coaching packages below and start your journey today!</p>
+                                <a href="#packages" class="inline-block mt-4 bg-primary hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition transform hover:scale-105">
+                                    VIEW ONLINE PACKAGES <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Packages Section (unchanged - keeping your complete packages section) -->
+    <section id="packages" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl xs:text-4xl md:text-5xl font-bold text-secondary mb-4 font-heading section-title">OUR PACKAGES</h2>
+                <p class="text-gray-600 mt-12 max-w-3xl mx-auto">Choose the training or nutrition package that best fits your fitness goals and schedule</p>
+            </div>
+            
+            <!-- Train-With-A-Friend Rate Note -->
+            <div class="mb-12 bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-lg max-w-4xl mx-auto">
+                <div class="flex items-center">
+                    <div class="bg-yellow-500 text-white p-3 rounded-full mr-4">
+                        <i class="fas fa-users text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-secondary mb-2">Train-With-A-Friend Rate</h3>
+                        <p class="text-gray-700 mb-2">
+                            Clients who train together at the same time may avail of our Train-With-A-Friend Rate, where both clients receive a discounted rate per package:
+                        </p>
+                        <ul class="text-gray-700 list-disc pl-5 mb-2">
+                            <li>10 Sessions – ₱2,500 discount per person</li>
+                            <li>16 Sessions – ₱3,500 discount per person</li>
+                            <li>20 Sessions – ₱4,500 discount per person</li>
+                            <li>30 Sessions – ₱6,000 discount per person</li>
+                        </ul>
+                        <p class="text-gray-700 text-sm italic">
+                            Applicable only when training at the same time, same schedule, and same location. Sessions are non-transferable and subject to package validity.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Payment Options Notice -->
+            <div class="mb-12 bg-primary/10 border-l-4 border-primary p-6 rounded-lg max-w-4xl mx-auto">
+                <div class="flex items-center">
+                    <div class="bg-primary text-white p-3 rounded-full mr-4">
+                        <i class="fas fa-credit-card text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-secondary mb-2">Flexible Payment Options Available</h3>
+                        <p class="text-gray-700">
+                            <span class="font-bold">Note:</span> Weekly payments, 50% installment, or full payment options apply to <span class="font-bold text-primary">personal training & online coaching services only</span>. 
+                            <span class="font-bold text-primary">Nutrition coaching service must be paid at full price</span>. Contact us to discuss which option works best for you.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Note about USD and PHP package price differences -->
+            <div class="mb-12 bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg max-w-4xl mx-auto">
+                <div class="flex items-center">
+                    <div class="bg-blue-500 text-white p-3 rounded-full mr-4">
+                        <i class="fas fa-globe text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-secondary mb-2">Note on International (USD) vs Local (PHP) Packages</h3>
+                        <p class="text-gray-700">
+                            International (USD) packages are priced to accommodate time-zone differences, flexible scheduling, and extended coach availability beyond local hours.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Nutrition Coaching Packages Section (unchanged) -->
+            <div class="mb-20">
+                <h3 class="text-2xl xs:text-3xl font-bold text-secondary mb-10 text-center font-heading">NUTRITION COACHING PACKAGES</h3>
+                
+                <div class="mb-8 bg-accent p-6 rounded-xl max-w-4xl mx-auto">
+                    <p class="text-gray-700 text-center">
+                        <span class="font-bold text-primary">Important Note:</span> A ₱1,000 PHP nutrition consultation fee is implemented for nutrition assessment with the dietitian for non-EP Fitness training clients.
+                    </p>
+                </div>
+                
+                <!-- UPDATED: ADDED USD NUTRITION PACKAGES -->
+                <div class="mb-16">
+                    <h4 class="text-2xl font-bold text-secondary mb-6 text-center">USD NUTRITION PACKAGES</h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                        <!-- Basic Nutrition Coaching (USD) -->
+                        <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                            <div class="text-center mb-8">
+                                <div class="text-3xl font-bold text-primary mb-2">$79 USD</div>
+                                <div class="text-gray-500 text-sm mb-4">Valid for 30 days</div>
+                                <h3 class="text-xl font-bold text-secondary">BASIC NUTRITION COACHING</h3>
+                                <p class="text-gray-600 mt-2">Best for beginners who want structure without constant check-ins</p>
+                            </div>
+                            
+                            <div class="space-y-4 mb-8">
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">1-Month Meal Plan Sets</span> (3 options to choose from, customized and repeatable for consistency)</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">Customized To Your Goals</span> (Weight Loss, Weight Gain, Medical Nutrition Therapy)</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">1 Online Follow-Up Session</span> scheduled at the end of the month</span>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Basic Nutrition Coaching (USD)" data-price="79" data-currency="USD" data-details="Valid for 30 days | 1-Month Meal Plan Sets | 1 Follow-Up Session">
+                                SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Standard Nutrition Coaching (USD) -->
+                        <div class="package-card bg-white border-2 border-primary rounded-2xl p-8 shadow-xl relative premium-highlight">
+                            <div class="text-center mb-8">
+                                <div class="text-3xl font-bold text-primary mb-2">$109 USD</div>
+                                <div class="text-gray-500 text-sm mb-4">Valid for 30 days</div>
+                                <h3 class="text-xl font-bold text-secondary">STANDARD NUTRITION COACHING</h3>
+                                <p class="text-gray-600 mt-2">Ideal for consistency builders & PCOS clients</p>
+                            </div>
+                            
+                            <div class="space-y-4 mb-8">
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">1-Month Meal Plan Sets</span> (5 options to choose from, customized and repeatable for consistency)</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">Customized To Your Goals</span> (Weight Loss, PCOS, Muscle Gain, Healthy Habits)</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">2 Online Follow-Up Sessions</span> scheduled every two weeks</span>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-primary hover:bg-red-700 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Standard Nutrition Coaching (USD)" data-price="109" data-currency="USD" data-details="Valid for 30 days | 1-Month Meal Plan Sets | 2 Follow-Up Sessions">
+                                SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Premium Nutrition Coaching (USD) -->
+                        <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                            <div class="text-center mb-8">
+                                <div class="text-3xl font-bold text-primary mb-2">$169 USD</div>
+                                <div class="text-gray-500 text-sm mb-4">Valid for 30 days</div>
+                                <h3 class="text-xl font-bold text-secondary">PREMIUM NUTRITION COACHING</h3>
+                                <p class="text-gray-600 mt-2">For clients who need close monitoring and accountability</p>
+                            </div>
+                            
+                            <div class="space-y-4 mb-8">
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">1-Month Meal Plan Sets</span> (5 options to choose from, customized and repeatable for consistency)</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">Tailored To Your Goals, Health Conditions, And Lifestyle</span> (Weight Loss, Weight Gain, Medical Nutrition Therapy)</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">Weekly Check-Ins/Assessments</span> (Online sessions to review progress and make adjustments)</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">Daily chat support</span> for nutrition guidance and calorie accountability (response within working hours)</span>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Premium Nutrition Coaching (USD)" data-price="169" data-currency="USD" data-details="Valid for 30 days | Weekly Check-Ins | Daily Support">
+                                SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Original PHP Nutrition Packages -->
+                <div class="mt-12">
+                    <h4 class="text-2xl font-bold text-secondary mb-6 text-center">PHP NUTRITION PACKAGES</h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                        <!-- Basic Nutrition Coaching (PHP) -->
+                        <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                            <div class="text-center mb-8">
+                                <div class="text-3xl font-bold text-primary mb-2">₱3,000 PHP</div>
+                                <div class="text-gray-500 text-sm mb-4">Valid for 30 days</div>
+                                <h3 class="text-xl font-bold text-secondary">BASIC NUTRITION COACHING</h3>
+                                <p class="text-gray-600 mt-2">Best for beginners who want structure without constant check-ins</p>
+                            </div>
+                            
+                            <div class="space-y-4 mb-8">
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">1-Month Meal Plan Sets</span> (3 options to choose from, customized and repeatable for consistency)</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">Customized To Your Goals</span> (Weight Loss, Weight Gain, Medical Nutrition Therapy)</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">1 Online Follow-Up Session</span> scheduled at the end of the month</span>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Basic Nutrition Coaching (PHP)" data-price="3000" data-currency="PHP" data-details="Valid for 30 days | 1-Month Meal Plan Sets | 1 Follow-Up Session">
+                                SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Standard Nutrition Coaching (PHP) -->
+                        <div class="package-card bg-white border-2 border-primary rounded-2xl p-8 shadow-xl relative premium-highlight">
+                            <div class="text-center mb-8">
+                                <div class="text-3xl font-bold text-primary mb-2">₱4,000 PHP</div>
+                                <div class="text-gray-500 text-sm mb-4">Valid for 30 days</div>
+                                <h3 class="text-xl font-bold text-secondary">STANDARD NUTRITION COACHING</h3>
+                                <p class="text-gray-600 mt-2">Ideal for consistency builders & PCOS clients</p>
+                            </div>
+                            
+                            <div class="space-y-4 mb-8">
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">1-Month Meal Plan Sets</span> (5 options to choose from, customized and repeatable for consistency)</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">Customized To Your Goals</span> (Weight Loss, PCOS, Muscle Gain, Healthy Habits)</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">2 Online Follow-Up Sessions</span> scheduled every two weeks</span>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-primary hover:bg-red-700 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Standard Nutrition Coaching (PHP)" data-price="4000" data-currency="PHP" data-details="Valid for 30 days | 1-Month Meal Plan Sets | 2 Follow-Up Sessions">
+                                SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Premium Nutrition Coaching (PHP) -->
+                        <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                            <div class="text-center mb-8">
+                                <div class="text-3xl font-bold text-primary mb-2">₱6,000 PHP</div>
+                                <div class="text-gray-500 text-sm mb-4">Valid for 30 days</div>
+                                <h3 class="text-xl font-bold text-secondary">PREMIUM NUTRITION COACHING</h3>
+                                <p class="text-gray-600 mt-2">For clients who need close monitoring and accountability</p>
+                            </div>
+                            
+                            <div class="space-y-4 mb-8">
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">1-Month Meal Plan Sets</span> (5 options to choose from, customized and repeatable for consistency)</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">Tailored To Your Goals, Health Conditions, And Lifestyle</span> (Weight Loss, Weight Gain, Medical Nutrition Therapy)</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">Weekly Check-Ins/Assessments</span> (Online sessions to review progress and make adjustments)</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3 mt-1 flex-shrink-0">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700"><span class="font-semibold">Daily chat support</span> for nutrition guidance and calorie accountability (response within working hours)</span>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Premium Nutrition Coaching (PHP)" data-price="6000" data-currency="PHP" data-details="Valid for 30 days | Weekly Check-Ins | Daily Support">
+                                SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Single Session Fee Notice -->
+            <div class="mb-16 bg-primary/10 border-l-4 border-primary p-6 rounded-lg max-w-4xl mx-auto">
+                <div class="flex items-center">
+                    <div class="bg-primary text-white p-3 rounded-full mr-4">
+                        <i class="fas fa-info text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-secondary mb-1">Single Session (Pay-Per-Session)</h3>
+                        <p class="text-gray-700">
+                            <span class="font-bold text-primary text-lg">₱2,500</span> per session (Subject to coach availability). 
+                            <span class="font-semibold">Packages are recommended for better value.</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Training Packages Header -->
+            <div class="text-center mb-16">
+                <h3 class="text-2xl xs:text-3xl font-bold text-secondary mb-4 font-heading section-title">TRAINING PACKAGES</h3>
+                <p class="text-gray-600 max-w-3xl mx-auto">Choose from our in-person or online training options</p>
+            </div>
+            
+            <!-- ONLINE COACHING PDF & SPUR.FIT PACKAGES (unchanged) -->
+            <div class="mb-20">
+                <h3 class="text-2xl xs:text-3xl font-bold text-secondary mb-10 text-center">ONLINE COACHING PDF & SPUR.FIT PACKAGES</h3>
+                <p class="text-gray-600 mb-6 text-center max-w-4xl mx-auto">Structured, app-based coaching with accountability and progress tracking</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <!-- BASIC Package -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-8">
+                            <div class="text-3xl font-bold text-primary mb-2">₱3,000 PHP</div>
+                            <div class="text-gray-500 text-sm mb-4">Per Month</div>
+                            <h3 class="text-xl font-bold text-secondary">BASIC</h3>
+                            <p class="text-gray-600 mt-2">Essential workout program</p>
+                        </div>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">4-Week Workout Program (PDF)</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Online Coaching PDF & Spur.fit - BASIC" data-price="3000" data-currency="PHP" data-details="Per Month | 4-Week Workout Program (PDF)">
+                            SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- STANDARD Package -->
+                    <div class="package-card bg-white border-2 border-primary rounded-2xl p-8 shadow-xl relative premium-highlight">
+                        <div class="text-center mb-8">
+                            <div class="text-3xl font-bold text-primary mb-2">₱4,500 PHP</div>
+                            <div class="text-gray-500 text-sm mb-4">Per Month</div>
+                            <h3 class="text-xl font-bold text-secondary">STANDARD</h3>
+                            <p class="text-gray-600 mt-2">Complete fitness support</p>
+                        </div>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">4-Week Workout Program (PDF)</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Nutrition Guidance</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Weekly Check-Ins</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">24/7 Chat Assistance</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-primary hover:bg-red-700 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Online Coaching PDF & Spur.fit - STANDARD" data-price="4500" data-currency="PHP" data-details="Per Month | Nutrition Guidance | Weekly Check-Ins | 24/7 Chat">
+                            SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- PREMIUM Package -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-8">
+                            <div class="text-3xl font-bold text-primary mb-2">₱6,500 PHP</div>
+                            <div class="text-gray-500 text-sm mb-4">Per Month</div>
+                            <h3 class="text-xl font-bold text-secondary">PREMIUM (with Spur.fit)</h3>
+                            <p class="text-gray-600 mt-2">Ultimate coaching experience</p>
+                        </div>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Structured, app-based coaching with accountability</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">4-Week Workout Program</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">24/7 Chat Assistance</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Built-in Progress Tracking Tools</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Access to Virtual Workout Videos</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Access To Spur.fit Application</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Weekly Check-Ins</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Online Coaching PDF & Spur.fit - PREMIUM" data-price="6500" data-currency="PHP" data-details="Per Month | App-based coaching | Progress Tracking | Virtual Workouts">
+                            SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- USD Online Coaching Packages (unchanged) -->
+            <div class="mb-20">
+                <h3 class="text-2xl xs:text-3xl font-bold text-secondary mb-10 text-center">1-ON-1 ONLINE COACHING (USD)</h3>
+                <p class="text-gray-600 mb-6 text-center max-w-4xl mx-auto">Live Training via Zoom / Google Meet</p>
+                <p class="text-gray-700 font-semibold mb-10 text-center max-w-4xl mx-auto">All packages include live 1-on-1 coaching via Zoom / Google Meet.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                    <!-- Package 1 (USD) -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-8">
+                            <div class="text-3xl font-bold text-primary mb-2">$275 USD</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 35 days</div>
+                            <h3 class="text-xl font-bold text-secondary">10 SESSIONS + 1 FREE</h3>
+                            <p class="text-gray-600 mt-2">Total: 11 Sessions</p>
+                        </div>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Online Training via Zoom/Google Meet</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Progressive training program</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Nutrition education & habit coaching</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Progress Tracking</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Online Coaching (USD) - 10+1 Sessions" data-price="275" data-currency="USD" data-details="Valid for 35 days | Total: 11 Sessions">
+                            SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Package 2 (USD) -->
+                    <div class="package-card bg-white border-2 border-primary rounded-2xl p-8 shadow-xl relative">
+                        <div class="text-center mb-8">
+                            <div class="text-3xl font-bold text-primary mb-2">$432 USD</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 45 days</div>
+                            <h3 class="text-xl font-bold text-secondary">16 SESSIONS + 2 FREE</h3>
+                            <p class="text-gray-600 mt-2">Total: 18 Sessions</p>
+                        </div>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Online Training via Zoom/Google Meet</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Progressive training program</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Nutrition education & habit coaching</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Progress Tracking & Coaching check-ins</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Priority coach support (working hours)</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-primary hover:bg-red-700 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Online Coaching (USD) - 16+2 Sessions" data-price="432" data-currency="USD" data-details="Valid for 45 days | Total: 18 Sessions">
+                            SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Package 3 (USD) -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-8">
+                            <div class="text-3xl font-bold text-primary mb-2">$506 USD</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 55 days</div>
+                            <h3 class="text-xl font-bold text-secondary">20 SESSIONS + 2 FREE</h3>
+                            <p class="text-gray-600 mt-2">Total: 22 Sessions</p>
+                        </div>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Online Training via Zoom/Google Meet</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Progressive training program</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Nutrition education & habit coaching</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Detailed Progress Tracking</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Coaching check-ins</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Priority coach support (working hours)</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Online Coaching (USD) - 20+2 Sessions" data-price="506" data-currency="USD" data-details="Valid for 55 days | Total: 22 Sessions">
+                            SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Package 4 (USD) - UPDATED: Valid for 80 days -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-8">
+                            <div class="text-3xl font-bold text-primary mb-2">$660 USD</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 80 days</div>
+                            <h3 class="text-xl font-bold text-secondary">30 SESSIONS</h3>
+                            <p class="text-gray-600 mt-2">Most Comprehensive Package</p>
+                        </div>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Online Training via Zoom/Google Meet</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Progressive training program</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Nutrition education & habit coaching</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Advanced Progress Analytics</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Priority coach support (working hours)</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Online Coaching (USD) - 30 Sessions" data-price="660" data-currency="USD" data-details="Valid for 80 days | Total: 30 Sessions">
+                            SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PHP Online Coaching Packages (unchanged) -->
+            <div class="mb-20">
+                <h3 class="text-2xl xs:text-3xl font-bold text-secondary mb-10 text-center">1-ON-1 ONLINE COACHING (PHP)</h3>
+                <p class="text-gray-600 mb-6 text-center max-w-4xl mx-auto">Live Training via Zoom / Google Meet</p>
+                <p class="text-gray-700 font-semibold mb-10 text-center max-w-4xl mx-auto">All packages include live 1-on-1 coaching via Zoom / Google Meet.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                    <!-- Package 1 (PHP) -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-8">
+                            <div class="text-3xl font-bold text-primary mb-2">₱12,100 PHP</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 35 days</div>
+                            <h3 class="text-xl font-bold text-secondary">10 SESSIONS + 1 FREE</h3>
+                            <p class="text-gray-600 mt-2">Total: 11 Sessions</p>
+                        </div>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Online Training via Zoom/Google Meet</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Progressive training program</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Nutrition education & habit coaching</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Progress Tracking</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Online Coaching (PHP) - 10+1 Sessions" data-price="12100" data-currency="PHP" data-details="Valid for 35 days | Total: 11 Sessions">
+                            SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Package 2 (PHP) -->
+                    <div class="package-card bg-white border-2 border-primary rounded-2xl p-8 shadow-xl relative">
+                        <div class="text-center mb-8">
+                            <div class="text-3xl font-bold text-primary mb-2">₱15,400 PHP</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 45 days</div>
+                            <h3 class="text-xl font-bold text-secondary">12 SESSIONS + 2 FREE</h3>
+                            <p class="text-gray-600 mt-2">Total: 14 Sessions</p>
+                        </div>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Online Training via Zoom/Google Meet</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Progressive training program</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Nutrition education & habit coaching</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Progress Tracking & Coaching check-ins</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-primary hover:bg-red-700 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Online Coaching (PHP) - 12+2 Sessions" data-price="15400" data-currency="PHP" data-details="Valid for 45 days | Total: 14 Sessions">
+                            SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Package 3 (PHP) -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-8">
+                            <div class="text-3xl font-bold text-primary mb-2">₱19,800 PHP</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 55 days</div>
+                            <h3 class="text-xl font-bold text-secondary">16 SESSIONS + 2 FREE</h3>
+                            <p class="text-gray-600 mt-2">Total: 18 Sessions</p>
+                        </div>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Online Training via Zoom/Google Meet</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Progressive training program</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Nutrition education & habit coaching</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Detailed Progress Tracking</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Coaching check-ins</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Online Coaching (PHP) - 16+2 Sessions" data-price="19800" data-currency="PHP" data-details="Valid for 55 days | Total: 18 Sessions">
+                            SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Package 4 (PHP) - UPDATED: Valid for 80 days -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-8">
+                            <div class="text-3xl font-bold text-primary mb-2">₱27,500 PHP</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 80 days</div>
+                            <h3 class="text-xl font-bold text-secondary">25 SESSIONS</h3>
+                            <p class="text-gray-600 mt-2">Most Comprehensive Package</p>
+                        </div>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Online Training via Zoom/Google Meet</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Progressive training program</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Nutrition education & habit coaching</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Advanced Progress Analytics</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Priority coach support (working hours)</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Online Coaching (PHP) - 25 Sessions" data-price="27500" data-currency="PHP" data-details="Valid for 80 days | Total: 25 Sessions">
+                            SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- City-Based Personal Training Packages (unchanged) -->
+            <div class="mb-20">
+                <h3 class="text-2xl xs:text-3xl font-bold text-secondary mb-10 text-center font-heading">IN-PERSON PERSONAL TRAINING BY CITY</h3>
+                <p class="text-gray-600 mb-10 text-center max-w-4xl mx-auto">All-inclusive rates for premium personal training sessions in each location</p>
+                
+                <!-- 1. Parañaque City - Packages with Free Sessions -->
+                <div class="mb-16">
+                    <div class="flex items-center justify-center mb-8">
+                        <div class="bg-primary text-white p-3 rounded-full mr-4">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h4 class="text-2xl font-bold text-secondary text-center">PARAÑAQUE CITY - PACKAGES WITH FREE SESSIONS</h4>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                        <!-- 10+2 Package -->
+                        <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                            <div class="text-center mb-8">
+                                <div class="text-3xl font-bold text-primary mb-2">₱15,500</div>
+                                <div class="text-gray-500 text-sm mb-4">Valid for 35 days</div>
+                                <h3 class="text-xl font-bold text-secondary">10 SESSIONS + 2 FREE</h3>
+                                <p class="text-gray-600 mt-2">Total: 12 Sessions</p>
+                            </div>
+                            
+                            <div class="space-y-4 mb-8">
+                                <div class="flex items-center">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">In-Person Personal Training</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">Progressive Training Program</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">Nutrition Education & Habit Coaching</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">Basic Progress Tracking</span>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Parañaque City - 10+2 Free Sessions" data-price="15500" data-currency="PHP" data-details="Valid for 35 days | Total: 12 Sessions">
+                                SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- 16+2 Package -->
+                        <div class="package-card bg-white border-2 border-primary rounded-2xl p-8 shadow-xl relative">
+                            <div class="text-center mb-8">
+                                <div class="text-3xl font-bold text-primary mb-2">₱23,400</div>
+                                <div class="text-gray-500 text-sm mb-4">Valid for 45 days</div>
+                                <h3 class="text-xl font-bold text-secondary">16 SESSIONS + 2 FREE</h3>
+                                <p class="text-gray-600 mt-2">Total: 18 Sessions</p>
+                            </div>
+                            
+                            <div class="space-y-4 mb-8">
+                                <div class="flex items-center">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">In-Person Personal Training</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">Progressive Training Program</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">Nutrition Education & Habit Coaching</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">Progress Tracking & Program Adjustments</span>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-primary hover:bg-red-700 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Parañaque City - 16+2 Free Sessions" data-price="23400" data-currency="PHP" data-details="Valid for 45 days | Total: 18 Sessions">
+                                SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- 20+2 Package -->
+                        <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                            <div class="text-center mb-8">
+                                <div class="text-3xl font-bold text-primary mb-2">₱28,600</div>
+                                <div class="text-gray-500 text-sm mb-4">Valid for 55 days</div>
+                                <h3 class="text-xl font-bold text-secondary">20 SESSIONS + 2 FREE</h3>
+                                <p class="text-gray-600 mt-2">Total: 22 Sessions</p>
+                            </div>
+                            
+                            <div class="space-y-4 mb-8">
+                                <div class="flex items-center">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">In-Person Personal Training</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </div>
+                                    <span class="text-gray-700">Advanced Progressive Training Program</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Nutrition Education & Habit Coaching</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Detailed Progress Tracking</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Parañaque City - 20+2 Free Sessions" data-price="28600" data-currency="PHP" data-details="Valid for 55 days | Total: 22 Sessions">
+                            SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- 30+3 Package - UPDATED: Valid for 100 days -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-8">
+                            <div class="text-3xl font-bold text-primary mb-2">₱42,900</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 100 days</div>
+                            <h3 class="text-xl font-bold text-secondary">30 SESSIONS + 3 FREE</h3>
+                            <p class="text-gray-600 mt-2">Total: 33 Sessions</p>
+                        </div>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">In-Person Personal Training</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Elite Progressive Training Program</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Nutrition Education & Habit Coaching</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Detailed Progress Tracking</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-primary text-white p-1 rounded-full mr-3">
+                                    <i class="fas fa-check text-xs"></i>
+                                </div>
+                                <span class="text-gray-700">Extended Coaching Support</span>
+                            </div>
+                        </div>
+                        
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Parañaque City - 30+3 Free Sessions" data-price="42900" data-currency="PHP" data-details="Valid for 100 days | Total: 33 Sessions">
+                            SELECT THIS PLAN <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                <p class="text-center text-gray-600 text-sm mt-4 max-w-3xl mx-auto">Packages are valid only within the registered service area. Sessions are non-transferable and non-refundable.</p>
+            </div>
+            
+            <!-- 2. Las Piñas City -->
+            <div class="mb-16">
+                <div class="flex items-center justify-center mb-8">
+                    <div class="bg-primary text-white p-3 rounded-full mr-4">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold text-secondary text-center">LAS PIÑAS CITY - PRIME TRAINING PACKAGES</h4>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱16,500</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 35 days</div>
+                            <h4 class="text-lg font-bold text-secondary">10 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Las Piñas Prime - 10 Sessions" data-price="16500" data-currency="PHP" data-details="Valid for 35 days | Total: 10 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="package-card bg-white border-2 border-primary rounded-2xl p-8 shadow-xl relative">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱25,600</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 45 days</div>
+                            <h4 class="text-lg font-bold text-secondary">16 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-primary hover:bg-red-700 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Las Piñas Prime - 16 Sessions" data-price="25600" data-currency="PHP" data-details="Valid for 45 days | Total: 16 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱31,000</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 55 days</div>
+                            <h4 class="text-lg font-bold text-secondary">20 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Las Piñas Prime - 20 Sessions" data-price="31000" data-currency="PHP" data-details="Valid for 55 days | Total: 20 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- UPDATED: Valid for 100 days -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱45,000</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 100 days</div>
+                            <h4 class="text-lg font-bold text-secondary">30 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Las Piñas Prime - 30 Sessions" data-price="45000" data-currency="PHP" data-details="Valid for 100 days | Total: 30 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                <p class="text-center text-gray-600 text-sm mt-4 max-w-3xl mx-auto">Packages are valid only within the registered service area. Sessions are non-transferable and non-refundable.</p>
+            </div>
+            
+            <!-- 3. Alabang -->
+            <div class="mb-16">
+                <div class="flex items-center justify-center mb-8">
+                    <div class="bg-primary text-white p-3 rounded-full mr-4">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold text-secondary text-center">ALABANG - SIGNATURE TRAINING PACKAGES</h4>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱17,500</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 35 days</div>
+                            <h4 class="text-lg font-bold text-secondary">10 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Alabang Signature - 10 Sessions" data-price="17500" data-currency="PHP" data-details="Valid for 35 days | Total: 10 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="package-card bg-white border-2 border-primary rounded-2xl p-8 shadow-xl relative">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱27,200</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 45 days</div>
+                            <h4 class="text-lg font-bold text-secondary">16 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-primary hover:bg-red-700 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Alabang Signature - 16 Sessions" data-price="27200" data-currency="PHP" data-details="Valid for 45 days | Total: 16 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱34,000</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 55 days</div>
+                            <h4 class="text-lg font-bold text-secondary">20 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Alabang Signature - 20 Sessions" data-price="34000" data-currency="PHP" data-details="Valid for 55 days | Total: 20 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- UPDATED: Valid for 100 days -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱49,500</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 100 days</div>
+                            <h4 class="text-lg font-bold text-secondary">30 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Alabang Signature - 30 Sessions" data-price="49500" data-currency="PHP" data-details="Valid for 100 days | Total: 30 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                <p class="text-center text-gray-600 text-sm mt-4 max-w-3xl mx-auto">Packages are valid only within the registered service area. Sessions are non-transferable and non-refundable.</p>
+            </div>
+            
+            <!-- 4. Pasay City - NEW PACKAGE ADDED FROM USER'S IMAGE -->
+            <div class="mb-16">
+                <div class="flex items-center justify-center mb-8">
+                    <div class="bg-primary text-white p-3 rounded-full mr-4">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold text-secondary text-center">PASAY CITY - PERSONAL TRAINING PACKAGES</h4>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱18,850</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 35 days</div>
+                            <h4 class="text-lg font-bold text-secondary">10 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Pasay City - 10 Sessions" data-price="18850" data-currency="PHP" data-details="Valid for 35 days | Total: 10 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="package-card bg-white border-2 border-primary rounded-2xl p-8 shadow-xl relative">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱28,800</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 45 days</div>
+                            <h4 class="text-lg font-bold text-secondary">16 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-primary hover:bg-red-700 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Pasay City - 16 Sessions" data-price="28800" data-currency="PHP" data-details="Valid for 45 days | Total: 16 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱36,000</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 55 days</div>
+                            <h4 class="text-lg font-bold text-secondary">20 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Pasay City - 20 Sessions" data-price="36000" data-currency="PHP" data-details="Valid for 55 days | Total: 20 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- UPDATED: Valid for 100 days -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱52,500</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 100 days</div>
+                            <h4 class="text-lg font-bold text-secondary">30 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Pasay City - 30 Sessions" data-price="52500" data-currency="PHP" data-details="Valid for 100 days | Total: 30 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                <p class="text-center text-gray-600 text-sm mt-4 max-w-3xl mx-auto">Packages are valid only within the registered service area. Sessions are non-transferable and non-refundable.</p>
+            </div>
+            
+            <!-- 5. Makati City -->
+            <div class="mb-16">
+                <div class="flex items-center justify-center mb-8">
+                    <div class="bg-primary text-white p-3 rounded-full mr-4">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold text-secondary text-center">MAKATI CITY - PRIME TRAINING PACKAGES</h4>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱18,850</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 35 days</div>
+                            <h4 class="text-lg font-bold text-secondary">10 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Makati Prime - 10 Sessions" data-price="18850" data-currency="PHP" data-details="Valid for 35 days | Total: 10 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="package-card bg-white border-2 border-primary rounded-2xl p-8 shadow-xl relative">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱28,800</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 45 days</div>
+                            <h4 class="text-lg font-bold text-secondary">16 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-primary hover:bg-red-700 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Makati Prime - 16 Sessions" data-price="28800" data-currency="PHP" data-details="Valid for 45 days | Total: 16 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱36,000</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 55 days</div>
+                            <h4 class="text-lg font-bold text-secondary">20 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Makati Prime - 20 Sessions" data-price="36000" data-currency="PHP" data-details="Valid for 55 days | Total: 20 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- UPDATED: Valid for 100 days -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱52,500</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 100 days</div>
+                            <h4 class="text-lg font-bold text-secondary">30 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Makati Prime - 30 Sessions" data-price="52500" data-currency="PHP" data-details="Valid for 100 days | Total: 30 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                <p class="text-center text-gray-600 text-sm mt-4 max-w-3xl mx-auto">Packages are valid only within the registered service area. Sessions are non-transferable and non-refundable.</p>
+            </div>
+            
+            <!-- 6. Taguig City - COMBINED WITH BONIFACIO GLOBAL CITY -->
+            <div class="mb-16">
+                <div class="flex items-center justify-center mb-8">
+                    <div class="bg-primary text-white p-3 rounded-full mr-4">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold text-secondary text-center">TAGUIG CITY - TRAINING PACKAGES (INCLUDING BONIFACIO GLOBAL CITY)</h4>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱18,500</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 35 days</div>
+                            <h4 class="text-lg font-bold text-secondary">10 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Taguig City - 10 Sessions" data-price="18500" data-currency="PHP" data-details="Valid for 35 days | Total: 10 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="package-card bg-white border-2 border-primary rounded-2xl p-8 shadow-xl relative">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱28,800</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 45 days</div>
+                            <h4 class="text-lg font-bold text-secondary">16 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-primary hover:bg-red-700 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Taguig City - 16 Sessions" data-price="28800" data-currency="PHP" data-details="Valid for 45 days | Total: 16 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱36,000</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 55 days</div>
+                            <h4 class="text-lg font-bold text-secondary">20 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Taguig City - 20 Sessions" data-price="36000" data-currency="PHP" data-details="Valid for 55 days | Total: 20 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- UPDATED: Valid for 100 days -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-2">₱52,500</div>
+                            <div class="text-gray-500 text-sm mb-4">Valid for 100 days</div>
+                            <h4 class="text-lg font-bold text-secondary">30 SESSIONS</h4>
+                        </div>
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-xl transition transform hover:scale-105 package-select-btn" data-package="Taguig City - 30 Sessions" data-price="52500" data-currency="PHP" data-details="Valid for 100 days | Total: 30 Sessions">
+                            SELECT <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                <p class="text-center text-gray-600 text-sm mt-4 max-w-3xl mx-auto">Packages are valid only within the registered service area. Sessions are non-transferable and non-refundable.</p>
+            </div>
+        </div>
+        
+        <div class="mt-16 text-center">
+            <div class="bg-accent p-6 rounded-xl max-w-4xl mx-auto">
+                <p class="text-gray-700">
+                    <span class="font-bold text-primary">Important Note:</span> All packages are valid only within the registered service area. Sessions are non-transferable and non-refundable. Single session rate is ₱2,500 (subject to coach availability). Packages are recommended for better value and consistent training.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Package Form Modal (unchanged) -->
+    <div id="packageModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4 modal-transition">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="text-2xl font-bold text-secondary">Package Sign-Up Form</h3>
+                    <button id="closeModal" class="text-gray-500 hover:text-gray-700 text-2xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="mb-8 p-5 bg-primary bg-opacity-10 rounded-xl">
+                    <h4 class="font-bold text-lg text-primary mb-2" id="selectedPackage">Select a package</h4>
+                    <p class="text-gray-700"><span class="font-bold">Price:</span> <span id="packagePrice"></span></p>
+                    <p class="text-gray-700 text-sm mt-1" id="packageDetails"></p>
+                </div>
+                
+                <form id="packageForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="fullName" class="block text-gray-700 font-semibold mb-2">Full Name *</label>
+                            <input type="text" id="fullName" name="fullName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <p id="nameError" class="text-red-500 text-sm mt-1 hidden">Please enter your full name</p>
+                        </div>
+                        
+                        <div>
+                            <label for="userEmail" class="block text-gray-700 font-semibold mb-2">Email Address *</label>
+                            <input type="email" id="userEmail" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="userPhone" class="block text-gray-700 font-semibold mb-2">Phone Number *</label>
+                            <input type="tel" id="userPhone" name="phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        
+                        <div>
+                            <label for="userAge" class="block text-gray-700 font-semibold mb-2">Age</label>
+                            <input type="number" id="userAge" name="age" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="trainingLocation" class="block text-gray-700 font-semibold mb-2">Training Location/City</label>
+                        <select id="trainingLocation" name="location" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <option value="">Select your location</option>
+                            <option value="online">Online Coaching</option>
+                            <option value="taguig">Taguig City (including BGC)</option>
+                            <option value="paranaque">Parañaque City</option>
+                            <option value="alabang">Alabang</option>
+                            <option value="pasay">Pasay City</option>
+                            <option value="makati">Makati City</option>
+                            <option value="las-pinas">Las Piñas City</option>
+                            <option value="other">Other Location</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="primaryGoal" class="block text-gray-700 font-semibold mb-2">Primary Fitness Goal *</label>
+                        <select id="primaryGoal" name="goal" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            <option value="">Select your goal</option>
+                            <option value="weight-loss">Weight Loss</option>
+                            <option value="muscle-gain">Muscle Gain/Hypertrophy</option>
+                            <option value="strength">Strength Training</option>
+                            <option value="conditioning">Strength & Conditioning</option>
+                            <option value="functional">Functional Fitness</option>
+                            <option value="general">General Fitness & Health</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="healthConditions" class="block text-gray-700 font-semibold mb-2">Health Conditions (if any)</label>
+                        <textarea id="healthConditions" name="healthConditions" rows="2" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="e.g., PCOS, diabetes, hypertension, injuries..."></textarea>
+                    </div>
+                    
+                    <div>
+                        <label for="additionalNotes" class="block text-gray-700 font-semibold mb-2">Additional Notes or Questions</label>
+                        <textarea id="additionalNotes" name="notes" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <input type="checkbox" id="termsAgree" required class="mr-3 mt-1">
+                        <label for="termsAgree" class="text-gray-700 text-sm">I agree to the <a style="text-decoration: underline;" href="termsconditions.html" target="_blank" class="text-primary hover:text-red-700">terms and conditions</a> and understand that I will receive payment instructions after submitting this form.</label>
+                    </div>
+                    <p id="termsError" class="text-red-500 text-sm mt-1 hidden pl-7">You must agree to the terms and conditions</p>
+                    
+                    <div class="flex flex-col xs:flex-row gap-4 pt-6">
+                        <button type="submit" id="packageSubmitBtn" class="flex-1 bg-primary hover:bg-red-700 text-white font-bold py-4 px-4 rounded-lg transition transform hover:scale-105 shadow-lg flex items-center justify-center">
+                            <span id="packageBtnText">SUBMIT FORM</span>
+                            <span id="packageBtnLoader" class="hidden ml-3">
+                                <span class="loading-spinner"></span>
+                            </span>
+                            <i id="packageBtnIcon" class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                        <button type="button" id="cancelForm" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-lg transition">
+                            CANCEL
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Payment Options Modal (unchanged) -->
+   <!-- Payment Options Modal -->
+<div id="paymentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4 modal-transition">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full">
+        <div class="p-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-secondary">Payment methods</h3>
+                <button id="closePaymentModal" class="text-gray-500 hover:text-gray-700 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="mb-4 text-sm text-gray-600">
+                BDO to BDO transfers are free. Fees may apply for non-BDO transfers.
+            </div>
+            
+            <div class="mb-6 p-5 bg-primary bg-opacity-10 rounded-xl">
+                <h4 class="font-bold text-lg text-primary mb-2" id="paymentPackageName">Package Name</h4>
+                <p class="text-gray-700"><span class="font-bold">Amount:</span> <span id="paymentAmount"></span></p>
+            </div>
+            
+            <!-- Payment QR Codes Grid - 3 Options -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- BDO Transfer QR Code -->
+                <div class="border-2 border-gray-200 rounded-xl p-4 text-center">
+                    <div class="bg-gray-100 p-2 rounded-lg mb-3 flex justify-center items-center h-36">
+                        <!-- QR CODE IMAGE FOR BDO - INSERT HERE -->
+
+                        <img src="BDO.jpg" alt="BDO QR Code" class="w-32 h-32 object-contain"> 
+                    </div>
+                    <p class="font-bold text-gray-800">BDO Transfer</p>
+                    <p class="text-xs text-gray-600">BDO Unibank</p>
+                </div>
+                
+                <!-- GCash QR Code -->
+                <div class="border-2 border-gray-200 rounded-xl p-4 text-center">
+                    <div class="bg-gray-100 p-2 rounded-lg mb-3 flex justify-center items-center h-36">
+                        <!-- QR CODE IMAGE FOR GCASH - INSERT HERE -->
+                        
+                        <img src="Gcash.jpg" alt="GCash QR Code" class="w-32 h-32 object-contain"> 
+                    </div>
+                    <p class="font-bold text-gray-800">GCash</p>
+                    <p class="text-xs text-gray-600">Scan to pay</p>
+                </div>
+                
+                <!-- PayPal QR Code -->
+                <div class="border-2 border-gray-200 rounded-xl p-4 text-center">
+                    <div class="bg-gray-100 p-2 rounded-lg mb-3 flex justify-center items-center h-36">
+                        <!-- QR CODE IMAGE FOR PAYPAL - INSERT HERE -->
+
+                        <img src="paypal.jpg" alt="PayPal QR Code" class="w-32 h-32 object-contain"> 
+                    </div>
+                    <p class="font-bold text-gray-800">PayPal</p>
+                    <p class="text-xs text-gray-600">Send payment via PayPal</p>
+                </div>
+            </div>
+            
+            <div class="mb-6 p-4 bg-yellow-50 border-l-4 border-yellow-500 rounded">
+                <p class="text-sm text-gray-700">
+                    <i class="fas fa-info-circle text-yellow-600 mr-2"></i>
+                    After making the payment, please click the "I AGREE" button below to proceed to the assessment form.
+                </p>
+            </div>
+            
+            <div class="flex flex-col xs:flex-row gap-4">
+                <button id="agreePaymentBtn" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-4 rounded-lg transition transform hover:scale-105 shadow-lg flex items-center justify-center">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    I AGREE - PROCEED TO ASSESSMENT
+                </button>
+                <button id="cancelPaymentBtn" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-lg transition">
+                    CANCEL
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Simple JavaScript - Only for closing modal and agree button -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const paymentModal = document.getElementById('paymentModal');
+        const closePaymentModal = document.getElementById('closePaymentModal');
+        const cancelPaymentBtn = document.getElementById('cancelPaymentBtn');
+        const agreePaymentBtn = document.getElementById('agreePaymentBtn');
+        
+        // Close modal functions
+        function closeModal() {
+            paymentModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        if (closePaymentModal) {
+            closePaymentModal.addEventListener('click', closeModal);
+        }
+        
+        if (cancelPaymentBtn) {
+            cancelPaymentBtn.addEventListener('click', closeModal);
+        }
+        
+        if (paymentModal) {
+            paymentModal.addEventListener('click', function(e) {
+                if (e.target === paymentModal) {
+                    closeModal();
+                }
+            });
+        }
+        
+        // Agree button - will be handled in master script
     });
+</script>
 
-    // ✅ Send confirmation to client
-    if (formType === 'contact') {
-      await transporter.sendMail({
-        from: `"EP Fitness" <${process.env.EMAIL_USER}>`,
-        to: email,
-        subject: "Thank you for contacting EP Fitness!",
-        html: `
-          <h2>Thank you for reaching out, ${name}!</h2>
-          <p>We have received your message and will get back to you within <strong>24 hours</strong>.</p>
-          <p>Coach Emman & EP Fitness Team</p>
-        `
-      });
-    }
+</section>
 
-    if (formType === 'package') {
-      const clientName = fullName || `${firstName || ''} ${lastName || ''}`.trim();
-      
-      await transporter.sendMail({
-        from: `"EP Fitness" <${process.env.EMAIL_USER}>`,
-        to: email,
-        subject: "Thank you for your EP Fitness package interest!",
-        html: `
-          <h2>Thanks for choosing EP Fitness, ${clientName}!</h2>
-          <p><strong>Your Selected Package:</strong> ${selectedPackage}</p>
-          <p><strong>Price:</strong> ${price}</p>
-          <p>Coach Emman will contact you within <strong>24 hours</strong> with payment instructions.</p>
-        `
-      });
-    }
+<!-- Original Training Assessment Form (for non-nutrition packages) -->
+<section id="assessment-original" class="py-16 md:py-24 bg-white form-section-hidden">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl xs:text-4xl md:text-5xl font-bold text-secondary mb-4 font-heading section-title">CLIENT ASSESSMENT FORM</h2>
+            <p class="text-gray-600 mt-12 max-w-3xl mx-auto">Please complete this comprehensive assessment form so Coach Emman can create a personalized training plan tailored specifically for you.</p>
+        </div>
 
-    if (formType === 'assessment') {
-      await transporter.sendMail({
-        from: `"EP Fitness" <${process.env.EMAIL_USER}>`,
-        to: email || assessmentFullName,
-        subject: "✅ Your EP Fitness Assessment Form has been received!",
-        html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <div style="background: #e53935; color: white; padding: 30px; text-align: center;">
-              <h1 style="margin: 0;">🏋️ EP FITNESS</h1>
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white p-8 md:p-12 rounded-2xl shadow-xl border border-gray-200">
+                <form id="originalAssessmentForm" class="space-y-8">
+                    
+                    <!-- PERSONAL INFORMATION -->
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">📌 PERSONAL INFORMATION</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Full Name *</label>
+                                <input type="text" id="originalFullName" name="originalFullName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Email Address *</label>
+                                <input type="email" id="originalEmail" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Phone Number *</label>
+                                <input type="tel" id="originalPhone" name="phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Gender</label>
+                                <select id="originalGender" name="gender" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                    <option value="">Select gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                    <option value="prefer-not">Prefer not to say</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Date of Birth</label>
+                                <input type="date" id="originalDateOfBirth" name="dateOfBirth" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Age</label>
+                                <input type="number" id="originalAge" name="originalAge" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Height (cm/ft)</label>
+                                <input type="text" id="originalHeight" name="height" placeholder="e.g., 175cm or 5'9&quot;" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Weight (kg/lbs)</label>
+                                <input type="text" id="originalWeight" name="weight" placeholder="e.g., 70kg or 154lbs" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">If you are a Fiverr client, please indicate your username</label>
+                                <input type="text" id="originalFiverrUsername" name="fiverrUsername" placeholder="Fiverr username" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- LIFESTYLE INFORMATION -->
+                    <div class="space-y-6 pt-4">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">🏃 LIFESTYLE INFORMATION</h3>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">What do you do for a living?</label>
+                            <input type="text" id="originalOccupation" name="occupation" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">What's the activity level at your job?</label>
+                            <select id="originalActivityLevel" name="activityLevel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select activity level</option>
+                                <option value="sedentary">Sedentary (desk job, minimal movement)</option>
+                                <option value="light">Light activity (standing, walking occasionally)</option>
+                                <option value="moderate">Moderate activity (active job, frequent movement)</option>
+                                <option value="heavy">Heavy activity (manual labor, constant movement)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Do you follow a regular working schedule? (Days/Afternoons/Nights)</label>
+                            <input type="text" id="originalWorkSchedule" name="workSchedule" placeholder="e.g., Monday-Friday 9am-5pm" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">How often do you travel?</label>
+                            <select id="originalTravelFrequency" name="travelFrequency" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select frequency</option>
+                                <option value="never">Rarely/Never</option>
+                                <option value="occasional">Occasionally (few times a year)</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="frequently">Frequently (several times a week)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Please list the physical activities that you participate in outside of the gym and outside of work:</label>
+                            <textarea id="originalOutsideActivities" name="outsideActivities" rows="3" placeholder="e.g., basketball, running, yoga, swimming, hiking..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- MEDICAL AND HEALTH INFORMATION -->
+                    <div class="space-y-6 pt-4">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">🏥 MEDICAL & HEALTH INFORMATION</h3>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">If you have any diagnosed health problems, list the condition(s):</label>
+                            <textarea id="originalDiagnosedConditions" name="diagnosedConditions" rows="2" placeholder="e.g., PCOS, diabetes, hypertension, asthma..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">If you are on any medications, please list them:</label>
+                            <textarea id="originalMedications" name="medications" rows="2" placeholder="Medication names and dosages if known" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">What additional therapies are being undertaken for the given health problem(s)?</label>
+                            <textarea id="originalConditionTherapies" name="conditionTherapies" rows="2" placeholder="e.g., physical therapy, acupuncture, counseling..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Do you have any existing injuries or conditions that I should be aware of while building your training plan?</label>
+                            <textarea id="originalExistingInjuries" name="existingInjuries" rows="2" placeholder="e.g., knee pain, lower back issues, shoulder injury..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">What additional therapies are being undertaken for the given injury?</label>
+                            <textarea id="originalInjuryTherapies" name="injuryTherapies" rows="2" placeholder="e.g., physiotherapy, chiropractic, massage..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Are you experiencing any stresses or motivational problems?</label>
+                            <textarea id="originalStressMotivation" name="stressMotivation" rows="2" placeholder="Please share if you're comfortable" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Has anyone of your immediate family developed heart disease before the age of 60?</label>
+                            <select id="originalFamilyHeartDisease" name="familyHeartDisease" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                                <option value="unsure">Unsure</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Do any diseases run in your family?</label>
+                            <textarea id="originalFamilyDiseases" name="familyDiseases" rows="2" placeholder="e.g., diabetes, heart disease, cancer..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Do you suffer from diabetes, asthma, high or low blood pressure?</label>
+                            <textarea id="originalChronicConditions" name="chronicConditions" rows="2" placeholder="Please specify" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Are you a current cigarette smoker?</label>
+                            <div class="flex space-x-6">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="originalSmoker" value="yes" class="mr-2"> Yes
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="originalSmoker" value="no" class="mr-2"> No
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="originalSmoker" value="occasional" class="mr-2"> Occasional
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- DIET INFORMATION -->
+                    <div class="space-y-6 pt-4">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">🥗 DIET INFORMATION</h3>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Your current diet could be best characterized as:</label>
+                            <select id="originalCurrentDiet" name="currentDiet" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select diet type</option>
+                                <option value="standard">Standard American/Western Diet</option>
+                                <option value="vegetarian">Vegetarian</option>
+                                <option value="vegan">Vegan</option>
+                                <option value="keto">Keto/Low Carb</option>
+                                <option value="paleo">Paleo</option>
+                                <option value="mediterranean">Mediterranean</option>
+                                <option value="intermittent-fasting">Intermittent Fasting</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Do you have any food allergies or intolerances?</label>
+                            <textarea id="originalFoodAllergies" name="foodAllergies" rows="2" placeholder="e.g., lactose intolerance, gluten sensitivity, nut allergy..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Which foods do you enjoy the most?</label>
+                            <textarea id="originalFavoriteFoods" name="favoriteFoods" rows="2" placeholder="Your favorite foods..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Which foods do you have a strong dislike for?</label>
+                            <textarea id="originalDislikedFoods" name="dislikedFoods" rows="2" placeholder="Foods you don't eat..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Have you experimented with any specific diets or eating approaches in the past? If so, why do you believe they were not successful for you?</label>
+                            <textarea id="originalPastDiets" name="pastDiets" rows="3" placeholder="e.g., Keto, Paleo, Weight Watchers - why they didn't work..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- GOALS -->
+                    <div class="space-y-6 pt-4">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">🎯 GOALS</h3>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">How would you describe your fitness level?</label>
+                            <select id="originalFitnessLevel" name="fitnessLevel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select fitness level</option>
+                                <option value="beginner">Beginner - New to exercise</option>
+                                <option value="novice">Novice - Some experience, inconsistent</option>
+                                <option value="intermediate">Intermediate - Regular exerciser</option>
+                                <option value="advanced">Advanced - Experienced, good form</option>
+                                <option value="athlete">Athlete - Competitive level</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">How much weight can you lift on these compound exercises? (Approximate max)</label>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="text-sm text-gray-600">Squat</label>
+                                    <input type="text" id="originalSquat" name="compoundLifts" placeholder="e.g., 100kg" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-600">Bench Press</label>
+                                    <input type="text" id="originalBench" name="compoundLifts" placeholder="e.g., 80kg" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                </div>
+                                <div>
+                                    <label class="text-sm text-gray-600">Deadlift</label>
+                                    <input type="text" id="originalDeadlift" name="compoundLifts" placeholder="e.g., 120kg" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">As we begin our coaching journey together, what specific changes or improvements would you like to see in yourself 3-6 months from now in order for you to consider it a successful experience?</label>
+                            <textarea id="originalSpecificGoals" name="specificGoals" rows="4" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">What are your expectations of me as your fitness coach? How can I provide you with the best support? (Communication preferences, feedback methods, etc.)</label>
+                            <textarea id="originalCoachExpectations" name="coachExpectations" rows="4" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">If you have previously made unsuccessful attempts to achieve these goals, what factors or circumstances do you believe will be different this time around?</label>
+                            <textarea id="originalPreviousAttempts" name="previousAttempts" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Please rate your readiness for change (1-10):</label>
+                            <input type="range" id="originalReadinessChange" name="readinessChange" min="1" max="10" step="1" value="5" class="w-full" oninput="this.nextElementSibling.value = this.value">
+                            <output class="block text-center text-primary font-bold mt-2">5</output>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Which following goals best fit with your goals?</label>
+                            <select id="originalGoalCategory" name="goalCategory" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select primary goal</option>
+                                <option value="weight-loss">Weight Loss / Fat Loss</option>
+                                <option value="muscle-gain">Muscle Gain / Hypertrophy</option>
+                                <option value="strength">Strength Training</option>
+                                <option value="endurance">Endurance / Conditioning</option>
+                                <option value="toning">Toning / Body Recomposition</option>
+                                <option value="health">General Health & Wellness</option>
+                                <option value="athletic">Athletic Performance</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">What is your goal with your training? What do you want to specifically achieve?</label>
+                            <textarea id="originalTrainingGoal" name="trainingGoal" rows="3" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- TRAINING PREFERENCES -->
+                    <div class="space-y-6 pt-4">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">🏋️ TRAINING PREFERENCES</h3>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Which gym equipment do you have access to?</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="originalGymEquipment" value="full-gym" class="mr-3"> Full commercial gym
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="originalGymEquipment" value="home-gym" class="mr-3"> Home gym (bench, rack, barbell)
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="originalGymEquipment" value="dumbbells" class="mr-3"> Dumbbells only
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="originalGymEquipment" value="bodyweight" class="mr-3"> Bodyweight only
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="originalGymEquipment" value="resistance-bands" class="mr-3"> Resistance bands
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="originalGymEquipment" value="kettlebells" class="mr-3"> Kettlebells
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Do you have any of these essentials available?</label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="originalEssentials" value="foam-roller" class="mr-3"> Foam Roller
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="originalEssentials" value="yoga-mat" class="mr-3"> Yoga Mat
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="originalEssentials" value="jump-rope" class="mr-3"> Jump Rope
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="originalEssentials" value="resistance-bands" class="mr-3"> Resistance Bands
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="originalEssentials" value="pull-up-bar" class="mr-3"> Pull-up Bar
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="originalEssentials" value="dumbbells" class="mr-3"> Dumbbells
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Timeline for achieving your goal:</label>
+                            <select id="originalGoalTimeline" name="goalTimeline" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select timeline</option>
+                                <option value="1-3-months">1-3 months</option>
+                                <option value="3-6-months">3-6 months</option>
+                                <option value="6-12-months">6-12 months</option>
+                                <option value="1-year+">1 year+</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">How often are you willing to train per week to reach your goal?</label>
+                            <select id="originalTrainingFrequency" name="trainingFrequency" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select frequency</option>
+                                <option value="2x">2 times per week</option>
+                                <option value="3x">3 times per week</option>
+                                <option value="4x">4 times per week</option>
+                                <option value="5x">5 times per week</option>
+                                <option value="6x">6 times per week</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Please rate your motivational level to do what it takes to reach your goal (1-10):</label>
+                            <input type="range" id="originalMotivationLevel" name="motivationLevel" min="1" max="10" step="1" value="8" class="w-full" oninput="this.nextElementSibling.value = this.value">
+                            <output class="block text-center text-primary font-bold mt-2">8</output>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Are you currently exercising regularly (at least 3x per week)?</label>
+                            <div class="flex space-x-6">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="originalCurrentlyExercising" value="yes" class="mr-2"> Yes
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="originalCurrentlyExercising" value="no" class="mr-2"> No
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="originalCurrentlyExercising" value="inconsistent" class="mr-2"> Inconsistent
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Have you trained with a personal trainer before?</label>
+                            <div class="flex space-x-6">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="originalTrainedBefore" value="yes" class="mr-2" id="originalTrainedYes"> Yes
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="originalTrainedBefore" value="no" class="mr-2" id="originalTrainedNo"> No
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div id="originalPreviousTrainingSection" class="hidden">
+                            <label class="block text-gray-700 font-semibold mb-2">If yes, what kind of training did you do?</label>
+                            <textarea id="originalPreviousTrainingType" name="previousTrainingType" rows="2" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">At what times during the day would you prefer to train?</label>
+                            <select id="originalPreferredTrainingTime" name="preferredTrainingTime" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select preferred time</option>
+                                <option value="early-morning">Early Morning (5am-8am)</option>
+                                <option value="morning">Morning (8am-11am)</option>
+                                <option value="lunch">Lunch Time (11am-2pm)</option>
+                                <option value="afternoon">Afternoon (2pm-5pm)</option>
+                                <option value="evening">Evening (5pm-8pm)</option>
+                                <option value="late">Late Evening (8pm+)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">How much time do you want to workout? (per session)</label>
+                            <select id="originalWorkoutDuration" name="workoutDuration" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select duration</option>
+                                <option value="30min">30 minutes</option>
+                                <option value="45min">45 minutes</option>
+                                <option value="60min">60 minutes</option>
+                                <option value="75min">75 minutes</option>
+                                <option value="90min">90 minutes</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">How often do you want to do Personal Training per week?</label>
+                            <select id="originalPersonalTrainingFrequency" name="personalTrainingFrequency" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select frequency</option>
+                                <option value="1x">1 session per week</option>
+                                <option value="2x">2 sessions per week</option>
+                                <option value="3x">3 sessions per week</option>
+                                <option value="4x">4 sessions per week</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- ABOUT YOU -->
+                    <div class="space-y-6 pt-4">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">💭 ABOUT YOU</h3>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Share three aspects about you that you would like me to know. (Hobbies, trips, life goals, fears, etc.)</label>
+                            <textarea id="originalThreeAspects" name="threeAspects" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- COMMITMENTS -->
+                    <div class="space-y-6 pt-4">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">🤝 COMMITMENTS</h3>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Are you capable, willing, and prepared to provide a completed WEEKLY check-in form to demonstrate your progress on a regular basis?</label>
+                            <div class="flex space-x-6">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="originalWeeklyCheckinCommitment" value="yes" required class="mr-2"> Yes
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="originalWeeklyCheckinCommitment" value="no" class="mr-2"> No
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Are you capable, willing, and prepared to provide your Progress Photo & Body Measurements on a monthly basis?</label>
+                            <div class="flex space-x-6">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="originalMonthlyPhotosCommitment" value="yes" required class="mr-2"> Yes
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="originalMonthlyPhotosCommitment" value="no" class="mr-2"> No
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Are you willing to commit to showing up even during challenging times when unexpected obstacles arise in life?</label>
+                            <div class="flex space-x-6">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="originalCommitmentDuringChallenges" value="yes" required class="mr-2"> Yes
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="originalCommitmentDuringChallenges" value="no" class="mr-2"> No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- TERMS AND SUBMIT -->
+                    <div class="space-y-6 pt-6">
+                        <div class="flex items-start">
+                            <input type="checkbox" id="originalTermsAgree" required class="mr-3 mt-1">
+                            <label for="originalTermsAgree" class="text-gray-700 text-sm">I confirm that all information provided is accurate and complete to the best of my knowledge. I understand that this information will be used to create a personalized training program.</label>
+                        </div>
+                        
+                        <div class="flex flex-col xs:flex-row gap-4 pt-6">
+                            <button type="submit" id="originalAssessmentSubmitBtn" class="flex-1 bg-primary hover:bg-red-700 text-white font-bold py-4 px-4 rounded-lg transition transform hover:scale-105 shadow-lg flex items-center justify-center">
+                                <span id="originalAssessmentBtnText">SUBMIT ASSESSMENT FORM</span>
+                                <span id="originalAssessmentBtnLoader" class="hidden ml-3">
+                                    <span class="loading-spinner"></span>
+                                </span>
+                                <i id="originalAssessmentBtnIcon" class="fas fa-paper-plane ml-2"></i>
+                            </button>
+                            <button type="reset" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-lg transition">
+                                CLEAR FORM
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div style="padding: 30px;">
-              <h2 style="color: #212121;">Thank you for completing your assessment, ${assessmentFullName}!</h2>
-              <p style="font-size: 16px;">Coach Emman has received your detailed assessment form and will review it within <strong style="color: #e53935;">24-48 hours</strong>.</p>
-              
-              <div style="background: #f5f5f5; padding: 25px; border-radius: 10px; margin: 30px 0; border-left: 5px solid #e53935;">
-                <h3 style="color: #e53935; margin-top: 0;">📋 What happens next?</h3>
-                <ol style="margin-bottom: 0;">
-                  <li style="margin-bottom: 10px;">Coach Emman will review your assessment</li>
-                  <li style="margin-bottom: 10px;">He will prepare a personalized training plan based on your goals</li>
-                  <li style="margin-bottom: 10px;">You will receive an email within 48 hours to schedule your first session</li>
-                  <li style="margin-bottom: 0;">We'll begin your transformation journey! 💪</li>
-                </ol>
-              </div>
-              
-              <p style="color: #666; font-size: 14px; text-align: center; margin-top: 30px;">
-                📞 Questions? Call Coach Emman: +63-906-279-6854<br>
-                ✉️ Email: epfitness24@gmail.com
-              </p>
+        </div>
+    </div>
+</section>
+
+<!-- New Nutrition Assessment Form (for nutrition packages) -->
+<section id="assessment-nutrition" class="py-16 md:py-24 bg-white form-section-hidden">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl xs:text-4xl md:text-5xl font-bold text-secondary mb-4 font-heading section-title">NUTRITION ASSESSMENT FORM</h2>
+            <p class="text-gray-600 mt-12 max-w-3xl mx-auto">Please complete this comprehensive nutrition assessment form so Coach EJ can create a personalized nutrition plan tailored specifically for you.</p>
+        </div>
+
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white p-8 md:p-12 rounded-2xl shadow-xl border border-gray-200">
+                <form id="nutritionAssessmentForm" class="space-y-8">
+                    
+                    <!-- PART 1: PERSONAL INFORMATION -->
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">📌 PART 1: PERSONAL INFORMATION</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Full Name *</label>
+                                <input type="text" id="nutritionFullName" name="nutritionFullName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Email Address *</label>
+                                <input type="email" id="nutritionEmail" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Phone Number *</label>
+                                <input type="tel" id="nutritionPhone" name="phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Gender</label>
+                                <select id="nutritionGender" name="gender" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                    <option value="">Select gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                    <option value="prefer-not">Prefer not to say</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Date of Birth</label>
+                                <input type="date" id="nutritionDateOfBirth" name="dateOfBirth" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Age</label>
+                                <input type="number" id="nutritionAge" name="age" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Height</label>
+                                <input type="text" id="nutritionHeight" name="height" placeholder="e.g., 175cm or 5'9&quot;" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-semibold mb-2">Weight</label>
+                                <input type="text" id="nutritionWeight" name="weight" placeholder="e.g., 70kg or 154lbs" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">If you are a Fiverr client, please indicate your username</label>
+                            <input type="text" id="nutritionFiverrUsername" name="fiverrUsername" placeholder="Fiverr username" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                    </div>
+                    
+                    <!-- PART 2: LIFESTYLE INFORMATION -->
+                    <div class="space-y-6 pt-4">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">🏃 PART 2: LIFESTYLE INFORMATION</h3>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">What do you do for a living?</label>
+                            <input type="text" id="nutritionOccupation" name="occupation" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">What's the activity level at your job?</label>
+                            <select id="nutritionActivityLevel" name="activityLevel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select activity level</option>
+                                <option value="sedentary">Sedentary (desk job, minimal movement)</option>
+                                <option value="light">Light activity (standing, walking occasionally)</option>
+                                <option value="moderate">Moderate activity (active job, frequent movement)</option>
+                                <option value="heavy">Heavy activity (manual labor, constant movement)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Do you follow a regular working schedule? (Days/Afternoons/Nights)</label>
+                            <input type="text" id="nutritionWorkSchedule" name="workSchedule" placeholder="e.g., Monday-Friday 9am-5pm" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">How often do you travel?</label>
+                            <select id="nutritionTravelFrequency" name="travelFrequency" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select frequency</option>
+                                <option value="never">Rarely/Never</option>
+                                <option value="occasional">Occasionally (few times a year)</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="frequently">Frequently (several times a week)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Please list the physical activities that you participate in outside of the gym and outside of work:</label>
+                            <textarea id="nutritionOutsideActivities" name="outsideActivities" rows="3" placeholder="e.g., basketball, running, yoga, swimming, hiking..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- PART 3: EATING HABITS -->
+                    <div class="space-y-6 pt-4">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">🥗 PART 3: EATING HABITS</h3>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">How many meals and snacks do you typically eat per day?</label>
+                            <input type="text" id="nutritionMealsPerDay" name="mealsPerDay" placeholder="e.g., 3 meals + 2 snacks" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Describe your typical daily eating pattern (e.g., breakfast, lunch, dinner, snacks):</label>
+                            <textarea id="nutritionEatingPattern" name="eatingPattern" rows="3" placeholder="e.g., Breakfast at 8am, Lunch at 1pm, Snack at 4pm, Dinner at 8pm" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Do you follow any specific diet or eating plan (e.g., vegetarian, keto, low-carb)?</label>
+                            <input type="text" id="nutritionSpecificDiet" name="specificDiet" placeholder="e.g., Vegetarian, Keto, No specific diet" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-4">How often do you consume the following:</label>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="text-sm text-gray-600">Fruits and vegetables</label>
+                                    <select id="nutritionFruitsVeggies" name="fruitsVeggies" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                        <option value="">Select frequency</option>
+                                        <option value="rarely">Rarely</option>
+                                        <option value="1-2">1-2 times per day</option>
+                                        <option value="3-4">3-4 times per day</option>
+                                        <option value="5+">5+ times per day</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="text-sm text-gray-600">Whole grains</label>
+                                    <select id="nutritionWholeGrains" name="wholeGrains" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                        <option value="">Select frequency</option>
+                                        <option value="rarely">Rarely</option>
+                                        <option value="1-2">1-2 times per day</option>
+                                        <option value="3-4">3-4 times per day</option>
+                                        <option value="5+">5+ times per day</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="text-sm text-gray-600">Lean proteins</label>
+                                    <select id="nutritionLeanProteins" name="leanProteins" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                        <option value="">Select frequency</option>
+                                        <option value="rarely">Rarely</option>
+                                        <option value="1-2">1-2 times per day</option>
+                                        <option value="3-4">3-4 times per day</option>
+                                        <option value="5+">5+ times per day</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="text-sm text-gray-600">Dairy products</label>
+                                    <select id="nutritionDairy" name="dairy" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                        <option value="">Select frequency</option>
+                                        <option value="rarely">Rarely</option>
+                                        <option value="1-2">1-2 times per day</option>
+                                        <option value="3-4">3-4 times per day</option>
+                                        <option value="5+">5+ times per day</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="text-sm text-gray-600">Processed foods</label>
+                                    <select id="nutritionProcessed" name="processed" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                        <option value="">Select frequency</option>
+                                        <option value="rarely">Rarely</option>
+                                        <option value="1-2">1-2 times per day</option>
+                                        <option value="3-4">3-4 times per day</option>
+                                        <option value="5+">5+ times per day</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="text-sm text-gray-600">Sugary beverages</label>
+                                    <select id="nutritionSugaryBeverages" name="sugaryBeverages" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                        <option value="">Select frequency</option>
+                                        <option value="rarely">Rarely</option>
+                                        <option value="1-2">1-2 times per day</option>
+                                        <option value="3-4">3-4 times per day</option>
+                                        <option value="5+">5+ times per day</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">How often do you eat out or order takeout?</label>
+                            <select id="nutritionEatOut" name="eatOut" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select frequency</option>
+                                <option value="rarely">Rarely (1-2 times per month)</option>
+                                <option value="weekly">Weekly (1-2 times per week)</option>
+                                <option value="several">Several times per week (3-5 times)</option>
+                                <option value="daily">Daily</option>
+                                <option value="multiple">Multiple times per day</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- PART 4: HYDRATION -->
+                    <div class="space-y-6 pt-4">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">💧 PART 4: HYDRATION</h3>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">How much water do you drink daily?</label>
+                            <select id="nutritionWater" name="water" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select amount</option>
+                                <option value="less-1">Less than 1 liter (4 cups)</option>
+                                <option value="1-2">1-2 liters (4-8 cups)</option>
+                                <option value="2-3">2-3 liters (8-12 cups)</option>
+                                <option value="3+">3+ liters (12+ cups)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Do you consume other beverages regularly (e.g., coffee, tea, soft drinks)?</label>
+                            <div class="mb-2">
+                                <label class="inline-flex items-center mr-6">
+                                    <input type="radio" name="nutritionOtherBeverages" value="yes" class="mr-2" id="nutritionBeveragesYes"> Yes
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="nutritionOtherBeverages" value="no" class="mr-2" id="nutritionBeveragesNo"> No
+                                </label>
+                            </div>
+                            <div id="nutritionBeveragesDetails" class="hidden">
+                                <label class="block text-gray-700 font-semibold mb-2">If yes, please specify the type and amount:</label>
+                                <textarea id="nutritionBeveragesSpecify" name="beveragesSpecify" rows="2" placeholder="e.g., 2 cups of coffee per day, 1 can of soda..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Have you experimented with any specific diets or eating approaches in the past? If so, why do you believe they were not successful for you?</label>
+                            <textarea id="nutritionPastDiets" name="pastDiets" rows="4" placeholder="e.g., Keto, Paleo, Weight Watchers - why they didn't work..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- PART 5: PROFESSIONAL PREFERENCES AND BARRIERS -->
+                    <div class="space-y-6 pt-4">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">🎯 PART 5: PROFESSIONAL PREFERENCES AND BARRIERS</h3>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Are there any foods or food groups you particularly enjoy or dislike?</label>
+                            <textarea id="nutritionFoodPreferences" name="foodPreferences" rows="3" placeholder="Foods you enjoy and foods you dislike..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Do you have any dietary restrictions or preferences?</label>
+                            <div class="mb-2">
+                                <label class="inline-flex items-center mr-6">
+                                    <input type="radio" name="nutritionDietaryRestrictions" value="yes" class="mr-2" id="nutritionRestrictionsYes"> Yes
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="nutritionDietaryRestrictions" value="no" class="mr-2" id="nutritionRestrictionsNo"> No
+                                </label>
+                            </div>
+                            <div id="nutritionRestrictionsDetails" class="hidden">
+                                <label class="block text-gray-700 font-semibold mb-2">If yes, please specify:</label>
+                                <textarea id="nutritionRestrictionsSpecify" name="restrictionsSpecify" rows="2" placeholder="e.g., lactose intolerance, gluten-free, vegetarian..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Do you face any challenges or barriers to maintaining a healthy diet (e.g., time, cost, access to food)?</label>
+                            <div class="mb-2">
+                                <label class="inline-flex items-center mr-6">
+                                    <input type="radio" name="nutritionBarriers" value="yes" class="mr-2" id="nutritionBarriersYes"> Yes
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="nutritionBarriers" value="no" class="mr-2" id="nutritionBarriersNo"> No
+                                </label>
+                            </div>
+                            <div id="nutritionBarriersDetails" class="hidden">
+                                <label class="block text-gray-700 font-semibold mb-2">If yes, please describe:</label>
+                                <textarea id="nutritionBarriersSpecify" name="barriersSpecify" rows="3" placeholder="e.g., limited time for meal prep, budget constraints, limited healthy food options nearby..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- PART 6: GOALS AND EXPECTATIONS -->
+                    <div class="space-y-6 pt-4">
+                        <h3 class="text-2xl font-bold text-primary border-b-2 border-primary pb-2">🌟 PART 6: GOALS AND EXPECTATIONS</h3>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-4">How committed are you to doing meal prep on a scale of 1-10? (1 being the lowest, 10 being the highest)</label>
+                            <div class="flex items-center space-x-4">
+                                <input type="range" id="nutritionMealPrepCommitment" name="mealPrepCommitment" min="1" max="10" step="1" value="5" class="w-full" oninput="this.nextElementSibling.value = this.value">
+                                <output class="text-primary font-bold text-xl">5</output>
+                            </div>
+                            <label class="block text-gray-700 font-semibold mt-3 mb-2">Please explain your answer in detail:</label>
+                            <textarea id="nutritionMealPrepExplanation" name="mealPrepExplanation" rows="3" placeholder="Explain your commitment level to meal prep..." class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">What SPECIFICALLY are your short-term and long-term nutrition and health goals? Please explain in as much detail as possible.</label>
+                            <textarea id="nutritionGoals" name="nutritionGoals" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <p class="text-sm text-gray-500 mt-1">Short-term (3 months): e.g., lose 5kg, reduce sugar intake<br>Long-term (6+ months): e.g., maintain healthy weight, improve energy levels</p>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">What SPECIFICALLY do you hope to achieve from this nutrition assessment and nutrition plan? Please explain in as much detail as possible.</label>
+                            <textarea id="nutritionExpectations" name="nutritionExpectations" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                            <p class="text-sm text-gray-500 mt-1">e.g., personalized meal plan, understanding portion sizes, learning to eat healthier, managing a health condition</p>
+                        </div>
+                    </div>
+                    
+                    <!-- TERMS AND SUBMIT -->
+                    <div class="space-y-6 pt-6">
+                        <div class="flex items-start">
+                            <input type="checkbox" id="nutritionTermsAgree" required class="mr-3 mt-1">
+                            <label for="nutritionTermsAgree" class="text-gray-700 text-sm">I confirm that all information provided is accurate and complete to the best of my knowledge. I understand that this information will be used to create a personalized nutrition plan.</label>
+                        </div>
+                        
+                        <div class="flex flex-col xs:flex-row gap-4 pt-6">
+                            <button type="submit" id="nutritionSubmitBtn" class="flex-1 bg-primary hover:bg-red-700 text-white font-bold py-4 px-4 rounded-lg transition transform hover:scale-105 shadow-lg flex items-center justify-center">
+                                <span id="nutritionBtnText">SUBMIT NUTRITION ASSESSMENT</span>
+                                <span id="nutritionBtnLoader" class="hidden ml-3">
+                                    <span class="loading-spinner"></span>
+                                </span>
+                                <i id="nutritionBtnIcon" class="fas fa-paper-plane ml-2"></i>
+                            </button>
+                            <button type="reset" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-4 px-4 rounded-lg transition">
+                                CLEAR FORM
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-          </div>
-        `
-      });
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section (unchanged) -->
+<section id="contact" class="py-16 md:py-24 bg-accent">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl xs:text-4xl md:text-5xl font-bold text-secondary mb-4 font-heading section-title">GET IN TOUCH</h2>
+            <p class="text-gray-600 mt-12 max-w-2xl mx-auto">Ready to start your fitness journey? Contact us today to schedule your first session.</p>
+        </div>
+        
+        <div class="flex flex-col lg:flex-row gap-10">
+            <div class="lg:w-1/2">
+                <div class="bg-white p-10 rounded-2xl shadow-xl">
+                    <h3 class="text-2xl font-bold text-secondary mb-8">SEND US A MESSAGE</h3>
+                    <form id="contactForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block text-gray-700 font-semibold mb-2">Your Name *</label>
+                                <input type="text" id="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block text-gray-700 font-semibold mb-2">Email Address *</label>
+                                <input type="email" id="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="phone" class="block text-gray-700 font-semibold mb-2">Phone Number</label>
+                            <input type="tel" id="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        
+                        <div>
+                            <label for="service" class="block text-gray-700 font-semibold mb-2">Service Interested In *</label>
+                            <select id="service" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Select a service</option>
+                                <option value="personal-training">One-on-One Personal Training</option>
+                                <option value="online-coaching">Online Coaching</option>
+                                <option value="nutrition-coaching">Nutrition Coaching</option>
+                                <option value="workout-program">I Need A Workout Program</option>
+                                <option value="not-sure">Not Sure - Need Guidance</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-gray-700 font-semibold mb-2">Your Message *</label>
+                            <textarea id="message" rows="4" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-primary hover:bg-red-700 text-white font-bold py-4 px-4 rounded-lg transition transform hover:scale-105 shadow-lg">
+                            SEND MESSAGE <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="lg:w-1/2">
+                <div class="bg-white p-10 rounded-2xl shadow-xl h-full">
+                    <h3 class="text-2xl font-bold text-secondary mb-8">CONTACT INFORMATION</h3>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-start">
+                            <div class="bg-primary text-white p-4 rounded-full mr-6">
+                                <i class="fas fa-phone text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-gray-700 mb-1">COACH EMMAN</h4>
+                                <a href="tel:+639062796854" class="text-gray-600 hover:text-primary transition text-lg">+63-906-279-6854</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-primary text-white p-4 rounded-full mr-6">
+                                <i class="fas fa-phone text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-gray-700 mb-1">COACH EJ</h4>
+                                <a href="tel:+639063331003" class="text-gray-600 hover:text-primary transition text-lg">+63-906-333-1003</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-primary text-white p-4 rounded-full mr-6">
+                                <i class="fas fa-envelope text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-gray-700 mb-1">EMAIL</h4>
+                                <a href="mailto:epfitness24@gmail.com" class="text-gray-600 hover:text-primary transition text-lg">epfitness24@gmail.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-primary text-white p-4 rounded-full mr-6">
+                                <i class="fab fa-instagram text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-gray-700 mb-1">INSTAGRAM</h4>
+                                <a href="https://www.instagram.com/ep_fitness?fbclid=IwY2xjawPp39xleHRuA2FlbQIxMABicmlkETFmeGhpcDlFcGk3YTJPVUFjc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHkAUgf4wea68iDTybiDRktUsl6_xBuzp67CnkvjpZ7nGGIeVHjFC6l90kqD8_aem_8tOEmyL4NgoiTEyb_Zgrcw" target="_blank" class="text-gray-600 hover:text-primary transition text-lg">@ep_fitness</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-primary text-white p-4 rounded-full mr-6">
+                                <i class="fab fa-facebook-f text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg text-gray-700 mb-1">FACEBOOK</h4>
+                                <a href="https://www.facebook.com/eminems.pilapil" target="_blank" class="text-gray-600 hover:text-primary transition text-lg">EP Fitness By Coach Emman</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Leave a Review Button -->
+                    <div class="mt-12 pt-8 border-t border-gray-200">
+                        <div class="text-center">
+                            <h4 class="text-xl font-bold text-secondary mb-4">Share Your Experience With Us!</h4>
+                            <p class="text-gray-600 mb-6">We value your feedback. Let us know about your fitness journey with EP Fitness.</p>
+                            <a href="mailto:epfitness24@gmail.com?subject=EP Fitness Review" 
+                               class="inline-flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition transform hover:scale-105 shadow-lg">
+                                <i class="fas fa-star mr-3"></i> LEAVE A REVIEW
+                            </a>
+                            <p class="text-gray-500 text-sm mt-3">Clicking this button will open your email client to send a review to Coach Emman</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Footer (unchanged) -->
+<footer class="bg-secondary text-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col lg:flex-row justify-between items-start mb-10">
+            <div class="mb-10 lg:mb-0">
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="h-14 w-14 rounded-full bg-primary flex items-center justify-center">
+                        <span class="text-white font-heading text-2xl">EP</span>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-bold text-white font-heading">EP FITNESS</span>
+                        <p class="text-gray-400 text-sm">by Coach Emman</p>
+                    </div>
+                </div>
+                <p class="text-gray-400 max-w-md mb-6">
+                    Transforming bodies and lives through personalized fitness training and nutrition guidance.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="https://www.facebook.com/EPFITNESSPH" target="_blank" class="bg-gray-800 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/ep_fitness?fbclid=IwY2xjawPp39xleHRuA2FlbQIxMABicmlkETFmeGhpcDlFcGk3YTJPVUFjc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHkAUgf4wea68iDTybiDRktUsl6_xBuzp67CnkvjpZ7nGGIeVHjFC6l90kqD8_aem_8tOEmyL4NgoiTEyb_Zgrcw" target="_blank" class="bg-gray-800 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-10">
+                <div>
+                    <h4 class="font-bold text-lg mb-6">QUICK LINKS</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="index.html#about" class="text-gray-400 hover:text-white transition">About</a></li>
+                        <li><a href="index.html#services" class="text-gray-400 hover:text-white transition">Services</a></li>
+                        <li><a href="EmmanResults.html" class="text-gray-400 hover:text-white transition">RESULTS</a></li>
+                        <li><a href="index.html#packages" class="text-gray-400 hover:text-white transition">Packages</a></li>
+                        <li><a href="termsconditions.html" class="text-primary hover:text-white transition">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6">SERVICES</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Personal Training</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Online Coaching</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Nutrition Coaching</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition">Meal Planning</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-6">CONTACT INFO</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-primary mr-3"></i>
+                            <span>+63-906-279-6854 (Coach Emman)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-primary mr-3"></i>
+                            <span>+63-906-333-1003 (Coach EJ)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-primary mr-3"></i>
+                            <span>epfitness24@gmail.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fab fa-instagram text-primary mr-3"></i>
+                            <span>@ep_fitness</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+            <p>&copy; 2023 EP Fitness by Coach Emman. All rights reserved.</p>
+            <p class="mt-2 text-sm">you can check <a style="text-decoration: underline;" href="termsconditions.html">Terms and Conditions</a> here.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ========== MASTER SCRIPT - EP FITNESS EMAIL INTEGRATION ========== -->
+<!-- Yeh script contact aur package dono forms handle karegi -->
+<script>
+    // ============================================
+    // EP FITNESS - PRODUCTION VERSION
+    // API Endpoint: /api/sendMail (relative URL - no CORS issues)
+    // ============================================
+
+    const API_URL = '/api/sendMail';
+
+    // ========== LOADING SPINNER STYLES ==========
+    const style = document.createElement('style');
+    style.textContent = `
+        .form-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            max-width: 350px;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    `;
+    document.head.appendChild(style);
+
+    // ========== NOTIFICATION SYSTEM ==========
+    function showNotification(message, type = 'success') {
+        const existing = document.querySelector('.form-notification');
+        if (existing) existing.remove();
+
+        const notification = document.createElement('div');
+        notification.className = `form-notification p-4 rounded-lg shadow-xl border-l-4 ${
+            type === 'success' 
+                ? 'bg-green-50 border-green-500 text-green-800' 
+                : 'bg-red-50 border-red-500 text-red-800'
+        }`;
+        
+        notification.innerHTML = `
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} text-xl"></i>
+                </div>
+                <div class="ml-3 flex-1">
+                    <p class="text-sm font-medium">${message}</p>
+                </div>
+                <button class="ml-4 text-gray-400 hover:text-gray-600" onclick="this.parentElement.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        setTimeout(() => notification?.remove(), 6000);
     }
 
-    res.status(200).json({ 
-      success: true, 
-      message: "Form submitted successfully!" 
-    });
+    // ========== LOADING STATE ==========
+    function setLoading(buttonId, isLoading) {
+        const btn = document.getElementById(buttonId);
+        if (!btn) return;
+        
+        const btnText = document.getElementById(buttonId + 'Text');
+        const btnLoader = document.getElementById(buttonId + 'Loader');
+        const btnIcon = document.getElementById(buttonId + 'Icon');
+        
+        if (isLoading) {
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+            if (btnText) btnText.textContent = 'PROCESSING...';
+            if (btnLoader) btnLoader.classList.remove('hidden');
+            if (btnIcon) btnIcon.classList.add('hidden');
+        } else {
+            btn.disabled = false;
+            btn.classList.remove('opacity-75', 'cursor-not-allowed');
+            if (btnText) {
+                if (buttonId === 'contactSubmitBtn') {
+                    btnText.textContent = 'SEND MESSAGE';
+                } else if (buttonId === 'nutritionSubmitBtn') {
+                    btnText.textContent = 'SUBMIT NUTRITION ASSESSMENT';
+                } else if (buttonId === 'originalAssessmentSubmitBtn') {
+                    btnText.textContent = 'SUBMIT ASSESSMENT FORM';
+                } else {
+                    btnText.textContent = 'SUBMIT FORM';
+                }
+            }
+            if (btnLoader) btnLoader.classList.add('hidden');
+            if (btnIcon) btnIcon.classList.remove('hidden');
+        }
+    }
 
-  } catch (error) {
-    console.error("📧 Email error:", error);
-    res.status(500).json({ 
-      error: "Failed to send email. Please try again or contact us directly at epfitness24@gmail.com" 
+    // ========== API SUBMIT FUNCTION ==========
+    async function submitForm(formData) {
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+            
+            if (!response.ok) throw new Error(data.error || 'Submission failed');
+            return { success: true, data };
+        } catch (error) {
+            console.error('Form Error:', error);
+            return { success: false, error: error.message };
+        }
+    }
+
+    // ========== INITIALIZE ALL FORMS ==========
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // ---------- CONTACT FORM ----------
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            // Add IDs to contact button
+            const contactBtn = contactForm.querySelector('button[type="submit"]');
+            if (contactBtn) {
+                contactBtn.id = 'contactSubmitBtn';
+                contactBtn.innerHTML = '<span id="contactBtnText">SEND MESSAGE</span><span id="contactBtnLoader" class="hidden ml-3"><span class="loading-spinner"></span></span><i id="contactBtnIcon" class="fas fa-paper-plane ml-2"></i>';
+            }
+
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = {
+                    formType: 'contact',
+                    name: document.getElementById('name')?.value,
+                    email: document.getElementById('email')?.value,
+                    phone: document.getElementById('phone')?.value || 'Not provided',
+                    service: document.getElementById('service')?.value,
+                    message: document.getElementById('message')?.value
+                };
+
+                if (!formData.name || !formData.email || !formData.service || !formData.message) {
+                    showNotification('Please fill in all required fields', 'error');
+                    return;
+                }
+
+                setLoading('contactSubmitBtn', true);
+                const result = await submitForm(formData);
+                setLoading('contactSubmitBtn', false);
+                
+                if (result.success) {
+                    showNotification('✅ Message sent! Coach Emman will contact you within 24 hours.', 'success');
+                    contactForm.reset();
+                } else {
+                    showNotification('❌ ' + result.error, 'error');
+                }
+            });
+        }
+
+        // ---------- PACKAGE MODAL SETUP ----------
+        const packageModal = document.getElementById('packageModal');
+        const paymentModal = document.getElementById('paymentModal');
+        const closeModal = document.getElementById('closeModal');
+        const closePaymentModal = document.getElementById('closePaymentModal');
+        const cancelForm = document.getElementById('cancelForm');
+        const cancelPaymentBtn = document.getElementById('cancelPaymentBtn');
+        const packageForm = document.getElementById('packageForm');
+        const fullNameInput = document.getElementById('fullName');
+        const termsCheckbox = document.getElementById('termsAgree');
+        const nameError = document.getElementById('nameError');
+        const termsError = document.getElementById('termsError');
+        const agreePaymentBtn = document.getElementById('agreePaymentBtn');
+        
+        // Assessment sections
+        const originalAssessmentSection = document.getElementById('assessment-original');
+        const nutritionAssessmentSection = document.getElementById('assessment-nutrition');
+        
+        let currentPackageData = null;
+
+        // Package selection buttons
+        document.querySelectorAll('.package-select-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const packageName = this.dataset.package;
+                const packagePrice = this.dataset.price;
+                const packageCurrency = this.dataset.currency;
+                const packageDetails = this.dataset.details;
+                
+                let formattedPrice = packageCurrency === 'USD' 
+                    ? `$${packagePrice} USD` 
+                    : `₱${parseInt(packagePrice).toLocaleString()} PHP`;
+                
+                document.getElementById('selectedPackage').textContent = packageName;
+                document.getElementById('packagePrice').textContent = formattedPrice;
+                document.getElementById('packageDetails').textContent = packageDetails;
+                
+                // Store package info
+                currentPackageData = {
+                    package: packageName,
+                    price: formattedPrice,
+                    isNutritionPackage: packageName.toLowerCase().includes('nutrition')
+                };
+                
+                // Reset form aur errors
+                if (packageForm) packageForm.reset();
+                if (nameError) nameError.classList.add('hidden');
+                if (termsError) termsError.classList.add('hidden');
+                
+                // Hide payment modal if open
+                if (paymentModal) paymentModal.classList.add('hidden');
+                
+                packageModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Close modal functions
+        function closePackageModal() {
+            packageModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function closePaymentModalFunc() {
+            paymentModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        if (closeModal) closeModal.addEventListener('click', closePackageModal);
+        if (cancelForm) cancelForm.addEventListener('click', closePackageModal);
+        if (closePaymentModal) closePaymentModal.addEventListener('click', closePaymentModalFunc);
+        if (cancelPaymentBtn) cancelPaymentBtn.addEventListener('click', closePaymentModalFunc);
+        
+        if (packageModal) {
+            packageModal.addEventListener('click', (e) => {
+                if (e.target === packageModal) closePackageModal();
+            });
+        }
+        
+        if (paymentModal) {
+            paymentModal.addEventListener('click', (e) => {
+                if (e.target === paymentModal) closePaymentModalFunc();
+            });
+        }
+
+        // ---------- PACKAGE FORM SUBMISSION ----------
+        if (packageForm) {
+            // Add IDs to package button
+            const packageBtn = packageForm.querySelector('button[type="submit"]');
+            if (packageBtn) {
+                packageBtn.id = 'packageSubmitBtn';
+                packageBtn.innerHTML = '<span id="packageBtnText">SUBMIT FORM</span><span id="packageBtnLoader" class="hidden ml-3"><span class="loading-spinner"></span></span><i id="packageBtnIcon" class="fas fa-paper-plane ml-2"></i>';
+            }
+
+            packageForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Full Name Validation
+                const fullName = fullNameInput?.value.trim();
+                
+                if (!fullName || fullName === '') {
+                    if (nameError) nameError.classList.remove('hidden');
+                    fullNameInput?.focus();
+                    showNotification('Please enter your full name', 'error');
+                    return;
+                } else {
+                    if (nameError) nameError.classList.add('hidden');
+                }
+
+                // Terms checkbox validation
+                if (!termsCheckbox?.checked) {
+                    if (termsError) termsError.classList.remove('hidden');
+                    showNotification('You must agree to the terms and conditions', 'error');
+                    return;
+                } else {
+                    if (termsError) termsError.classList.add('hidden');
+                }
+
+                // Email validation
+                const email = document.getElementById('userEmail')?.value;
+                if (!email) {
+                    showNotification('Please enter your email address', 'error');
+                    return;
+                }
+
+                // Phone validation
+                const phone = document.getElementById('userPhone')?.value;
+                if (!phone) {
+                    showNotification('Please enter your phone number', 'error');
+                    return;
+                }
+
+                // Goal validation
+                const goal = document.getElementById('primaryGoal')?.value;
+                if (!goal) {
+                    showNotification('Please select your primary fitness goal', 'error');
+                    return;
+                }
+
+                // Form data
+                const formData = {
+                    formType: 'package',
+                    fullName: fullName,
+                    firstName: fullName.split(' ')[0] || fullName,
+                    lastName: fullName.split(' ').slice(1).join(' ') || ' ',
+                    email: email,
+                    phone: phone,
+                    age: document.getElementById('userAge')?.value || 'Not provided',
+                    location: document.getElementById('trainingLocation')?.value || 'Not specified',
+                    goal: goal,
+                    healthConditions: document.getElementById('healthConditions')?.value || 'None reported',
+                    notes: document.getElementById('additionalNotes')?.value || 'No additional notes',
+                    package: document.getElementById('selectedPackage')?.textContent,
+                    price: document.getElementById('packagePrice')?.textContent,
+                    details: document.getElementById('packageDetails')?.textContent
+                };
+
+                setLoading('packageSubmitBtn', true);
+                const result = await submitForm(formData);
+                setLoading('packageSubmitBtn', false);
+                
+                if (result.success) {
+                    showNotification('✅ Package request submitted! Please complete payment to proceed.', 'success');
+                    
+                    // Save package data for payment modal
+                    currentPackageData = {
+                        package: formData.package,
+                        price: formData.price,
+                        isNutritionPackage: formData.package.toLowerCase().includes('nutrition')
+                    };
+                    
+                    // Update payment modal
+                    document.getElementById('paymentPackageName').textContent = formData.package;
+                    document.getElementById('paymentAmount').textContent = formData.price;
+                    
+                    // Close package modal and open payment modal
+                    packageModal.classList.add('hidden');
+                    paymentModal.classList.remove('hidden');
+                    
+                    // Reset payment radio buttons
+                    document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => radio.checked = false);
+                } else {
+                    showNotification('❌ ' + result.error, 'error');
+                }
+            });
+        }
+        
+        // ---------- PAYMENT MODAL - AGREE BUTTON ----------
+        if (agreePaymentBtn) {
+            agreePaymentBtn.addEventListener('click', function() {
+                // Check if payment method selected
+                const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
+                
+                if (!selectedPayment) {
+                    showNotification('Please select a payment method', 'error');
+                    return;
+                }
+                
+                // Close payment modal
+                paymentModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+                
+                // Show appropriate assessment form based on package type
+                if (currentPackageData && currentPackageData.isNutritionPackage) {
+                    // Show nutrition assessment for nutrition packages
+                    if (nutritionAssessmentSection) {
+                        // Hide original if visible
+                        if (originalAssessmentSection) originalAssessmentSection.classList.add('form-section-hidden');
+                        // Show nutrition assessment
+                        nutritionAssessmentSection.classList.remove('form-section-hidden');
+                        
+                        // Scroll to nutrition assessment form
+                        setTimeout(() => {
+                            nutritionAssessmentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 300);
+                        
+                        showNotification('✅ Please complete the nutrition assessment form to finalize your registration.', 'success');
+                    }
+                } else {
+                    // Show original assessment for non-nutrition packages
+                    if (originalAssessmentSection) {
+                        // Hide nutrition if visible
+                        if (nutritionAssessmentSection) nutritionAssessmentSection.classList.add('form-section-hidden');
+                        // Show original assessment
+                        originalAssessmentSection.classList.remove('form-section-hidden');
+                        
+                        // Scroll to original assessment form
+                        setTimeout(() => {
+                            originalAssessmentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 300);
+                        
+                        showNotification('✅ Please complete the assessment form to finalize your registration.', 'success');
+                    }
+                }
+            });
+        }
+        
+        // ---------- ORIGINAL ASSESSMENT FORM ----------
+        const originalAssessmentForm = document.getElementById('originalAssessmentForm');
+        if (originalAssessmentForm) {
+            // Add IDs to assessment button
+            const assessmentBtn = originalAssessmentForm.querySelector('button[type="submit"]');
+            if (assessmentBtn) {
+                assessmentBtn.id = 'originalAssessmentSubmitBtn';
+                assessmentBtn.innerHTML = '<span id="originalAssessmentBtnText">SUBMIT ASSESSMENT FORM</span><span id="originalAssessmentBtnLoader" class="hidden ml-3"><span class="loading-spinner"></span></span><i id="originalAssessmentBtnIcon" class="fas fa-paper-plane ml-2"></i>';
+            }
+
+            originalAssessmentForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Get all checkbox groups
+                const gymEquipment = Array.from(document.querySelectorAll('input[name="originalGymEquipment"]:checked')).map(cb => cb.value);
+                const essentials = Array.from(document.querySelectorAll('input[name="originalEssentials"]:checked')).map(cb => cb.value);
+                
+                // Get radio values
+                const smoker = document.querySelector('input[name="originalSmoker"]:checked')?.value || '';
+                const currentlyExercising = document.querySelector('input[name="originalCurrentlyExercising"]:checked')?.value || '';
+                const trainedBefore = document.querySelector('input[name="originalTrainedBefore"]:checked')?.value || '';
+                const weeklyCheckin = document.querySelector('input[name="originalWeeklyCheckinCommitment"]:checked')?.value || '';
+                const monthlyPhotos = document.querySelector('input[name="originalMonthlyPhotosCommitment"]:checked')?.value || '';
+                const commitment = document.querySelector('input[name="originalCommitmentDuringChallenges"]:checked')?.value || '';
+                
+                // Validate required fields
+                const fullName = document.getElementById('originalFullName')?.value;
+                const email = document.getElementById('originalEmail')?.value;
+                const phone = document.getElementById('originalPhone')?.value;
+                const specificGoals = document.getElementById('originalSpecificGoals')?.value;
+                const coachExpectations = document.getElementById('originalCoachExpectations')?.value;
+                const goalCategory = document.getElementById('originalGoalCategory')?.value;
+                const trainingGoal = document.getElementById('originalTrainingGoal')?.value;
+                const threeAspects = document.getElementById('originalThreeAspects')?.value;
+                const termsAgree = document.getElementById('originalTermsAgree')?.checked;
+                
+                if (!fullName || !email || !phone) {
+                    showNotification('Please fill in your name, email and phone number', 'error');
+                    return;
+                }
+                
+                if (!specificGoals || !coachExpectations || !goalCategory || !trainingGoal) {
+                    showNotification('Please complete the Goals section', 'error');
+                    return;
+                }
+                
+                if (!threeAspects) {
+                    showNotification('Please share three aspects about yourself', 'error');
+                    return;
+                }
+                
+                if (!termsAgree) {
+                    showNotification('You must agree to the terms', 'error');
+                    return;
+                }
+                
+                // Compound lifts
+                const squat = document.getElementById('originalSquat')?.value || '';
+                const bench = document.getElementById('originalBench')?.value || '';
+                const deadlift = document.getElementById('originalDeadlift')?.value || '';
+                const compoundLifts = `Squat: ${squat}, Bench: ${bench}, Deadlift: ${deadlift}`;
+                
+                const formData = {
+                    formType: 'assessment',
+                    // Personal
+                    assessmentFullName: fullName,
+                    email: email,
+                    phone: phone,
+                    gender: document.getElementById('originalGender')?.value || '',
+                    dateOfBirth: document.getElementById('originalDateOfBirth')?.value || '',
+                    assessmentAge: document.getElementById('originalAge')?.value || '',
+                    height: document.getElementById('originalHeight')?.value || '',
+                    weight: document.getElementById('originalWeight')?.value || '',
+                    fiverrUsername: document.getElementById('originalFiverrUsername')?.value || '',
+                    
+                    // Lifestyle
+                    occupation: document.getElementById('originalOccupation')?.value || '',
+                    activityLevel: document.getElementById('originalActivityLevel')?.value || '',
+                    workSchedule: document.getElementById('originalWorkSchedule')?.value || '',
+                    travelFrequency: document.getElementById('originalTravelFrequency')?.value || '',
+                    outsideActivities: document.getElementById('originalOutsideActivities')?.value || '',
+                    
+                    // Medical
+                    diagnosedConditions: document.getElementById('originalDiagnosedConditions')?.value || '',
+                    medications: document.getElementById('originalMedications')?.value || '',
+                    conditionTherapies: document.getElementById('originalConditionTherapies')?.value || '',
+                    existingInjuries: document.getElementById('originalExistingInjuries')?.value || '',
+                    injuryTherapies: document.getElementById('originalInjuryTherapies')?.value || '',
+                    stressMotivation: document.getElementById('originalStressMotivation')?.value || '',
+                    familyHeartDisease: document.getElementById('originalFamilyHeartDisease')?.value || '',
+                    familyDiseases: document.getElementById('originalFamilyDiseases')?.value || '',
+                    chronicConditions: document.getElementById('originalChronicConditions')?.value || '',
+                    smoker: smoker,
+                    
+                    // Diet
+                    currentDiet: document.getElementById('originalCurrentDiet')?.value || '',
+                    foodAllergies: document.getElementById('originalFoodAllergies')?.value || '',
+                    favoriteFoods: document.getElementById('originalFavoriteFoods')?.value || '',
+                    dislikedFoods: document.getElementById('originalDislikedFoods')?.value || '',
+                    pastDiets: document.getElementById('originalPastDiets')?.value || '',
+                    
+                    // Goals
+                    fitnessLevel: document.getElementById('originalFitnessLevel')?.value || '',
+                    compoundLifts: compoundLifts,
+                    specificGoals: specificGoals,
+                    coachExpectations: coachExpectations,
+                    previousAttempts: document.getElementById('originalPreviousAttempts')?.value || '',
+                    readinessChange: document.getElementById('originalReadinessChange')?.value || '5',
+                    goalCategory: goalCategory,
+                    trainingGoal: trainingGoal,
+                    
+                    // Training
+                    gymEquipment: gymEquipment.join(', '),
+                    essentials: essentials.join(', '),
+                    goalTimeline: document.getElementById('originalGoalTimeline')?.value || '',
+                    trainingFrequency: document.getElementById('originalTrainingFrequency')?.value || '',
+                    motivationLevel: document.getElementById('originalMotivationLevel')?.value || '8',
+                    currentlyExercising: currentlyExercising,
+                    trainedBefore: trainedBefore,
+                    previousTrainingType: document.getElementById('originalPreviousTrainingType')?.value || '',
+                    preferredTrainingTime: document.getElementById('originalPreferredTrainingTime')?.value || '',
+                    workoutDuration: document.getElementById('originalWorkoutDuration')?.value || '',
+                    personalTrainingFrequency: document.getElementById('originalPersonalTrainingFrequency')?.value || '',
+                    
+                    // About
+                    threeAspects: threeAspects,
+                    
+                    // Commitments
+                    weeklyCheckinCommitment: weeklyCheckin,
+                    monthlyPhotosCommitment: monthlyPhotos,
+                    commitmentDuringChallenges: commitment
+                };
+                
+                // Add package info if available
+                if (currentPackageData) {
+                    formData.selectedPackage = currentPackageData.package;
+                    formData.packagePrice = currentPackageData.price;
+                }
+                
+                setLoading('originalAssessmentSubmitBtn', true);
+                const result = await submitForm(formData);
+                setLoading('originalAssessmentSubmitBtn', false);
+                
+                if (result.success) {
+                    showNotification('✅ Assessment form submitted! Coach Emman will review and contact you within 48 hours.', 'success');
+                    originalAssessmentForm.reset();
+                    // Hide previous training section
+                    const prevSection = document.getElementById('originalPreviousTrainingSection');
+                    if (prevSection) prevSection.classList.add('hidden');
+                    // Reset range outputs
+                    const readinessRange = document.getElementById('originalReadinessChange');
+                    const motivationRange = document.getElementById('originalMotivationLevel');
+                    if (readinessRange) readinessRange.nextElementSibling.value = '5';
+                    if (motivationRange) motivationRange.nextElementSibling.value = '8';
+                    
+                    // Optionally hide assessment section after submission
+                    // originalAssessmentSection.classList.add('form-section-hidden');
+                    
+                    // Clear package data
+                    currentPackageData = null;
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    showNotification('❌ ' + result.error, 'error');
+                }
+            });
+        }
+        
+        // ---------- NUTRITION ASSESSMENT FORM ----------
+        const nutritionAssessmentForm = document.getElementById('nutritionAssessmentForm');
+        if (nutritionAssessmentForm) {
+            // Add IDs to button
+            const nutritionBtn = nutritionAssessmentForm.querySelector('button[type="submit"]');
+            if (nutritionBtn) {
+                nutritionBtn.id = 'nutritionSubmitBtn';
+                nutritionBtn.innerHTML = '<span id="nutritionBtnText">SUBMIT NUTRITION ASSESSMENT</span><span id="nutritionBtnLoader" class="hidden ml-3"><span class="loading-spinner"></span></span><i id="nutritionBtnIcon" class="fas fa-paper-plane ml-2"></i>';
+            }
+
+            // Conditional sections for beverages
+            const beveragesYes = document.getElementById('nutritionBeveragesYes');
+            const beveragesNo = document.getElementById('nutritionBeveragesNo');
+            const beveragesDetails = document.getElementById('nutritionBeveragesDetails');
+            
+            if (beveragesYes && beveragesNo && beveragesDetails) {
+                beveragesYes.addEventListener('change', function() {
+                    if (this.checked) beveragesDetails.classList.remove('hidden');
+                });
+                beveragesNo.addEventListener('change', function() {
+                    if (this.checked) beveragesDetails.classList.add('hidden');
+                });
+            }
+            
+            // Conditional sections for dietary restrictions
+            const restrictionsYes = document.getElementById('nutritionRestrictionsYes');
+            const restrictionsNo = document.getElementById('nutritionRestrictionsNo');
+            const restrictionsDetails = document.getElementById('nutritionRestrictionsDetails');
+            
+            if (restrictionsYes && restrictionsNo && restrictionsDetails) {
+                restrictionsYes.addEventListener('change', function() {
+                    if (this.checked) restrictionsDetails.classList.remove('hidden');
+                });
+                restrictionsNo.addEventListener('change', function() {
+                    if (this.checked) restrictionsDetails.classList.add('hidden');
+                });
+            }
+            
+            // Conditional sections for barriers
+            const barriersYes = document.getElementById('nutritionBarriersYes');
+            const barriersNo = document.getElementById('nutritionBarriersNo');
+            const barriersDetails = document.getElementById('nutritionBarriersDetails');
+            
+            if (barriersYes && barriersNo && barriersDetails) {
+                barriersYes.addEventListener('change', function() {
+                    if (this.checked) barriersDetails.classList.remove('hidden');
+                });
+                barriersNo.addEventListener('change', function() {
+                    if (this.checked) barriersDetails.classList.add('hidden');
+                });
+            }
+
+            // Update range output
+            const mealPrepRange = document.getElementById('nutritionMealPrepCommitment');
+            if (mealPrepRange) {
+                mealPrepRange.addEventListener('input', function() {
+                    this.nextElementSibling.value = this.value;
+                });
+            }
+
+            nutritionAssessmentForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Get radio values
+                const otherBeverages = document.querySelector('input[name="nutritionOtherBeverages"]:checked')?.value || '';
+                const dietaryRestrictions = document.querySelector('input[name="nutritionDietaryRestrictions"]:checked')?.value || '';
+                const barriers = document.querySelector('input[name="nutritionBarriers"]:checked')?.value || '';
+                
+                // Validate required fields
+                const fullName = document.getElementById('nutritionFullName')?.value;
+                const email = document.getElementById('nutritionEmail')?.value;
+                const phone = document.getElementById('nutritionPhone')?.value;
+                const nutritionGoals = document.getElementById('nutritionGoals')?.value;
+                const nutritionExpectations = document.getElementById('nutritionExpectations')?.value;
+                const termsAgree = document.getElementById('nutritionTermsAgree')?.checked;
+                
+                if (!fullName || !email || !phone) {
+                    showNotification('Please fill in your name, email and phone number', 'error');
+                    return;
+                }
+                
+                if (!nutritionGoals || !nutritionExpectations) {
+                    showNotification('Please complete the Goals and Expectations section', 'error');
+                    return;
+                }
+                
+                if (!termsAgree) {
+                    showNotification('You must agree to the terms', 'error');
+                    return;
+                }
+                
+                // Food frequency data
+                const fruitsVeggies = document.getElementById('nutritionFruitsVeggies')?.value || '';
+                const wholeGrains = document.getElementById('nutritionWholeGrains')?.value || '';
+                const leanProteins = document.getElementById('nutritionLeanProteins')?.value || '';
+                const dairy = document.getElementById('nutritionDairy')?.value || '';
+                const processed = document.getElementById('nutritionProcessed')?.value || '';
+                const sugaryBeverages = document.getElementById('nutritionSugaryBeverages')?.value || '';
+                
+                const formData = {
+                    formType: 'nutritionAssessment',
+                    // Personal
+                    nutritionFullName: fullName,
+                    email: email,
+                    phone: phone,
+                    gender: document.getElementById('nutritionGender')?.value || '',
+                    dateOfBirth: document.getElementById('nutritionDateOfBirth')?.value || '',
+                    age: document.getElementById('nutritionAge')?.value || '',
+                    height: document.getElementById('nutritionHeight')?.value || '',
+                    weight: document.getElementById('nutritionWeight')?.value || '',
+                    fiverrUsername: document.getElementById('nutritionFiverrUsername')?.value || '',
+                    
+                    // Lifestyle
+                    occupation: document.getElementById('nutritionOccupation')?.value || '',
+                    activityLevel: document.getElementById('nutritionActivityLevel')?.value || '',
+                    workSchedule: document.getElementById('nutritionWorkSchedule')?.value || '',
+                    travelFrequency: document.getElementById('nutritionTravelFrequency')?.value || '',
+                    outsideActivities: document.getElementById('nutritionOutsideActivities')?.value || '',
+                    
+                    // Eating Habits
+                    mealsPerDay: document.getElementById('nutritionMealsPerDay')?.value || '',
+                    eatingPattern: document.getElementById('nutritionEatingPattern')?.value || '',
+                    specificDiet: document.getElementById('nutritionSpecificDiet')?.value || '',
+                    fruitsVeggies: fruitsVeggies,
+                    wholeGrains: wholeGrains,
+                    leanProteins: leanProteins,
+                    dairy: dairy,
+                    processed: processed,
+                    sugaryBeverages: sugaryBeverages,
+                    eatOut: document.getElementById('nutritionEatOut')?.value || '',
+                    
+                    // Hydration
+                    water: document.getElementById('nutritionWater')?.value || '',
+                    otherBeverages: otherBeverages,
+                    beveragesSpecify: document.getElementById('nutritionBeveragesSpecify')?.value || '',
+                    pastDiets: document.getElementById('nutritionPastDiets')?.value || '',
+                    
+                    // Preferences & Barriers
+                    foodPreferences: document.getElementById('nutritionFoodPreferences')?.value || '',
+                    dietaryRestrictions: dietaryRestrictions,
+                    restrictionsSpecify: document.getElementById('nutritionRestrictionsSpecify')?.value || '',
+                    barriers: barriers,
+                    barriersSpecify: document.getElementById('nutritionBarriersSpecify')?.value || '',
+                    
+                    // Goals
+                    mealPrepCommitment: document.getElementById('nutritionMealPrepCommitment')?.value || '5',
+                    mealPrepExplanation: document.getElementById('nutritionMealPrepExplanation')?.value || '',
+                    nutritionGoals: nutritionGoals,
+                    nutritionExpectations: nutritionExpectations
+                };
+                
+                // Add package info if available
+                if (currentPackageData) {
+                    formData.selectedPackage = currentPackageData.package;
+                    formData.packagePrice = currentPackageData.price;
+                }
+                
+                setLoading('nutritionSubmitBtn', true);
+                const result = await submitForm(formData);
+                setLoading('nutritionSubmitBtn', false);
+                
+                if (result.success) {
+                    showNotification('✅ Nutrition assessment submitted! Coach EJ will review and contact you within 48 hours.', 'success');
+                    nutritionAssessmentForm.reset();
+                    
+                    // Reset conditional sections
+                    if (beveragesDetails) beveragesDetails.classList.add('hidden');
+                    if (restrictionsDetails) restrictionsDetails.classList.add('hidden');
+                    if (barriersDetails) barriersDetails.classList.add('hidden');
+                    
+                    // Reset range output
+                    if (mealPrepRange) mealPrepRange.nextElementSibling.value = '5';
+                    
+                    // Clear package data
+                    currentPackageData = null;
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    showNotification('❌ ' + result.error, 'error');
+                }
+            });
+        }
+        
+        // ---------- MOBILE MENU ----------
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('open');
+            });
+        }
+
+        // ---------- SMOOTH SCROLL ----------
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Show/hide previous training section in original assessment
+        const trainedYes = document.getElementById('originalTrainedYes');
+        const trainedNo = document.getElementById('originalTrainedNo');
+        const previousTrainingSection = document.getElementById('originalPreviousTrainingSection');
+        
+        if (trainedYes && trainedNo && previousTrainingSection) {
+            trainedYes.addEventListener('change', function() {
+                if (this.checked) {
+                    previousTrainingSection.classList.remove('hidden');
+                }
+            });
+            
+            trainedNo.addEventListener('change', function() {
+                if (this.checked) {
+                    previousTrainingSection.classList.add('hidden');
+                }
+            });
+        }
+
+        // Update range outputs in original assessment
+        const readinessRange = document.getElementById('originalReadinessChange');
+        const motivationRange = document.getElementById('originalMotivationLevel');
+        
+        if (readinessRange) {
+            readinessRange.addEventListener('input', function() {
+                this.nextElementSibling.value = this.value;
+            });
+        }
+        
+        if (motivationRange) {
+            motivationRange.addEventListener('input', function() {
+                this.nextElementSibling.value = this.value;
+            });
+        }
     });
-  }
-}
+</script>
+<!-- ========== END MASTER SCRIPT ========== -->
+</body>
+</html>
