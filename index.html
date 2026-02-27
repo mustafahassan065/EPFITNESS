@@ -536,7 +536,7 @@
                 </div>
             </div>
             
-            <!-- COLUMN 2: Coach Emman Button -->
+            <!-- COLUMN 2: Coach Emman Button - UPDATED with Gmail fix -->
             <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition transform hover:scale-[1.02] duration-300 h-full flex flex-col">
                 <div class="flex items-center mb-4">
                     <div class="bg-primary text-white p-3 rounded-full mr-4">
@@ -553,13 +553,13 @@
                         epfitness24@gmail.com
                     </p>
                 </div>
-                <button onclick="window.location.href='mailto:epfitness24@gmail.com?subject=Personal%20Training%20Inquiry%20-%20EP%20Fitness&body=Hi%20Coach%20Emman%2C%0A%0AI\'m%20interested%20in%20learning%20more%20about%20your%20personal%20training%20services.%0A%0A%0A%0AName%3A%0AGoal%3A%0APreferred%20training%20location%3A'" 
+                <button onclick="openGmail('epfitness24@gmail.com', 'Personal Training Inquiry - EP Fitness', 'Hi Coach Emman,%0A%0AI\'m interested in learning more about your personal training services.%0A%0A%0A%0AName:%0AGoal:%0APreferred training location:')" 
    class="inline-flex items-center justify-center w-full bg-primary hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition transform hover:scale-105 shadow-md">
     <i class="fas fa-paper-plane mr-2"></i> CONTACT COACH EMMAN
 </button>
             </div>
             
-            <!-- COLUMN 3: Coach EJ Button -->
+            <!-- COLUMN 3: Coach EJ Button - UPDATED with Gmail fix -->
             <div class="bg-gradient-to-br from-green-900 to-green-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition transform hover:scale-[1.02] duration-300 h-full flex flex-col">
                 <div class="flex items-center mb-4">
                     <div class="bg-green-500 text-white p-3 rounded-full mr-4">
@@ -576,7 +576,7 @@
                         ejukulele@gmail.com
                     </p>
                 </div>
-                <button onclick="window.location.href='mailto:ejukulele@gmail.com?subject=Nutrition%20Coaching%20Inquiry%20-%20EP%20Fitness&body=Hi%20Coach%20EJ%2C%0A%0AI\'m%20interested%20in%20learning%20more%20about%20your%20nutrition%20coaching%20services.%0A%0A%0A%0AName%3A%0AGoal%3A%0ASpecific%20nutrition%20concerns%3A'" 
+                <button onclick="openGmail('ejukulele@gmail.com', 'Nutrition Coaching Inquiry - EP Fitness', 'Hi Coach EJ,%0A%0AI\'m interested in learning more about your nutrition coaching services.%0A%0A%0A%0AName:%0AGoal:%0ASpecific nutrition concerns:')" 
    class="inline-flex items-center justify-center w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition transform hover:scale-105 shadow-md">
     <i class="fas fa-paper-plane mr-2"></i> CONTACT COACH EJ
 </button>
@@ -3436,16 +3436,16 @@
                         </div>
                     </div>
                     
-                    <!-- Leave a Review Button -->
+                    <!-- Leave a Review Button - UPDATED with Gmail fix -->
                     <div class="mt-12 pt-8 border-t border-gray-200">
                         <div class="text-center">
                             <h4 class="text-xl font-bold text-secondary mb-4">Share Your Experience With Us!</h4>
                             <p class="text-gray-600 mb-6">We value your feedback. Let us know about your fitness journey with EP Fitness.</p>
-                            <button onclick="window.location.href='mailto:epfitness24@gmail.com?subject=EP Fitness Review'" 
+                            <button onclick="openGmail('epfitness24@gmail.com', 'EP Fitness Review', 'Hi Coach Emman,%0A%0AI\'d like to share my experience with EP Fitness:%0A%0A%0A%0AName:%0ARating (1-5):%0AMy review:')" 
    class="inline-flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition transform hover:scale-105 shadow-lg">
     <i class="fas fa-star mr-3"></i> LEAVE A REVIEW
 </button>
-                            <p class="text-gray-500 text-sm mt-3">Clicking this button will open your email client to send a review to Coach Emman</p>
+                            <p class="text-gray-500 text-sm mt-3">Clicking this button will open Gmail to send a review to Coach Emman</p>
                         </div>
                     </div>
                 </div>
@@ -3603,6 +3603,20 @@
         document.body.appendChild(notification);
         setTimeout(() => notification?.remove(), 6000);
     }
+
+    // ========== EMAIL REDIRECT FIX ==========
+    // Force Gmail to open instead of default mail client
+    window.openGmail = function(email, subject, body) {
+        // Encode the subject and body for URL
+        const encodedSubject = encodeURIComponent(subject);
+        const encodedBody = encodeURIComponent(body);
+        
+        // Create Gmail compose URL
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodedSubject}&body=${encodedBody}`;
+        
+        // Open Gmail in a new tab
+        window.open(gmailUrl, '_blank');
+    };
 
     // ========== LOADING STATE ==========
     function setLoading(buttonId, isLoading) {
