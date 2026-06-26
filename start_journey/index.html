@@ -1186,72 +1186,154 @@
                 <p class="text-gray-600 mt-12 max-w-3xl mx-auto">Browse through our gallery of client success stories and transformations</p>
             </div>
             
-            <!-- First Row - 4 Images -->
-            <div class="image-grid mb-8" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
+            <!-- Image Grid -->
+            <div class="client-grid">
                 <!-- Image 1 -->
                 <div class="result-image">
                     <img src="sales1.jpeg" 
                          alt="Client Transformation 1" 
-                         class="w-full h-64 object-cover">
+                         loading="lazy">
                 </div>
                 
                 <!-- Image 2 -->
                 <div class="result-image">
                     <img src="sales2.jpeg" 
                          alt="Client Transformation 2" 
-                         class="w-full h-64 object-cover">
+                         loading="lazy">
                 </div>
                 
                 <!-- Image 3 -->
                 <div class="result-image">
                     <img src="sales3.jpeg" 
                          alt="Client Transformation 3" 
-                         class="w-full h-64 object-cover">
+                         loading="lazy">
                 </div>
                 
                 <!-- Image 4 -->
                 <div class="result-image">
                     <img src="sales4.jpeg" 
                          alt="Client Transformation 4" 
-                         class="w-full h-64 object-cover">
+                         loading="lazy">
                 </div>
-            </div>
-            
-            <!-- Second Row - 4 Images -->
-            <div class="image-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
+                
                 <!-- Image 5 -->
                 <div class="result-image">
                     <img src="sales5.jpeg" 
                          alt="Client Transformation 5" 
-                         class="w-full h-64 object-cover">
+                         loading="lazy">
                 </div>
                 
                 <!-- Image 6 -->
                 <div class="result-image">
                     <img src="sales6.jpeg" 
                          alt="Client Transformation 6" 
-                         class="w-full h-64 object-cover">
+                         loading="lazy">
                 </div>
                 
                 <!-- Image 7 -->
                 <div class="result-image">
                     <img src="sales7.jpeg" 
                          alt="Client Transformation 7" 
-                         class="w-full h-64 object-cover">
+                         loading="lazy">
                 </div>
                 
                 <!-- Image 8 -->
                 <div class="result-image">
                     <img src="sales8.jpeg" 
                          alt="Client Transformation 8" 
-                         class="w-full h-64 object-cover">
+                         loading="lazy">
                 </div>
             </div>
         </div>
     </section>
 </section>
-    
 
+<style>
+/* Client Grid Styles */
+.client-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.result-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    aspect-ratio: 3/4;
+    background: #1a1a1a;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.result-image:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+}
+
+.result-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.result-image:hover img {
+    transform: scale(1.05);
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+    .client-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .client-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 0 5px;
+    }
+    
+    .result-image {
+        border-radius: 10px;
+        aspect-ratio: 3/4;
+    }
+}
+
+@media (max-width: 480px) {
+    .client-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 0;
+    }
+    
+    .result-image {
+        border-radius: 8px;
+        aspect-ratio: 3/4;
+    }
+    
+    .result-image:hover {
+        transform: translateY(-3px);
+    }
+}
+
+/* Small phones */
+@media (max-width: 380px) {
+    .client-grid {
+        gap: 8px;
+    }
+    
+    .result-image {
+        border-radius: 6px;
+    }
+}
+</style>
 
   <section style="
   background:var(--dark);
