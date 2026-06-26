@@ -930,89 +930,83 @@
       border:1px solid var(--border);
       box-shadow:0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(220,38,38,0.15);
     ">
-     <!--
+     
  
-        OPTION C — Direct MP4 file:
-        Replace entire iframe with:
-        <video controls poster="thumbnail.jpg" style="width:100%;display:block;">
-          <source src="coach-emman-intro.mp4" type="video/mp4">
-        </video>
-      -->
- 
-      <!-- PLACEHOLDER — replace with real video -->
-      <div id="video-placeholder" style="
-        position:relative;
-        background:#0f0f0f;
-        aspect-ratio:16/9;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        cursor:pointer;
-      " onclick="loadVideo()">
- 
-        <!-- Thumbnail background — replace src with real thumbnail -->
-        <img
-          src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1280&q=80"
-          alt="Coach Emman — EP Fitness"
-          style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55;"
-        >
- 
-        <!-- Dark overlay -->
-        <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(8,8,8,0.7),rgba(8,8,8,0.4));"></div>
- 
-        <!-- Red glow behind play button -->
-        <div style="
-          position:absolute;
-          width:140px;height:140px;
-          background:radial-gradient(circle,rgba(220,38,38,0.4),transparent 70%);
-          border-radius:50%;
-          filter:blur(20px);
-        "></div>
- 
-        <!-- Play button -->
-        <div style="
-          position:relative;z-index:2;
-          width:76px;height:76px;border-radius:50%;
-          background:var(--red);
-          display:flex;align-items:center;justify-content:center;
-          box-shadow:0 0 0 12px rgba(220,38,38,0.2), 0 12px 40px rgba(220,38,38,0.5);
-          transition:transform .2s,box-shadow .2s;
-        " id="play-btn">
-          <i class="fas fa-play" style="color:#fff;font-size:1.4rem;margin-left:4px;"></i>
-        </div>
- 
-        <!-- Video label -->
-        <div style="
-          position:absolute;bottom:24px;left:24px;z-index:2;
-          display:flex;align-items:center;gap:10px;
-        ">
-          <div style="
-            background:rgba(220,38,38,0.9);
-            border-radius:6px;padding:4px 10px;
-            font-size:.72rem;font-weight:700;color:#fff;
-            letter-spacing:.06em;text-transform:uppercase;
-          ">● Live</div>
-          <div style="font-size:.8rem;color:rgba(255,255,255,0.8);font-weight:600;">
-            Coach Emman Pilapil · 2 min
-          </div>
-        </div>
-      </div>
- 
-      <!-- Actual YouTube iframe — hidden until play clicked -->
-      <div id="video-iframe-wrap" style="display:none;aspect-ratio:16/9;">
-        <iframe
-          id="yt-iframe"
-          width="100%" height="100%"
-          src=""
-          title="Coach Emman Pilapil — EP Fitness"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-          style="display:block;"
-        ></iframe>
-      </div>
+      <!-- Local Video Player -->
+<div id="video-placeholder" style="
+  position:relative;
+  background:#0f0f0f;
+  aspect-ratio:16/9;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+" onclick="playVideo()">
+
+  <!-- Thumbnail background -->
+  <img
+    src="Emman.jpg"
+    alt="Coach Emman — EP Fitness"
+    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55;"
+  >
+
+  <!-- Dark overlay -->
+  <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(8,8,8,0.7),rgba(8,8,8,0.4));"></div>
+
+  <!-- Red glow behind play button -->
+  <div style="
+    position:absolute;
+    width:140px;height:140px;
+    background:radial-gradient(circle,rgba(220,38,38,0.4),transparent 70%);
+    border-radius:50%;
+    filter:blur(20px);
+  "></div>
+
+  <!-- Play button -->
+  <div style="
+    position:relative;z-index:2;
+    width:76px;height:76px;border-radius:50%;
+    background:var(--red);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 0 12px rgba(220,38,38,0.2), 0 12px 40px rgba(220,38,38,0.5);
+    transition:transform .2s,box-shadow .2s;
+  " id="play-btn">
+    <i class="fas fa-play" style="color:#fff;font-size:1.4rem;margin-left:4px;"></i>
+  </div>
+
+  <!-- Video label -->
+  <div style="
+    position:absolute;bottom:24px;left:24px;z-index:2;
+    display:flex;align-items:center;gap:10px;
+  ">
+    <div style="
+      background:rgba(220,38,38,0.9);
+      border-radius:6px;padding:4px 10px;
+      font-size:.72rem;font-weight:700;color:#fff;
+      letter-spacing:.06em;text-transform:uppercase;
+    ">● Live</div>
+    <div style="font-size:.8rem;color:rgba(255,255,255,0.8);font-weight:600;">
+      Coach Emman Pilapil · 2 min
     </div>
- 
+  </div>
+</div>
+
+<!-- Actual video player — hidden until play clicked -->
+<div id="video-player-wrap" style="display:none;aspect-ratio:16/9;">
+  <video
+    id="local-video"
+    width="100%"
+    height="100%"
+    controls
+    autoplay
+    style="display:block;background:#000;"
+  >
+    <source src="EmmanVideo.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+
     <!-- Below video CTA -->
     <div style="text-align:center;margin-top:36px;" data-reveal>
       <a href="start_journey/apply.html" class="btn btn-red btn-lg">
@@ -1185,95 +1179,79 @@
         No gimmicks. No shortcuts. Just structured coaching and people who showed up.
       </p>
     </div>
-
-    <div class="testimonials-grid">
-      <!-- Replace quotes, names, results, and avatar images with real ones -->
-      <div class="tcard card-hover" data-reveal>
-        <div class="tcard-stars">★★★★★</div>
-        <div class="tcard-quote">I tried everything before EP Fitness — random workouts, fad diets, you name it. Coach Emman's program was the first that actually fit my schedule and delivered real, lasting results. Down 12kg in 12 weeks and still going strong.</div>
-        <div class="tcard-author">
-          <div class="tcard-avatar">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=88&h=88&fit=crop" alt="Marco R.">
-          </div>
-          <div>
-            <div class="tcard-name">Marco R.</div>
-            <div class="tcard-result">↓ 12kg in 12 weeks</div>
-          </div>
+    <section class="py-16 md:py-20 bg-accent">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl xs:text-4xl md:text-5xl font-bold text-secondary mb-4 font-heading section-title">CLIENT TRANSFORMATIONS</h2>
+                <p class="text-gray-600 mt-12 max-w-3xl mx-auto">Browse through our gallery of client success stories and transformations</p>
+            </div>
+            
+            <!-- First Row - 4 Images -->
+            <div class="image-grid mb-8" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
+                <!-- Image 1 -->
+                <div class="result-image">
+                    <img src="sales1.jpeg" 
+                         alt="Client Transformation 1" 
+                         class="w-full h-64 object-cover">
+                </div>
+                
+                <!-- Image 2 -->
+                <div class="result-image">
+                    <img src="sales2.jpeg" 
+                         alt="Client Transformation 2" 
+                         class="w-full h-64 object-cover">
+                </div>
+                
+                <!-- Image 3 -->
+                <div class="result-image">
+                    <img src="sales3.jpeg" 
+                         alt="Client Transformation 3" 
+                         class="w-full h-64 object-cover">
+                </div>
+                
+                <!-- Image 4 -->
+                <div class="result-image">
+                    <img src="sales4.jpeg" 
+                         alt="Client Transformation 4" 
+                         class="w-full h-64 object-cover">
+                </div>
+            </div>
+            
+            <!-- Second Row - 4 Images -->
+            <div class="image-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
+                <!-- Image 5 -->
+                <div class="result-image">
+                    <img src="sales5.jpeg" 
+                         alt="Client Transformation 5" 
+                         class="w-full h-64 object-cover">
+                </div>
+                
+                <!-- Image 6 -->
+                <div class="result-image">
+                    <img src="sales6.jpeg" 
+                         alt="Client Transformation 6" 
+                         class="w-full h-64 object-cover">
+                </div>
+                
+                <!-- Image 7 -->
+                <div class="result-image">
+                    <img src="sales7.jpeg" 
+                         alt="Client Transformation 7" 
+                         class="w-full h-64 object-cover">
+                </div>
+                
+                <!-- Image 8 -->
+                <div class="result-image">
+                    <img src="sales8.jpeg" 
+                         alt="Client Transformation 8" 
+                         class="w-full h-64 object-cover">
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class="tcard card-hover" data-reveal>
-        <div class="tcard-stars">★★★★★</div>
-        <div class="tcard-quote">Coach EJ's nutrition plan completely changed how I think about food. No more extreme dieting. Just practical, sustainable eating that supports my training. I feel stronger and healthier than I ever have.</div>
-        <div class="tcard-author">
-          <div class="tcard-avatar">
-            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=88&h=88&fit=crop" alt="Sarah M.">
-          </div>
-          <div>
-            <div class="tcard-name">Sarah M.</div>
-            <div class="tcard-result">↑ 8kg lean muscle in 4 months</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="tcard card-hover" data-reveal>
-        <div class="tcard-stars">★★★★★</div>
-        <div class="tcard-quote">I'm a busy professional and thought I had no time. EP Fitness built my entire program around my schedule. The online coaching format was perfect — I trained when I could and still hit every single goal.</div>
-        <div class="tcard-author">
-          <div class="tcard-avatar">
-            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=88&h=88&fit=crop" alt="James L.">
-          </div>
-          <div>
-            <div class="tcard-name">James L.</div>
-            <div class="tcard-result">↓ 8% body fat in 16 weeks</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="tcard card-hover" data-reveal>
-        <div class="tcard-stars">★★★★★</div>
-        <div class="tcard-quote">I was skeptical at first but the results speak for themselves. Coach Emman adjusted my program every two weeks based on my progress. That level of attention is what makes EP Fitness different.</div>
-        <div class="tcard-author">
-          <div class="tcard-avatar">
-            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=88&h=88&fit=crop" alt="Ryan T.">
-          </div>
-          <div>
-            <div class="tcard-name">Ryan T.</div>
-            <div class="tcard-result">↑ 15kg total strength increase</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="tcard card-hover" data-reveal>
-        <div class="tcard-stars">★★★★★</div>
-        <div class="tcard-quote">The nutrition assessment from Coach EJ was a game changer. I learned more in that one session than years of reading fitness articles. PCOS made weight loss so hard — finally something that works for my body.</div>
-        <div class="tcard-author">
-          <div class="tcard-avatar">
-            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=88&h=88&fit=crop" alt="Pia C.">
-          </div>
-          <div>
-            <div class="tcard-name">Pia C.</div>
-            <div class="tcard-result">↓ 9kg in 14 weeks (PCOS)</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="tcard card-hover" data-reveal>
-        <div class="tcard-stars">★★★★★</div>
-        <div class="tcard-quote">I did the online coaching and it exceeded every expectation. Weekly check-ins kept me accountable, the program was challenging but manageable, and Coach Emman genuinely cares about your progress.</div>
-        <div class="tcard-author">
-          <div class="tcard-avatar">
-            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=88&h=88&fit=crop" alt="Diego M.">
-          </div>
-          <div>
-            <div class="tcard-name">Diego M.</div>
-            <div class="tcard-result">↓ 6kg · ↑ visible muscle definition</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    </section>
 </section>
+    
+
 
   <section style="
   background:var(--dark);
@@ -1762,6 +1740,17 @@
 <!-- ══════════════════════════════════════════
      SCRIPTS
 ══════════════════════════════════════════ -->
+  <script>
+function playVideo() {
+  // Hide placeholder, show video player
+  document.getElementById('video-placeholder').style.display = 'none';
+  document.getElementById('video-player-wrap').style.display = 'block';
+  
+  // Get video element and play
+  var video = document.getElementById('local-video');
+  video.play();
+}
+</script>
   <script id="additions-js">
   // ── VIDEO — Replace YOUR_YOUTUBE_VIDEO_ID ──
   const YOUTUBE_VIDEO_ID = 'YOUR_YOUTUBE_VIDEO_ID';
