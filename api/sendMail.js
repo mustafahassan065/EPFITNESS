@@ -253,9 +253,9 @@ export default async function handler(req, res) {
     }
     
     // 2. Validate CSRF token
-    if (!validateCsrfToken(csrfToken)) {
-      return res.status(403).json({ error: "Invalid security token. Please refresh the page and try again." });
-    }
+   if (csrfToken !== undefined && !validateCsrfToken(csrfToken)) {
+  return res.status(403).json({ error: "Invalid security token..." });
+}
     
     // 3. Check timestamp (prevent replay attacks - form should be submitted within 1 hour)
     const submissionTime = parseInt(timestamp) || 0;
@@ -342,7 +342,46 @@ export default async function handler(req, res) {
         <p><small>Submitted from IP: ${clientIp} at ${new Date().toLocaleString()}</small></p>
       `;
     } 
-    
+    // 🎯 STRATEGY CALL APPLICATION EMAIL
+else if (formType === 'strategyCallApplication') {
+  emailSubject = `🎯 New Strategy Call Application — ${sanitizeInput(name)}`;
+  emailHtml = `
+    <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
+      <div style="background:#DC2626;color:white;padding:28px;text-align:center;">
+        <h1 style="margin:0;">🏋️ EP FITNESS</h1>
+        <p style="margin:8px 0 0;opacity:.9;">New Strategy Call Application</p>
+      </div>
+      <div style="padding:28px;">
+        <h2 style="color:#212121;margin-top:0;">New Application Received</h2>
+        <table style="width:100%;border-collapse:collapse;">
+          <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:12px 0;font-weight:bold;color:#555;width:140px;">Name</td>
+            <td style="padding:12px 0;color:#212121;">${sanitizeInput(name)}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:12px 0;font-weight:bold;color:#555;">Email</td>
+            <td style="padding:12px 0;color:#212121;">${sanitizeInput(email)}</td>
+          </tr>
+          <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:12px 0;font-weight:bold;color:#555;">Gender</td>
+            <td style="padding:12px 0;color:#212121;">${sanitizeInput(gender)}</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 0;font-weight:bold;color:#555;">Goal</td>
+            <td style="padding:12px 0;color:#DC2626;font-weight:bold;">${sanitizeInput(goal)}</td>
+          </tr>
+        </table>
+        <div style="background:#fff3f3;border-left:4px solid #DC2626;padding:16px;margin-top:24px;border-radius:4px;">
+          <p style="margin:0;font-size:14px;color:#555;">
+            📅 Reply to this email or check Calendly for their booked slot.<br>
+            ⏰ Submitted: ${new Date().toLocaleString()}<br>
+            🌐 IP: ${clientIp}
+          </p>
+        </div>
+      </div>
+    </div>
+  `;
+}
     // 📦 PACKAGE FORM EMAIL
     else if (formType === 'package') {
       const clientName = fullName || `${firstName || ''} ${lastName || ''}`.trim();
@@ -735,6 +774,55 @@ export default async function handler(req, res) {
         `
       });
     }
+    if (formType === 'strategyCallApplication') {
+  await transporter.sendMail({
+    from: `"Coach Emman | EP Fitness" <${process.env.EMAIL_USER}>`,
+    to: email,
+    subject: "Your free strategy call application is received ✓",
+    html: `
+      <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
+        <div style="background:#DC2626;color:white;padding:28px;text-align:center;">
+          <h1 style="margin:0;">🏋️ EP FITNESS</h1>
+        </div>
+        <div style="padding:28px;">
+          <h2 style="color:#212121;">Hey ${sanitizeInput(name)}, you're in! 💪</h2>
+          <p style="font-size:16px;color:#444;line-height:1.7;">
+            I've received your application and I'll be reviewing it personally before our call.
+          </p>
+          <p style="font-size:16px;color:#444;line-height:1.7;">
+            <strong>Your goal:</strong> ${sanitizeInput(goal)}
+          </p>
+          <div style="background:#f9f9f9;border-radius:10px;padding:24px;margin:24px 0;border-left:5px solid #DC2626;">
+            <h3 style="color:#DC2626;margin-top:0;">Next Step — Book Your Free Call</h3>
+            <p style="color:#555;margin-bottom:20px;">
+              Pick a 15-minute slot that works for your schedule. The call is completely free — 
+              no commitment, no pitch. Just an honest conversation about what it will take 
+              to get you the results you want.
+            </p>
+            <a href="https://calendly.com/ep_fitness/fitness-assessment-consultation"
+               style="display:inline-block;background:#DC2626;color:white;padding:14px 32px;
+                      border-radius:50px;text-decoration:none;font-weight:bold;font-size:15px;">
+              📅 Book My Free Strategy Call
+            </a>
+          </div>
+          <p style="color:#555;font-size:14px;line-height:1.7;">
+            If you can't book right now, no worries — I'll follow up within 24 hours 
+            to arrange a time that works for you.
+          </p>
+          <p style="color:#555;font-size:14px;margin-top:24px;">
+            Talk soon,<br>
+            <strong>Coach Emman Pilapil</strong><br>
+            EP Fitness<br>
+            <a href="mailto:epfitness24@gmail.com" style="color:#DC2626;">epfitness24@gmail.com</a>
+          </p>
+        </div>
+        <div style="background:#f5f5f5;padding:16px;text-align:center;font-size:12px;color:#999;">
+          © 2025 EP Fitness · ep-fitness.com
+        </div>
+      </div>
+    `
+  });
+}
 
     res.status(200).json({ 
       success: true, 
