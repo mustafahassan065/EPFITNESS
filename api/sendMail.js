@@ -253,7 +253,7 @@ module.exports = async function handler(req, res) {
     }
     
     // 2. Validate CSRF token
-   if (csrfToken !== undefined && !validateCsrfToken(csrfToken)) {
+   if (formType !== 'strategyCallApplication' && !validateCsrfToken(csrfToken)) {
   return res.status(403).json({ error: "Invalid security token..." });
 }
     
