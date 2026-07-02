@@ -781,7 +781,8 @@
       gender,
       goal: goalLabels[selectedGoal] || selectedGoal,
       message: `New strategy call application.\n\nGoal: ${goalLabels[selectedGoal]}\nGender: ${gender}`,
-      timestamp: new Date().toISOString(),
+      timestamp: Date.now().toString(),      // ← YEH ADD KARO
+      csrfToken: 'epfitness-apply-2025',    // ← YEH ADD KARO,
       website: '', // honeypot always empty for real users
     };
 
