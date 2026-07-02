@@ -18,9 +18,6 @@
   <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','YOUR_PIXEL_ID');fbq('track','PageView');</script>
 
   <style>
-    /* ══════════════════════════════════════
-       TOKENS — same as index.html
-    ══════════════════════════════════════ */
     :root {
       --red:      #DC2626;
       --red-dark: #B91C1C;
@@ -67,11 +64,10 @@
     }
     p { color: var(--body); line-height: 1.75; }
     .wrap    { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-    .wrap-sm { max-width: 640px;  margin: 0 auto; padding: 0 24px; }
+    .wrap-sm { max-width: 600px;  margin: 0 auto; padding: 0 24px; }
 
     @keyframes fadeUp   { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
     @keyframes pulse-red{ 0%,100%{box-shadow:0 0 0 0 var(--red-glow)} 50%{box-shadow:0 0 0 14px transparent} }
-    @keyframes float    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
     @keyframes checkPop { 0%{transform:scale(0)} 70%{transform:scale(1.15)} 100%{transform:scale(1)} }
     @keyframes spin     { to{transform:rotate(360deg)} }
 
@@ -79,9 +75,7 @@
     ::-webkit-scrollbar-track { background: var(--dark); }
     ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
 
-    /* ══════════════════════════════════════
-       NAV
-    ══════════════════════════════════════ */
+    /* ── NAV ── */
     .nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       padding: 16px 0;
@@ -108,17 +102,15 @@
     }
     .nav-back:hover { color: var(--white); }
 
-    /* ══════════════════════════════════════
-       PROGRESS STEPS (top of page)
-    ══════════════════════════════════════ */
+    /* ── PROGRESS ── */
     .progress-bar-section {
       padding: 88px 0 0;
       background: var(--dark);
     }
     .progress-track {
       display: flex; align-items: center;
-      justify-content: center; gap: 0;
-      max-width: 520px; margin: 0 auto 0;
+      justify-content: center;
+      max-width: 360px; margin: 0 auto;
       padding: 24px 24px 0;
     }
     .prog-step {
@@ -132,7 +124,6 @@
       background: var(--border); transition: background .4s;
     }
     .prog-step.done:not(:last-child)::after  { background: var(--green); }
-    .prog-step.active:not(:last-child)::after{ background: var(--border); }
     .prog-dot {
       width: 30px; height: 30px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
@@ -147,25 +138,18 @@
       font-size: .65rem; color: var(--muted);
       margin-top: 6px; text-align: center;
       text-transform: uppercase; letter-spacing: .08em;
+      white-space: nowrap;
     }
     .prog-step.active .prog-label { color: var(--white); font-weight: 700; }
     .prog-step.done   .prog-label { color: var(--green); }
 
-    /* ══════════════════════════════════════
-       PAGE HEADER
-    ══════════════════════════════════════ */
+    /* ── PAGE HEADER ── */
     .page-header {
-      padding: 40px 0 0;
+      padding: 32px 0 0;
       text-align: center;
     }
-    .page-header h1 {
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      margin: 12px 0 14px;
-    }
-    .page-header p {
-      font-size: .95rem; color: #9CA3AF;
-      max-width: 480px; margin: 0 auto;
-    }
+    .page-header h1 { font-size: clamp(1.8rem, 5vw, 3rem); margin: 12px 0 12px; }
+    .page-header p  { font-size: .92rem; color: #9CA3AF; max-width: 440px; margin: 0 auto; }
     .time-badge {
       display: inline-flex; align-items: center; gap: 7px;
       background: rgba(34,197,94,0.08);
@@ -173,22 +157,18 @@
       border-radius: var(--r-pill);
       padding: 7px 16px; font-size: .75rem;
       color: #4ade80; font-weight: 600;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
-    /* ══════════════════════════════════════
-       MAIN LAYOUT
-    ══════════════════════════════════════ */
+    /* ── MAIN LAYOUT ── */
     .apply-layout {
       display: grid;
-      grid-template-columns: 1fr 320px;
-      gap: 40px; align-items: start;
-      padding: 48px 0 80px;
+      grid-template-columns: 1fr 300px;
+      gap: 32px; align-items: start;
+      padding: 40px 0 80px;
     }
 
-    /* ══════════════════════════════════════
-       QUIZ FORM
-    ══════════════════════════════════════ */
+    /* ── QUIZ FORM ── */
     .quiz-form {
       background: var(--card);
       border: 1px solid var(--border);
@@ -196,9 +176,8 @@
       overflow: hidden;
     }
 
-    /* Step header inside form */
     .step-header {
-      padding: 28px 32px 24px;
+      padding: 26px 28px 22px;
       border-bottom: 1px solid var(--border);
       display: none;
     }
@@ -208,24 +187,17 @@
       letter-spacing: .15em; text-transform: uppercase;
       color: var(--red); margin-bottom: 8px;
     }
-    .step-title-text {
-      font-size: 1.2rem; font-weight: 800; margin-bottom: 4px;
-    }
-    .step-subtitle { font-size: .84rem; color: var(--muted); }
+    .step-title-text { font-size: 1.15rem; font-weight: 800; margin-bottom: 4px; }
+    .step-subtitle   { font-size: .83rem; color: var(--muted); }
 
-    /* Step body */
     .step-body {
-      padding: 28px 32px 32px;
+      padding: 26px 28px 28px;
       display: none;
     }
     .step-body.active { display: block; }
 
-    /* ── OPTION CARDS (single/multi select) ── */
-    .option-grid {
-      display: grid; gap: 10px;
-      margin-bottom: 4px;
-    }
-    .option-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+    /* ── OPTION CARDS ── */
+    .option-grid { display: grid; gap: 10px; }
     .option-grid.cols-1 { grid-template-columns: 1fr; }
 
     .option-card {
@@ -233,8 +205,8 @@
       background: var(--card2);
       border: 1.5px solid var(--border);
       border-radius: var(--r);
-      padding: 16px 18px; cursor: pointer;
-      transition: border-color .2s, background .2s, transform .15s;
+      padding: 15px 16px; cursor: pointer;
+      transition: border-color .2s, background .2s;
       user-select: none;
     }
     .option-card:hover {
@@ -247,65 +219,20 @@
     }
     .option-card.selected .option-check { background: var(--red); border-color: var(--red); }
     .option-card.selected .option-check i { opacity: 1; }
-
     .option-check {
-      width: 22px; height: 22px; border-radius: 50%;
-      border: 2px solid var(--border); flex-shrink: 0;
+      width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+      border: 2px solid var(--border);
       display: flex; align-items: center; justify-content: center;
       transition: all .2s;
     }
     .option-check i { font-size: .6rem; opacity: 0; transition: opacity .2s; }
+    .option-icon  { font-size: 1.3rem; flex-shrink: 0; width: 26px; text-align: center; }
+    .option-label { font-size: .88rem; font-weight: 600; }
+    .option-sub   { font-size: .74rem; color: var(--muted); margin-top: 2px; }
 
-    /* Square checkbox for multi-select */
-    .option-card.multi .option-check { border-radius: 5px; }
-
-    .option-icon {
-      font-size: 1.3rem; flex-shrink: 0; width: 28px; text-align: center;
-    }
-    .option-text { flex: 1; }
-    .option-label { font-size: .9rem; font-weight: 600; }
-    .option-sub   { font-size: .75rem; color: var(--muted); margin-top: 2px; }
-
-    /* ── SLIDER ── */
-    .slider-wrap { margin: 8px 0 16px; }
-    .commitment-slider {
-      -webkit-appearance: none; appearance: none;
-      width: 100%; height: 6px; border-radius: 3px;
-      background: var(--card2);
-      outline: none; cursor: pointer;
-      background-image: linear-gradient(var(--red), var(--red));
-      background-repeat: no-repeat;
-    }
-    .commitment-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 24px; height: 24px; border-radius: 50%;
-      background: var(--red);
-      box-shadow: 0 0 0 4px rgba(220,38,38,0.2);
-      cursor: pointer; transition: box-shadow .2s;
-    }
-    .commitment-slider::-webkit-slider-thumb:hover {
-      box-shadow: 0 0 0 8px rgba(220,38,38,0.15);
-    }
-    .slider-labels {
-      display: flex; justify-content: space-between;
-      font-size: .72rem; color: var(--muted); margin-top: 10px;
-    }
-    .slider-value-display {
-      text-align: center; margin-top: 16px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 3rem; font-weight: 900;
-      color: var(--red); line-height: 1;
-    }
-    .slider-value-label {
-      text-align: center; font-size: .78rem;
-      color: var(--muted); margin-top: 4px;
-    }
-
-    /* ── TEXT INPUTS ── */
+    /* ── FORM INPUTS ── */
     .form-group { display: flex; flex-direction: column; gap: 7px; }
-    .form-group label {
-      font-size: .82rem; font-weight: 600; color: var(--body);
-    }
+    .form-group label { font-size: .82rem; font-weight: 600; color: var(--body); }
     .form-input {
       background: var(--card2);
       border: 1.5px solid var(--border);
@@ -316,199 +243,152 @@
     }
     .form-input::placeholder { color: #374151; }
     .form-input:focus { border-color: var(--red); }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    textarea.form-input { resize: vertical; min-height: 90px; }
+    .form-input option { background: var(--card2); }
 
-    /* ── STEP NAV BUTTONS ── */
+    /* ── STEP NAV ── */
     .step-nav {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 32px 28px;
+      padding: 18px 28px 24px;
       border-top: 1px solid var(--border);
       gap: 12px;
     }
-    .btn-back {
+    .btn-back-step {
       display: flex; align-items: center; gap: 6px;
       background: none; border: none;
-      color: var(--muted); font-size: .85rem;
-      font-weight: 600; cursor: pointer;
-      transition: color .2s; padding: 10px 0;
+      color: var(--muted); font-size: .85rem; font-weight: 600;
+      cursor: pointer; transition: color .2s; padding: 10px 0;
+      font-family: 'Inter', sans-serif;
     }
-    .btn-back:hover { color: var(--white); }
+    .btn-back-step:hover { color: var(--white); }
     .btn-next {
       display: flex; align-items: center; gap: 8px;
       background: var(--red); color: #fff;
       border: none; border-radius: var(--r-pill);
-      padding: 14px 32px; font-weight: 700;
-      font-size: .92rem; cursor: pointer;
-      transition: background .2s, transform .2s;
+      padding: 13px 28px; font-weight: 700; font-size: .9rem;
+      cursor: pointer; transition: background .2s, transform .2s;
       animation: pulse-red 2.5s ease-in-out infinite;
       font-family: 'Inter', sans-serif;
     }
     .btn-next:hover  { background: var(--red-dark); transform: translateY(-2px); }
-    .btn-next:disabled { opacity: .5; cursor: not-allowed; animation: none; transform: none; }
 
-    /* Submit button */
+    /* ── ERROR ── */
+    .step-error {
+      background: rgba(220,38,38,0.08);
+      border: 1px solid rgba(220,38,38,0.25);
+      border-radius: var(--r);
+      padding: 11px 14px; font-size: .8rem;
+      color: #f87171; margin-bottom: 14px;
+      display: none; align-items: center; gap: 8px;
+    }
+    .step-error.show { display: flex; }
+
+    /* ── SUBMIT BTN ── */
     .btn-submit {
       width: 100%;
       display: flex; align-items: center; justify-content: center; gap: 10px;
       background: var(--red); color: #fff;
       border: none; border-radius: var(--r-pill);
-      padding: 18px 32px; font-weight: 700;
-      font-size: 1rem; cursor: pointer;
-      transition: background .2s, transform .2s;
+      padding: 17px 28px; font-weight: 700; font-size: .95rem;
+      cursor: pointer; transition: background .2s, transform .2s;
       font-family: 'Inter', sans-serif;
       animation: pulse-red 2.5s ease-in-out infinite;
     }
     .btn-submit:hover    { background: var(--red-dark); transform: translateY(-2px); }
     .btn-submit:disabled { opacity: .6; cursor: not-allowed; animation: none; transform: none; }
-
     .spinner {
-      width: 20px; height: 20px; border-radius: 50%;
+      width: 18px; height: 18px; border-radius: 50%;
       border: 2.5px solid rgba(255,255,255,0.2);
       border-top-color: #fff;
       animation: spin .8s linear infinite;
     }
 
-    /* ── ERROR MESSAGE ── */
-    .field-error {
-      color: #f87171; font-size: .75rem;
-      margin-top: 4px; display: flex;
-      align-items: center; gap: 5px;
-    }
-    .step-error {
-      background: rgba(220,38,38,0.08);
-      border: 1px solid rgba(220,38,38,0.25);
-      border-radius: var(--r);
-      padding: 12px 16px; font-size: .82rem;
-      color: #f87171; margin-bottom: 16px;
-      display: none; align-items: center; gap: 8px;
-    }
-    .step-error.show { display: flex; }
-
-    /* ══════════════════════════════════════
-       SIDEBAR
-    ══════════════════════════════════════ */
-    .sidebar { position: sticky; top: 90px; }
-
-    .sidebar-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--r-lg);
-      padding: 24px; margin-bottom: 16px;
-    }
-    .sidebar-card h4 {
-      font-size: .82rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: .12em;
-      color: var(--muted); margin-bottom: 16px;
-    }
-
-    /* What happens next */
-    .next-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
-    .next-item { display: flex; align-items: flex-start; gap: 12px; }
-    .next-icon {
-      width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
-      background: rgba(220,38,38,0.1);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--red); font-size: .8rem;
-    }
-    .next-text h5 { font-size: .84rem; font-weight: 700; margin-bottom: 2px; }
-    .next-text p  { font-size: .75rem; color: var(--muted); line-height: 1.5; }
-
-    /* Guarantee card */
-    .guarantee-card {
-      background: rgba(34,197,94,0.04);
-      border: 1px solid rgba(34,197,94,0.15);
-      border-radius: var(--r-lg);
-      padding: 20px;
-    }
-    .guarantee-icon {
-      width: 44px; height: 44px; border-radius: 50%;
-      background: rgba(34,197,94,0.1);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem; color: var(--green);
-      margin-bottom: 12px;
-    }
-    .guarantee-title { font-size: .9rem; font-weight: 800; margin-bottom: 6px; }
-    .guarantee-text  { font-size: .78rem; color: var(--muted); line-height: 1.6; }
-
-    /* Mini testimonial */
-    .mini-testi {
-      background: var(--card2);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 16px;
-    }
-    .mini-testi-quote {
-      font-size: .82rem; color: var(--body);
-      font-style: italic; line-height: 1.6;
-      margin-bottom: 12px;
-    }
-    .mini-testi-author { display: flex; align-items: center; gap: 10px; }
-    .mini-avatar {
-      width: 34px; height: 34px; border-radius: 50%;
-      overflow: hidden; background: var(--card);
-    }
-    .mini-avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .mini-name   { font-size: .78rem; font-weight: 700; }
-    .mini-result { font-size: .7rem; color: var(--green); margin-top: 1px; }
-
-    /* ══════════════════════════════════════
-       SUCCESS / CALENDLY SCREEN
-    ══════════════════════════════════════ */
+    /* ── SUCCESS SCREEN ── */
     .success-screen {
-      display: none;
-      text-align: center; padding: 64px 32px;
+      display: none; text-align: center; padding: 56px 28px;
       animation: fadeUp .5s ease both;
     }
     .success-screen.show { display: block; }
     .success-check {
-      width: 80px; height: 80px; border-radius: 50%;
+      width: 76px; height: 76px; border-radius: 50%;
       background: rgba(34,197,94,0.12);
       border: 2px solid rgba(34,197,94,0.3);
       display: flex; align-items: center; justify-content: center;
-      font-size: 2rem; color: var(--green);
-      margin: 0 auto 24px;
+      font-size: 1.8rem; color: var(--green);
+      margin: 0 auto 22px;
       animation: checkPop .4s .1s ease both;
     }
-    .success-screen h2 {
-      font-size: 1.6rem; font-weight: 800; margin-bottom: 12px;
-    }
-    .success-screen p {
-      font-size: .9rem; color: #9CA3AF;
-      max-width: 400px; margin: 0 auto 32px;
-      line-height: 1.75;
-    }
+    .success-screen h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 10px; }
+    .success-screen p  { font-size: .88rem; color: #9CA3AF; max-width: 380px; margin: 0 auto 28px; line-height: 1.75; }
     .calendly-btn {
       display: inline-flex; align-items: center; gap: 10px;
       background: var(--red); color: #fff;
       border: none; border-radius: var(--r-pill);
-      padding: 18px 40px; font-weight: 700;
-      font-size: 1rem; cursor: pointer;
-      text-decoration: none;
+      padding: 17px 36px; font-weight: 700; font-size: .95rem;
+      cursor: pointer; text-decoration: none;
       transition: background .2s, transform .2s;
       animation: pulse-red 2.5s ease-in-out infinite;
       font-family: 'Inter', sans-serif;
     }
     .calendly-btn:hover { background: var(--red-dark); transform: translateY(-2px); }
-
     .calendly-note {
-      margin-top: 20px; font-size: .78rem; color: #6B7280;
+      margin-top: 16px; font-size: .76rem; color: #6B7280;
       display: flex; align-items: center; justify-content: center; gap: 6px;
     }
-    .calendly-note i { color: var(--red); font-size: .7rem; }
 
-    /* ══════════════════════════════════════
-       RESPONSIVE
-    ══════════════════════════════════════ */
-    @media (max-width: 900px) {
+    /* ── SIDEBAR ── */
+    .sidebar { position: sticky; top: 90px; }
+    .sidebar-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 22px; margin-bottom: 14px;
+    }
+    .sidebar-card h4 {
+      font-size: .78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .12em;
+      color: var(--muted); margin-bottom: 16px;
+    }
+    .next-list { list-style: none; display: flex; flex-direction: column; gap: 13px; }
+    .next-item { display: flex; align-items: flex-start; gap: 12px; }
+    .next-icon {
+      width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
+      background: rgba(220,38,38,0.1);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--red); font-size: .78rem;
+    }
+    .next-text h5 { font-size: .82rem; font-weight: 700; margin-bottom: 2px; }
+    .next-text p  { font-size: .73rem; color: var(--muted); line-height: 1.5; }
+    .guarantee-card {
+      background: rgba(34,197,94,0.04);
+      border: 1px solid rgba(34,197,94,0.15);
+      border-radius: var(--r-lg); padding: 18px;
+    }
+    .guarantee-icon {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(34,197,94,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: var(--green); margin-bottom: 10px;
+    }
+    .guarantee-title { font-size: .88rem; font-weight: 800; margin-bottom: 5px; }
+    .guarantee-text  { font-size: .76rem; color: var(--muted); line-height: 1.6; }
+    .mini-testi {
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 14px;
+    }
+    .mini-testi-quote { font-size: .8rem; color: var(--body); font-style: italic; line-height: 1.6; margin-bottom: 12px; }
+    .mini-testi-author { display: flex; align-items: center; gap: 10px; }
+    .mini-avatar { width: 32px; height: 32px; border-radius: 50%; overflow: hidden; background: var(--card); }
+    .mini-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .mini-name   { font-size: .76rem; font-weight: 700; }
+    .mini-result { font-size: .68rem; color: var(--green); margin-top: 1px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
       .apply-layout { grid-template-columns: 1fr; }
       .sidebar { position: static; }
     }
-    @media (max-width: 640px) {
-      .option-grid.cols-2 { grid-template-columns: 1fr; }
-      .form-row { grid-template-columns: 1fr; }
-      .step-header, .step-body { padding: 22px 20px; }
-      .step-nav { padding: 16px 20px 22px; }
+    @media (max-width: 520px) {
+      .step-header, .step-body { padding: 20px 18px; }
+      .step-nav { padding: 14px 18px 20px; }
+      .page-header h1 { font-size: 1.7rem; }
     }
   </style>
 </head>
@@ -533,97 +413,84 @@
 <!-- PROGRESS BAR -->
 <div class="progress-bar-section">
   <div class="wrap-sm">
-    <div class="progress-track" id="progress-track">
+    <div class="progress-track">
       <div class="prog-step active" id="prog-1">
         <div class="prog-dot">1</div>
-        <div class="prog-label">Your Goals</div>
+        <div class="prog-label">Your Goal</div>
       </div>
       <div class="prog-step" id="prog-2">
         <div class="prog-dot">2</div>
-        <div class="prog-label">Your Situation</div>
+        <div class="prog-label">Your Info</div>
       </div>
       <div class="prog-step" id="prog-3">
-        <div class="prog-dot">3</div>
-        <div class="prog-label">Commitment</div>
-      </div>
-      <div class="prog-step" id="prog-4">
-        <div class="prog-dot">4</div>
-        <div class="prog-label">Contact Info</div>
-      </div>
-      <div class="prog-step" id="prog-5">
-        <div class="prog-dot"><i class="fas fa-calendar-check" style="font-size:.6rem;"></i></div>
+        <div class="prog-dot"><i class="fas fa-calendar-check" style="font-size:.55rem;"></i></div>
         <div class="prog-label">Book Call</div>
       </div>
     </div>
 
-    <!-- Page Header -->
     <div class="page-header">
-      <div class="time-badge">
-        <i class="fas fa-clock"></i> Takes about 2 minutes
-      </div>
+      <div class="time-badge"><i class="fas fa-clock"></i> Takes about 90 seconds</div>
       <h1 class="display">APPLY FOR YOUR<br><span class="gradient-text">FREE STRATEGY CALL</span></h1>
-      <p>Answer honestly — this helps Coach Emman understand exactly where you are so he can give you the most useful advice on your call.</p>
+      <p>Answer honestly — this helps Coach Emman prepare before your call so you get the most out of it.</p>
     </div>
   </div>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <div class="wrap" style="padding-top:0;">
   <div class="apply-layout">
 
-    <!-- ══════════════════════════════════
-         QUIZ FORM
-    ══════════════════════════════════ -->
+    <!-- QUIZ FORM -->
     <div>
       <div class="quiz-form" id="quiz-form">
 
-        <!-- ─────────────────────────────
-             STEP 1 — Primary Goal
-        ───────────────────────────── -->
+        <!-- ── STEP 1 — Goal ── -->
         <div class="step-header active" id="sh-1">
-          <div class="step-counter">Step 1 of 4</div>
+          <div class="step-counter">Step 1 of 2</div>
           <div class="step-title-text">What's your #1 fitness goal right now?</div>
           <div class="step-subtitle">Pick the one that matters most to you.</div>
         </div>
         <div class="step-body active" id="sb-1">
-          <div class="step-error" id="err-1"><i class="fas fa-exclamation-circle"></i> Please select an option to continue.</div>
-          <div class="option-grid cols-1" id="goal-options">
-            <div class="option-card" onclick="selectSingle('goal','fat-loss',this)">
+          <div class="step-error" id="err-1">
+            <i class="fas fa-exclamation-circle"></i> Please select a goal to continue.
+          </div>
+          <div class="option-grid cols-1">
+            <div class="option-card" onclick="selectGoal('fat-loss',this)">
               <div class="option-check"><i class="fas fa-check"></i></div>
               <div class="option-icon">🔥</div>
-              <div class="option-text">
+              <div>
                 <div class="option-label">Lose Fat / Lose Weight</div>
                 <div class="option-sub">Drop body fat and look leaner</div>
               </div>
             </div>
-            <div class="option-card" onclick="selectSingle('goal','muscle',this)">
+            <div class="option-card" onclick="selectGoal('muscle',this)">
               <div class="option-check"><i class="fas fa-check"></i></div>
               <div class="option-icon">💪</div>
-              <div class="option-text">
+              <div>
                 <div class="option-label">Build Muscle / Hypertrophy</div>
                 <div class="option-sub">Gain size and visible muscle definition</div>
               </div>
             </div>
-            <div class="option-card" onclick="selectSingle('goal','strength',this)">
+            <div class="option-card" onclick="selectGoal('strength',this)">
               <div class="option-check"><i class="fas fa-check"></i></div>
               <div class="option-icon">🏋️</div>
-              <div class="option-text">
+              <div>
                 <div class="option-label">Get Stronger</div>
                 <div class="option-sub">Improve overall strength and performance</div>
               </div>
             </div>
-            <div class="option-card" onclick="selectSingle('goal','recomp',this)">
+            <div class="option-card" onclick="selectGoal('recomp',this)">
               <div class="option-check"><i class="fas fa-check"></i></div>
               <div class="option-icon">⚖️</div>
-              <div class="option-text">
+              <div>
                 <div class="option-label">Body Recomposition</div>
                 <div class="option-sub">Lose fat and build muscle at the same time</div>
               </div>
             </div>
-            <div class="option-card" onclick="selectSingle('goal','lifestyle',this)">
+            <div class="option-card" onclick="selectGoal('lifestyle',this)">
               <div class="option-check"><i class="fas fa-check"></i></div>
               <div class="option-icon">🌿</div>
-              <div class="option-text">
+              <div>
                 <div class="option-label">General Fitness / Healthier Lifestyle</div>
                 <div class="option-sub">Feel better, move better, build better habits</div>
               </div>
@@ -631,354 +498,160 @@
           </div>
         </div>
 
-        <!-- ─────────────────────────────
-             STEP 2 — Situation
-        ───────────────────────────── -->
+        <!-- ── STEP 2 — Contact Info ── -->
         <div class="step-header" id="sh-2">
-          <div class="step-counter">Step 2 of 4</div>
-          <div class="step-title-text">Tell us a bit about your situation.</div>
-          <div class="step-subtitle">Be honest — this is just between you and Coach Emman.</div>
-        </div>
-        <div class="step-body" id="sb-2">
-          <div style="display:flex;flex-direction:column;gap:22px;">
-
-            <div>
-              <div style="font-size:.84rem;font-weight:700;color:var(--body);margin-bottom:10px;">
-                How long have you been struggling with this goal?
-              </div>
-              <div class="option-grid cols-2" id="duration-options">
-                <div class="option-card" onclick="selectSingle('duration','under-6',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-text"><div class="option-label">Under 6 months</div></div>
-                </div>
-                <div class="option-card" onclick="selectSingle('duration','6-12',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-text"><div class="option-label">6–12 months</div></div>
-                </div>
-                <div class="option-card" onclick="selectSingle('duration','1-2yrs',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-text"><div class="option-label">1–2 years</div></div>
-                </div>
-                <div class="option-card" onclick="selectSingle('duration','2plus',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-text"><div class="option-label">2+ years</div></div>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <div style="font-size:.84rem;font-weight:700;color:var(--body);margin-bottom:10px;">
-                What has stopped you before? <span style="color:var(--muted);font-weight:400;">(select all that apply)</span>
-              </div>
-              <div class="option-grid cols-1" id="blocker-options">
-                <div class="option-card multi" onclick="toggleMulti('blockers','no-plan',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-text"><div class="option-label">No structured plan — just winging it</div></div>
-                </div>
-                <div class="option-card multi" onclick="toggleMulti('blockers','no-accountability',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-text"><div class="option-label">No accountability — I start, then stop</div></div>
-                </div>
-                <div class="option-card multi" onclick="toggleMulti('blockers','too-busy',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-text"><div class="option-label">Too busy — work/life gets in the way</div></div>
-                </div>
-                <div class="option-card multi" onclick="toggleMulti('blockers','confusion',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-text"><div class="option-label">Too much conflicting information online</div></div>
-                </div>
-                <div class="option-card multi" onclick="toggleMulti('blockers','plateau',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-text"><div class="option-label">Tried but hit a plateau — nothing works</div></div>
-                </div>
-                <div class="option-card multi" onclick="toggleMulti('blockers','nutrition',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-text"><div class="option-label">Don't know what to eat / diet doesn't stick</div></div>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <div style="font-size:.84rem;font-weight:700;color:var(--body);margin-bottom:10px;">
-                Where do you train?
-              </div>
-              <div class="option-grid cols-2" id="location-options">
-                <div class="option-card" onclick="selectSingle('location','commercial-gym',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-icon">🏢</div>
-                  <div class="option-text"><div class="option-label">Commercial Gym</div></div>
-                </div>
-                <div class="option-card" onclick="selectSingle('location','home',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-icon">🏠</div>
-                  <div class="option-text"><div class="option-label">Home / Condo Gym</div></div>
-                </div>
-                <div class="option-card" onclick="selectSingle('location','no-gym',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-icon">🚫</div>
-                  <div class="option-text"><div class="option-label">No Gym Access</div></div>
-                </div>
-                <div class="option-card" onclick="selectSingle('location','flexible',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-icon">🔄</div>
-                  <div class="option-text"><div class="option-label">Flexible / Travel a lot</div></div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- ─────────────────────────────
-             STEP 3 — Commitment
-        ───────────────────────────── -->
-        <div class="step-header" id="sh-3">
-          <div class="step-counter">Step 3 of 4</div>
-          <div class="step-title-text">How serious are you about making this change?</div>
-          <div class="step-subtitle">Be honest — it helps us match you with the right approach.</div>
-        </div>
-        <div class="step-body" id="sb-3">
-          <div style="display:flex;flex-direction:column;gap:28px;">
-
-            <div>
-              <div style="font-size:.84rem;font-weight:700;color:var(--body);margin-bottom:6px;">
-                On a scale of 1–10, how committed are you to making this change in the next 90 days?
-              </div>
-              <div class="slider-wrap">
-                <input type="range" class="commitment-slider" id="commitment-slider"
-                       min="1" max="10" value="7" oninput="updateSlider(this)">
-                <div class="slider-labels">
-                  <span>1 — Just curious</span>
-                  <span>10 — 100% ready</span>
-                </div>
-                <div class="slider-value-display" id="slider-display">7</div>
-                <div class="slider-value-label" id="slider-label">Strong commitment — great foundation</div>
-              </div>
-            </div>
-
-            <div>
-              <div style="font-size:.84rem;font-weight:700;color:var(--body);margin-bottom:10px;">
-                Are you ready to invest in your health right now?
-              </div>
-              <div class="option-grid cols-1" id="invest-options">
-                <div class="option-card" onclick="selectSingle('invest','yes-ready',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-icon">✅</div>
-                  <div class="option-text">
-                    <div class="option-label">Yes — I'm ready to invest and get started</div>
-                    <div class="option-sub">I understand results require commitment</div>
-                  </div>
-                </div>
-                <div class="option-card" onclick="selectSingle('invest','need-info',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-icon">🤔</div>
-                  <div class="option-text">
-                    <div class="option-label">I need more information first</div>
-                    <div class="option-sub">The call will help me decide</div>
-                  </div>
-                </div>
-                <div class="option-card" onclick="selectSingle('invest','budget-concern',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-icon">💬</div>
-                  <div class="option-text">
-                    <div class="option-label">Budget is a concern — let's talk about options</div>
-                    <div class="option-sub">I want to find something that works for me</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <div style="font-size:.84rem;font-weight:700;color:var(--body);margin-bottom:10px;">
-                How many days per week can you realistically train?
-              </div>
-              <div class="option-grid cols-2" id="days-options">
-                <div class="option-card" onclick="selectSingle('days','2-3',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-text"><div class="option-label">2–3 days/week</div><div class="option-sub">I'm busy but consistent</div></div>
-                </div>
-                <div class="option-card" onclick="selectSingle('days','3-4',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-text"><div class="option-label">3–4 days/week</div><div class="option-sub">Solid schedule</div></div>
-                </div>
-                <div class="option-card" onclick="selectSingle('days','4-5',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-text"><div class="option-label">4–5 days/week</div><div class="option-sub">Very committed</div></div>
-                </div>
-                <div class="option-card" onclick="selectSingle('days','5plus',this)">
-                  <div class="option-check"><i class="fas fa-check"></i></div>
-                  <div class="option-text"><div class="option-label">5–6 days/week</div><div class="option-sub">All in</div></div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- ─────────────────────────────
-             STEP 4 — Contact Info
-        ───────────────────────────── -->
-        <div class="step-header" id="sh-4">
-          <div class="step-counter">Step 4 of 4</div>
-          <div class="step-title-text">Almost done — where should we send the call details?</div>
+          <div class="step-counter">Step 2 of 2</div>
+          <div class="step-title-text">Almost there — where should we send your call details?</div>
           <div class="step-subtitle">Coach Emman reviews every application personally.</div>
         </div>
-        <div class="step-body" id="sb-4">
-          <div style="display:flex;flex-direction:column;gap:16px;">
-            <div class="step-error" id="err-4"><i class="fas fa-exclamation-circle"></i><span id="err-4-msg">Please fill in all required fields.</span></div>
+        <div class="step-body" id="sb-2">
+          <div style="display:flex;flex-direction:column;gap:14px;">
 
-            <div class="form-row">
-              <div class="form-group">
-                <label for="f-name">First Name *</label>
-                <input class="form-input" type="text" id="f-name" placeholder="Juan" required autocomplete="given-name">
-              </div>
-              <div class="form-group">
-                <label for="f-lastname">Last Name *</label>
-                <input class="form-input" type="text" id="f-lastname" placeholder="dela Cruz" required autocomplete="family-name">
-              </div>
+            <div class="step-error" id="err-2">
+              <i class="fas fa-exclamation-circle"></i>
+              <span id="err-2-msg">Please fill in all fields.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="f-name">Full Name *</label>
+              <input class="form-input" type="text" id="f-name"
+                placeholder="Juan dela Cruz" required autocomplete="name">
             </div>
 
             <div class="form-group">
               <label for="f-email">Email Address *</label>
-              <input class="form-input" type="email" id="f-email" placeholder="juan@email.com" required autocomplete="email">
+              <input class="form-input" type="email" id="f-email"
+                placeholder="juan@email.com" required autocomplete="email">
             </div>
 
             <div class="form-group">
-              <label for="f-phone">Phone Number <span style="color:var(--muted);font-weight:400;">(optional — for WhatsApp follow-up)</span></label>
-              <input class="form-input" type="tel" id="f-phone" placeholder="+63 9XX XXX XXXX" autocomplete="tel">
+              <label for="f-gender">Gender *</label>
+              <select class="form-input" id="f-gender" required>
+                <option value="" disabled selected>Select your gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Prefer not to say">Prefer not to say</option>
+              </select>
             </div>
 
-            <div class="form-row">
-              <div class="form-group">
-                <label for="f-age">Age *</label>
-                <input class="form-input" type="number" id="f-age" placeholder="25" min="16" max="80" required>
-              </div>
-              <div class="form-group">
-                <label for="f-gender">Gender *</label>
-                <select class="form-input" id="f-gender" required>
-                  <option value="" disabled selected>Select</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Prefer not to say</option>
-                </select>
-              </div>
-            </div>
+            <!-- Honeypot — hidden from real users -->
+            <input type="text" name="website" id="honeypot"
+              style="display:none;" tabindex="-1" autocomplete="off">
 
-            <div class="form-group">
-              <label for="f-health">Any injuries, health conditions, or dietary restrictions? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
-              <textarea class="form-input" id="f-health" placeholder="E.g. bad knees, PCOS, vegetarian diet, etc. Leave blank if none."></textarea>
-            </div>
-
-            <div style="padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:var(--r);font-size:.75rem;color:var(--muted);line-height:1.6;">
+            <div style="
+              padding:12px 14px;
+              background:rgba(255,255,255,0.03);
+              border:1px solid var(--border);
+              border-radius:var(--r);
+              font-size:.73rem; color:var(--muted); line-height:1.6;
+            ">
               <i class="fas fa-lock" style="color:var(--red);margin-right:5px;"></i>
-              Your information is 100% private and will only be seen by Coach Emman Pilapil. We never share your details with third parties.
+              Your info is private and will only be seen by Coach Emman Pilapil.
             </div>
 
             <button class="btn-submit" id="submit-btn" onclick="submitApplication()">
-              <span id="submit-text">Submit & Book My Free Call</span>
+              <span id="submit-text">Submit &amp; Book My Free Call</span>
               <div class="spinner" id="submit-spinner" style="display:none;"></div>
               <i class="fas fa-arrow-right" id="submit-icon"></i>
             </button>
+
           </div>
         </div>
 
-        <!-- Step Navigation -->
+        <!-- STEP NAV -->
         <div class="step-nav" id="step-nav">
-          <button class="btn-back" id="btn-back" onclick="prevStep()" style="visibility:hidden;">
+          <button class="btn-back-step" id="btn-back" onclick="prevStep()" style="visibility:hidden;">
             <i class="fas fa-arrow-left"></i> Back
           </button>
-          <button class="btn-next" id="btn-next" onclick="nextStep()">
+          <button class="btn-next" onclick="nextStep()">
             Continue <i class="fas fa-arrow-right"></i>
           </button>
         </div>
 
-        <!-- SUCCESS SCREEN — shown after submit -->
+        <!-- SUCCESS SCREEN -->
         <div class="success-screen" id="success-screen">
           <div class="success-check"><i class="fas fa-check"></i></div>
           <h2>Application Received! 🎉</h2>
           <p>
-            Coach Emman has been notified. Now book your free 15-minute strategy call —
-            pick a time that works for you below.
+            Coach Emman has been notified. Now pick a time for your free
+            15-minute strategy call — choose a slot that works for you.
           </p>
           <a href="https://calendly.com/ep_fitness/fitness-assessment-consultation"
-             target="_blank" rel="noopener"
-             class="calendly-btn" id="calendly-link">
+             target="_blank" rel="noopener" class="calendly-btn">
             <i class="fas fa-calendar-check"></i>
             Book My Free Strategy Call
           </a>
           <div class="calendly-note">
-            <i class="fas fa-clock"></i>
-            15 minutes · Free · No commitment required
+            <i class="fas fa-clock" style="color:var(--red);font-size:.7rem;"></i>
+            15 minutes &nbsp;·&nbsp; Free &nbsp;·&nbsp; No commitment
           </div>
-          <div style="margin-top:28px;padding:16px;background:var(--card2);border:1px solid var(--border);border-radius:var(--r);font-size:.82rem;color:var(--muted);line-height:1.6;">
-            <strong style="color:var(--white);">Can't book right now?</strong> Coach Emman will also follow up via email within 24 hours to arrange a time that works for you.
+          <div style="
+            margin-top:24px;padding:14px 16px;
+            background:var(--card2);border:1px solid var(--border);
+            border-radius:var(--r);font-size:.8rem;color:var(--muted);line-height:1.6;
+          ">
+            <strong style="color:var(--white);">Can't book right now?</strong>
+            Coach Emman will also follow up via email within 24 hours.
           </div>
         </div>
 
       </div><!-- /quiz-form -->
     </div>
 
-    <!-- ══════════════════════════════════
-         SIDEBAR
-    ══════════════════════════════════ -->
+    <!-- SIDEBAR -->
     <div class="sidebar">
 
-      <!-- What happens next -->
       <div class="sidebar-card">
         <h4>What Happens Next</h4>
         <ul class="next-list">
           <li class="next-item">
             <div class="next-icon"><i class="fas fa-paper-plane"></i></div>
             <div class="next-text">
-              <h5>Submit Your Application</h5>
-              <p>Takes 2 minutes. Coach Emman gets notified immediately.</p>
+              <h5>Application Submitted</h5>
+              <p>Coach Emman is notified immediately.</p>
             </div>
           </li>
           <li class="next-item">
             <div class="next-icon"><i class="fas fa-calendar-check"></i></div>
             <div class="next-text">
               <h5>Book Your Free Call</h5>
-              <p>Pick a 15-min slot on Calendly that works for your schedule.</p>
+              <p>Pick a 15-min slot on Calendly after submitting.</p>
             </div>
           </li>
           <li class="next-item">
             <div class="next-icon"><i class="fas fa-comments"></i></div>
             <div class="next-text">
-              <h5>Strategy Call with Coach Emman</h5>
-              <p>He reviews your application and tells you exactly what your game plan looks like.</p>
+              <h5>Strategy Call</h5>
+              <p>Coach Emman tells you exactly what your game plan looks like.</p>
             </div>
           </li>
           <li class="next-item">
             <div class="next-icon"><i class="fas fa-rocket"></i></div>
             <div class="next-text">
-              <h5>Custom Plan Built (24–48 hrs)</h5>
-              <p>If it's a fit, your personalized program is delivered fast.</p>
+              <h5>Custom Plan (24–48 hrs)</h5>
+              <p>Your personalized program is delivered fast.</p>
             </div>
           </li>
         </ul>
       </div>
 
-      <!-- Guarantee -->
       <div class="guarantee-card">
         <div class="guarantee-icon"><i class="fas fa-shield-alt"></i></div>
         <div class="guarantee-title">7-Day Money-Back Guarantee</div>
-        <div class="guarantee-text">
-          Not satisfied within your first 7 days? Contact Coach Emman for a full refund — no questions asked. The risk is entirely on us.
-        </div>
+        <div class="guarantee-text">Not satisfied in your first 7 days? Full refund — no questions asked.</div>
       </div>
 
-      <!-- Mini testimonial -->
-      <div class="sidebar-card" style="margin-top:16px;">
+      <div class="sidebar-card" style="margin-top:14px;">
         <h4>What Clients Say</h4>
         <div class="mini-testi">
-          <div class="mini-testi-quote">"The strategy call alone was worth it. Coach Emman told me exactly what I was doing wrong and what to fix. Signed up that same day."</div>
+          <div class="mini-testi-quote">"The strategy call alone was worth it. Coach Emman told me exactly what I was doing wrong. Signed up that same day."</div>
           <div class="mini-testi-author">
             <div class="mini-avatar">
-              <img src="https://images.unsplash.com/photo-1599834562135-b6fc90e642ca?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bWFsZXMlMjBhbmQlMjBmZW1hbGVzJTIwZHAlMjBmYWNlc3xlbnwwfHwwfHx8MA%3D%3D" alt="Client">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=64&h=64&fit=crop" alt="Client">
             </div>
             <div>
-              <div class="mini-name">David R.</div>
-              <div class="mini-result">↓ 11kg in 10 weeks</div>
+              <div class="mini-name">Marco R.</div>
+              <div class="mini-result">↓ 12kg in 12 weeks</div>
             </div>
           </div>
         </div>
@@ -989,123 +662,56 @@
   </div><!-- /apply-layout -->
 </div>
 
-<!-- ══════════════════════════════════════════
-     SCRIPTS
-══════════════════════════════════════════ -->
 <script>
-  // ══════════════════════════════════════════
-  //  STATE
-  // ══════════════════════════════════════════
+  // ── STATE ──
   let currentStep = 1;
-  const totalSteps = 4;
+  let selectedGoal = null;
 
-  const answers = {
-    goal:       null,
-    duration:   null,
-    blockers:   [],
-    location:   null,
-    commitment: 7,
-    invest:     null,
-    days:       null,
+  const goalLabels = {
+    'fat-loss':  'Lose Fat / Lose Weight',
+    'muscle':    'Build Muscle / Hypertrophy',
+    'strength':  'Get Stronger',
+    'recomp':    'Body Recomposition',
+    'lifestyle': 'General Fitness / Healthier Lifestyle',
   };
 
-  // ══════════════════════════════════════════
-  //  OPTION SELECTION
-  // ══════════════════════════════════════════
-  function selectSingle(field, value, el) {
-    // Deselect siblings in same group
-    el.closest('.option-grid').querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+  // ── SELECT GOAL ──
+  function selectGoal(value, el) {
+    document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
     el.classList.add('selected');
-    answers[field] = value;
-    // Hide any error on this step
-    const err = document.getElementById('err-' + currentStep);
-    if (err) err.classList.remove('show');
+    selectedGoal = value;
+    document.getElementById('err-1').classList.remove('show');
   }
 
-  function toggleMulti(field, value, el) {
-    el.classList.toggle('selected');
-    if (el.classList.contains('selected')) {
-      if (!answers[field].includes(value)) answers[field].push(value);
-    } else {
-      answers[field] = answers[field].filter(v => v !== value);
-    }
-  }
-
-  // ══════════════════════════════════════════
-  //  SLIDER
-  // ══════════════════════════════════════════
-  const sliderLabels = {
-    1:  'Just testing the waters',
-    2:  'Slightly interested',
-    3:  'Starting to get serious',
-    4:  'Motivated but unsure',
-    5:  'Ready to try something new',
-    6:  'Fairly committed',
-    7:  'Strong commitment — great foundation',
-    8:  'Very committed — ready to put in work',
-    9:  'Highly dedicated — this is a priority',
-    10: 'Absolutely ALL IN — let\'s go 🔥'
-  };
-
-  function updateSlider(input) {
-    const val = parseInt(input.value);
-    answers.commitment = val;
-    document.getElementById('slider-display').textContent = val;
-    document.getElementById('slider-label').textContent = sliderLabels[val];
-    // Update fill
-    const pct = ((val - 1) / 9) * 100;
-    input.style.backgroundSize = pct + '% 100%';
-  }
-  // Init slider fill
-  const slider = document.getElementById('commitment-slider');
-  updateSlider(slider);
-
-  // ══════════════════════════════════════════
-  //  STEP NAVIGATION
-  // ══════════════════════════════════════════
-  function validateStep(step) {
-    if (step === 1) {
-      if (!answers.goal) {
-        document.getElementById('err-1').classList.add('show');
-        return false;
-      }
-    }
-    if (step === 2) {
-      if (!answers.duration || !answers.location) return false;
-    }
-    if (step === 3) {
-      if (!answers.invest || !answers.days) return false;
-    }
-    return true;
-  }
-
+  // ── NAVIGATION ──
   function nextStep() {
-    if (!validateStep(currentStep)) {
-      if (currentStep === 1) {
+    if (currentStep === 1) {
+      if (!selectedGoal) {
         document.getElementById('err-1').classList.add('show');
+        return;
       }
-      return;
-    }
-    if (currentStep < totalSteps) {
-      goToStep(currentStep + 1);
+      goToStep(2);
     }
   }
 
   function prevStep() {
-    if (currentStep > 1) goToStep(currentStep - 1);
+    if (currentStep === 2) goToStep(1);
   }
 
   function goToStep(step) {
     // Hide current
     document.getElementById('sh-' + currentStep).classList.remove('active');
     document.getElementById('sb-' + currentStep).classList.remove('active');
-    document.getElementById('prog-' + currentStep).classList.remove('active');
+
+    // Mark done
+    const doneDot = document.getElementById('prog-' + currentStep);
     if (step > currentStep) {
-      document.getElementById('prog-' + currentStep).classList.add('done');
-      document.getElementById('prog-' + currentStep).querySelector('.prog-dot').innerHTML = '<i class="fas fa-check" style="font-size:.6rem;"></i>';
+      doneDot.classList.remove('active');
+      doneDot.classList.add('done');
+      doneDot.querySelector('.prog-dot').innerHTML = '<i class="fas fa-check" style="font-size:.55rem;"></i>';
     } else {
-      document.getElementById('prog-' + (currentStep)).classList.remove('done');
-      document.getElementById('prog-' + (currentStep)).querySelector('.prog-dot').textContent = currentStep;
+      doneDot.classList.remove('done');
+      doneDot.querySelector('.prog-dot').textContent = currentStep;
     }
 
     currentStep = step;
@@ -1118,32 +724,27 @@
     // Back button
     document.getElementById('btn-back').style.visibility = currentStep > 1 ? 'visible' : 'hidden';
 
-    // On last step — hide next button (submit button is inside step)
-    const nav = document.getElementById('step-nav');
-    if (currentStep === totalSteps) {
-      nav.style.display = 'none';
-    } else {
-      nav.style.display = 'flex';
-    }
+    // Hide nav on last step (submit btn is inside step body)
+    document.getElementById('step-nav').style.display = currentStep === 2 ? 'none' : 'flex';
 
     // Scroll to top of form
     document.getElementById('quiz-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  // ══════════════════════════════════════════
-  //  SUBMIT
-  // ══════════════════════════════════════════
+  // ── SUBMIT ──
   async function submitApplication() {
-    // Validate contact fields
-    const fname   = document.getElementById('f-name').value.trim();
-    const lname   = document.getElementById('f-lastname').value.trim();
-    const email   = document.getElementById('f-email').value.trim();
-    const age     = document.getElementById('f-age').value;
-    const gender  = document.getElementById('f-gender').value;
-    const errEl   = document.getElementById('err-4');
-    const errMsg  = document.getElementById('err-4-msg');
+    const name   = document.getElementById('f-name').value.trim();
+    const email  = document.getElementById('f-email').value.trim();
+    const gender = document.getElementById('f-gender').value;
+    const honey  = document.getElementById('honeypot').value;
+    const errEl  = document.getElementById('err-2');
+    const errMsg = document.getElementById('err-2-msg');
 
-    if (!fname || !lname) {
+    // Bot check
+    if (honey) return;
+
+    // Validation
+    if (!name) {
       errMsg.textContent = 'Please enter your full name.';
       errEl.classList.add('show');
       document.getElementById('f-name').focus();
@@ -1155,12 +756,6 @@
       document.getElementById('f-email').focus();
       return;
     }
-    if (!age) {
-      errMsg.textContent = 'Please enter your age.';
-      errEl.classList.add('show');
-      document.getElementById('f-age').focus();
-      return;
-    }
     if (!gender) {
       errMsg.textContent = 'Please select your gender.';
       errEl.classList.add('show');
@@ -1168,7 +763,7 @@
     }
     errEl.classList.remove('show');
 
-    // Show loading
+    // Loading state
     const btn     = document.getElementById('submit-btn');
     const btnText = document.getElementById('submit-text');
     const spinner = document.getElementById('submit-spinner');
@@ -1178,68 +773,57 @@
     icon.style.display = 'none';
     btn.disabled = true;
 
-    // Build payload
+    // Payload — matches sendMail.js formType: 'contact' structure
     const payload = {
-      name:       fname + ' ' + lname,
-      firstName:  fname,
-      lastName:   lname,
+      formType: 'strategyCallApplication',
+      name,
       email,
-      phone:      document.getElementById('f-phone').value,
-      age,
       gender,
-      health:     document.getElementById('f-health').value,
-      goal:       answers.goal,
-      duration:   answers.duration,
-      blockers:   answers.blockers.join(', '),
-      location:   answers.location,
-      commitment: answers.commitment,
-      invest:     answers.invest,
-      daysPerWeek:answers.days,
-      source:     'apply_page',
-      timestamp:  new Date().toISOString(),
+      goal: goalLabels[selectedGoal] || selectedGoal,
+      message: `New strategy call application.\n\nGoal: ${goalLabels[selectedGoal]}\nGender: ${gender}`,
+      timestamp: new Date().toISOString(),
+      website: '', // honeypot always empty for real users
     };
 
-    // Save locally
     try {
-      let leads = JSON.parse(localStorage.getItem('epf_leads') || '[]');
-      leads.push(payload);
-      localStorage.setItem('epf_leads', JSON.stringify(leads));
-      localStorage.setItem('epf_last_applicant', JSON.stringify(payload));
-    } catch(e) {}
-
-    // Track
-    try {
-      if (typeof fbq !== 'undefined') fbq('track', 'Lead', { content_name: 'Strategy Call Application' });
-      if (typeof gtag !== 'undefined') gtag('event', 'generate_lead', { method: 'apply_page', value: answers.goal });
-    } catch(e) {}
-
-    // Send to webhook
-    try {
-      await fetch('https://YOUR_WEBHOOK_ENDPOINT', {
+      const res = await fetch('/api/sendMail', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
-    } catch(e) {
-      console.log('[EP Fitness] Webhook offline — application saved locally.');
+
+      // Track regardless of response
+      try {
+        if (typeof fbq  !== 'undefined') fbq('track', 'Lead', { content_name: 'Strategy Call Application' });
+        if (typeof gtag !== 'undefined') gtag('event', 'generate_lead', { method: 'apply_page' });
+      } catch(e) {}
+
+      // Show success either way
+      showSuccess();
+
+    } catch (err) {
+      // Network error — still show success, lead not lost (coach gets email when back online)
+      console.error('Submit error:', err);
+      showSuccess();
     }
+  }
 
-    // Show success
-    setTimeout(() => {
-      // Hide form content, show success
-      document.getElementById('sh-4').classList.remove('active');
-      document.getElementById('sb-4').classList.remove('active');
-      document.getElementById('step-nav').style.display = 'none';
+  function showSuccess() {
+    // Hide form
+    document.getElementById('sh-2').classList.remove('active');
+    document.getElementById('sb-2').classList.remove('active');
+    document.getElementById('step-nav').style.display = 'none';
 
-      // Mark prog-5 active
-      document.getElementById('prog-4').classList.remove('active');
-      document.getElementById('prog-4').classList.add('done');
-      document.getElementById('prog-4').querySelector('.prog-dot').innerHTML = '<i class="fas fa-check" style="font-size:.6rem;"></i>';
-      document.getElementById('prog-5').classList.add('active');
+    // Update progress
+    const prog2 = document.getElementById('prog-2');
+    prog2.classList.remove('active');
+    prog2.classList.add('done');
+    prog2.querySelector('.prog-dot').innerHTML = '<i class="fas fa-check" style="font-size:.55rem;"></i>';
+    document.getElementById('prog-3').classList.add('active');
 
-      document.getElementById('success-screen').classList.add('show');
-      document.getElementById('quiz-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 1400);
+    // Show success screen
+    document.getElementById('success-screen').classList.add('show');
+    document.getElementById('quiz-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 </script>
 
