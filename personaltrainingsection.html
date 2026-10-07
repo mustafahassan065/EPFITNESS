@@ -93,20 +93,21 @@
             display: inline-block;
         }
 
-        /* Video embed styling */
+        /* ===== Video embed styling (Reels / Shorts 9:16 vertical format) ===== */
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            padding-bottom: 177.77%; /* 9:16 aspect ratio (reels / shorts) */
             height: 0;
             overflow: hidden;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: #000;
         }
         
         .video-wrapper:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transform: scale(1.03);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
         }
         
         .video-wrapper iframe {
@@ -116,7 +117,7 @@
             width: 100%;
             height: 100%;
             border: 0;
-            border-radius: 0.75rem;
+            border-radius: 1rem;
         }
     </style>
 </head>
@@ -216,12 +217,12 @@
                 <p class="text-gray-600 mt-8 max-w-2xl mx-auto">Browse through our personal training gallery showcasing various training techniques and client sessions</p>
             </div>
 
-            <!-- ===================== VIDEO GALLERY SECTION ===================== -->
+            <!-- ===================== VIDEO GALLERY SECTION (REELS FORMAT) ===================== -->
             <div class="mb-12">
                 <h3 class="text-2xl xs:text-3xl font-bold text-secondary mb-8 text-center font-heading">
                     <i class="fas fa-video text-primary mr-3"></i>WATCH OUR TRAINING SESSIONS
                 </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
                     <!-- Video 1 -->
                     <div class="video-wrapper">
                         <iframe src="https://drive.google.com/file/d/1IINWOLG0Qwz0rbsdK2txPbiTvzN0HkCN/preview" allow="autoplay; encrypted-media" allowfullscreen></iframe>
@@ -340,7 +341,7 @@
                 <p class="text-gray-600 mt-8 max-w-2xl mx-auto">Professional physiotherapy sessions focused on patient rehabilitation, pain management, and mobility restoration. Our certified therapists provide personalized care for every condition.</p>
             </div>
 
-            <!-- Physiotherapy Image Grid (6 images) -->
+            <!-- Physiotherapy Image Grid (9 images) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
                 <!-- Physio 1 -->
                 <div class="gallery-image overflow-hidden rounded-lg bg-gray-100 shadow-sm">
