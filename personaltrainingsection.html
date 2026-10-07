@@ -119,6 +119,18 @@
             border: 0;
             border-radius: 1rem;
         }
+
+        /* Blocker for Google Drive's "open in new window" arrow icon (top-right corner) */
+        .drive-blocker {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 70px;
+            height: 70px;
+            z-index: 20;
+            background: transparent;
+            cursor: default;
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -226,26 +238,32 @@
                     <!-- Video 1 -->
                     <div class="video-wrapper">
                         <iframe src="https://drive.google.com/file/d/1IINWOLG0Qwz0rbsdK2txPbiTvzN0HkCN/preview" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        <div class="drive-blocker"></div>
                     </div>
                     <!-- Video 2 -->
                     <div class="video-wrapper">
                         <iframe src="https://drive.google.com/file/d/1VlrH3OTCgiE50LNnfWFdGsR_T3MXX9yt/preview" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        <div class="drive-blocker"></div>
                     </div>
                     <!-- Video 3 -->
                     <div class="video-wrapper">
                         <iframe src="https://drive.google.com/file/d/1pHfIiLhz2Vt-73q4a5szCIKY_YaatoSA/preview" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        <div class="drive-blocker"></div>
                     </div>
                     <!-- Video 4 -->
                     <div class="video-wrapper">
                         <iframe src="https://drive.google.com/file/d/1xq1ST4c5vI_AQJelsF0QfxG3-EiUHy58/preview" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        <div class="drive-blocker"></div>
                     </div>
                     <!-- Video 5 -->
                     <div class="video-wrapper">
                         <iframe src="https://drive.google.com/file/d/1usKJ9wpzosezikFOmWocdDSCUPTJTxPO/preview" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        <div class="drive-blocker"></div>
                     </div>
                     <!-- Video 6 -->
                     <div class="video-wrapper">
                         <iframe src="https://drive.google.com/file/d/1AnQgjSWvmmGuxRqamFYT8lxv22qJGBsx/preview" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        <div class="drive-blocker"></div>
                     </div>
                 </div>
             </div>
