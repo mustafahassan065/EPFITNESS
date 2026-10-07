@@ -112,10 +112,12 @@
         
         .video-wrapper iframe {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+            top: 50%;
+            left: 50%;
+            /* Zoom so 16:9 Drive player fills a 9:16 frame (crops the side black bars) */
+            width: 177.77%;
             height: 100%;
+            transform: translate(-50%, -50%);
             border: 0;
             border-radius: 1rem;
         }
@@ -125,8 +127,8 @@
             position: absolute;
             top: 0;
             right: 0;
-            width: 70px;
-            height: 70px;
+            width: 90px;
+            height: 90px;
             z-index: 20;
             background: transparent;
             cursor: default;
