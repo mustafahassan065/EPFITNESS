@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Training Packages | EP Fitness</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#e53935',
+                        secondary: '#212121',
+                        accent: '#f5f5f5',
+                        dark: '#1a1a1a',
+                        light: '#ffffff',
+                    },
+                    fontFamily: {
+                        heading: ['Bebas Neue', 'sans-serif'],
+                        body: ['Montserrat', 'sans-serif'],
+                    },
+                    screens: { 'xs': '480px' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; }
+        .mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .mobile-menu.open { max-height: 800px; transition: max-height 0.5s ease-in; }
+        .section-title { position: relative; display: inline-block; }
+        .section-title:after {
+            content: ''; position: absolute; bottom: -10px; left: 50%;
+            transform: translateX(-50%); width: 80px; height: 4px; background-color: #e53935;
+        }
+        .package-card { transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .package-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .most-popular-badge {
+            position: absolute; top: 20px; right: -35px; background: #e53935; color: white;
+            padding: 5px 40px; font-size: 12px; font-weight: bold; transform: rotate(45deg);
+            z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .best-choice-badge {
+            position: absolute; top: 20px; right: -35px; background: #2e7d32; color: white;
+            padding: 5px 40px; font-size: 12px; font-weight: bold; transform: rotate(45deg);
+            z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .city-tab { transition: all 0.2s ease; }
+        .city-tab:hover { background-color: #f5f5f5; }
+    </style>
+</head>
+<body class="bg-light">
+
+    <!-- Navigation -->
+    <nav class="bg-white text-secondary shadow-lg sticky top-0 z-50 border-b-2 border-primary">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2"></div>
+            <div class="hidden md:flex space-x-8 font-semibold">
+                <a href="index.html" class="hover:text-primary transition transform hover:scale-105">HOME</a>
+                <div class="relative group">
+                    <button class="hover:text-primary transition transform hover:scale-105 flex items-center focus:outline-none">
+                        ABOUT <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                    </button>
+                    <div class="absolute left-0 mt-2 w-64 bg-white shadow-lg rounded-lg py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 border border-gray-200">
+                        <a href="index.html#about" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">About us</div></a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="index.html#coaches" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Meet the Coaches</div></a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="personaltrainingsection.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Personal Training Gallery</div></a>
+                    </div>
+                </div>
+                <a href="index.html#services" class="hover:text-primary transition transform hover:scale-105">SERVICES</a>
+                <a href="EmmanResults.html" class="hover:text-primary transition transform hover:scale-105">RESULTS</a>
+                <!-- PACKAGES DROPDOWN -->
+                <div class="relative group">
+                    <button class="text-primary transition transform hover:scale-105 flex items-center focus:outline-none">
+                        PACKAGES <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                    </button>
+                    <div class="absolute left-0 mt-2 w-64 bg-white shadow-lg rounded-lg py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 border border-gray-200">
+                        <a href="packages-personal-training.html" class="block px-4 py-3 text-secondary bg-accent text-primary transition"><div class="font-semibold">Personal Training</div></a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="packages-online-coaching.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Online Coaching</div></a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="packages-nutrition.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Nutrition Coaching</div></a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="packages-physiotherapy.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Physiotherapy</div></a>
+                    </div>
+                </div>
+                <a href="WorkOutPlans.html" class="hover:text-primary transition transform hover:scale-105">WORKOUT PLANS</a>
+                <a href="faqs.html" class="hover:text-primary transition transform hover:scale-105">FAQS</a>
+                <a href="index.html#contact" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-red-700 transition">CONTACT</a>
+            </div>
+            <button class="md:hidden text-secondary focus:outline-none" id="mobile-menu-button">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu md:hidden bg-white px-4 border-t border-gray-200" id="mobile-menu">
+            <div class="flex flex-col space-y-3 py-3">
+                <a href="index.html" class="hover:text-primary transition py-2 font-semibold">HOME</a>
+                <a href="index.html#about" class="hover:text-primary transition py-2 font-semibold">ABOUT</a>
+                <a href="index.html#coaches" class="hover:text-primary transition py-2 font-semibold">MEET THE COACHES</a>
+                <a href="personaltrainingsection.html" class="hover:text-primary transition py-2 font-semibold">TRAINING GALLERY</a>
+                <a href="index.html#services" class="hover:text-primary transition py-2 font-semibold">SERVICES</a>
+                <a href="EmmanResults.html" class="hover:text-primary transition py-2 font-semibold">RESULTS</a>
+                <div class="border-t border-gray-200 pt-2 mt-2">
+                    <p class="text-xs text-primary font-bold px-2 mb-1">PACKAGES</p>
+                    <a href="packages-personal-training.html" class="hover:text-primary transition py-2 pl-4 font-semibold block">Personal Training</a>
+                    <a href="packages-online-coaching.html" class="hover:text-primary transition py-2 pl-4 font-semibold block">Online Coaching</a>
+                    <a href="packages-nutrition.html" class="hover:text-primary transition py-2 pl-4 font-semibold block">Nutrition Coaching</a>
+                    <a href="packages-physiotherapy.html" class="hover:text-primary transition py-2 pl-4 font-semibold block">Physiotherapy</a>
+                </div>
+                <a href="WorkOutPlans.html" class="hover:text-primary transition py-2 font-semibold">WORKOUT PLANS</a>
+                <a href="faqs.html" class="hover:text-primary transition py-2 font-semibold">FAQS</a>
+                <a href="index.html#contact" class="hover:text-primary transition py-2 font-semibold">CONTACT</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="bg-secondary text-white py-16 md:py-20">
+        <div class="container mx-auto px-4 text-center">
+            <div class="inline-flex items-center bg-primary/20 border border-primary px-4 py-2 rounded-full mb-6">
+                <i class="fas fa-dumbbell text-primary mr-2"></i>
+                <span class="text-primary font-bold text-sm tracking-wider">IN-PERSON TRAINING</span>
+            </div>
+            <h1 class="text-4xl xs:text-5xl md:text-6xl font-bold font-heading mb-4">PERSONAL TRAINING PACKAGES</h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">Premium in-person coaching at partner gyms across Metro Manila. All-inclusive rates.</p>
+        </div>
+    </section>
+
+    <!-- Info Banners -->
+    <section class="py-10 bg-white">
+        <div class="container mx-auto px-4 max-w-5xl space-y-6">
+            <!-- Train-With-A-Friend -->
+            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-lg">
+                <div class="flex items-start">
+                    <div class="bg-yellow-500 text-white p-3 rounded-full mr-4 flex-shrink-0">
+                        <i class="fas fa-users text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-secondary mb-2">Train-With-A-Friend Rate</h3>
+                        <p class="text-gray-700 mb-2">Train together at the same time and both receive a discounted rate per package:</p>
+                        <ul class="text-gray-700 list-disc pl-5 mb-2">
+                            <li>10+2 Sessions – ₱6,000 discount per person</li>
+                            <li>16+2 Sessions – ₱7,000 discount per person</li>
+                            <li>20+2 Sessions – ₱8,000 discount per person</li>
+                            <li>30 Sessions – ₱12,500 discount per person</li>
+                        </ul>
+                        <p class="text-gray-700 text-sm italic">Applicable only when training at the same time, same schedule, and same location.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Options -->
+            <div class="bg-primary/10 border-l-4 border-primary p-6 rounded-lg">
+                <div class="flex items-start">
+                    <div class="bg-primary text-white p-3 rounded-full mr-4 flex-shrink-0">
+                        <i class="fas fa-credit-card text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-secondary mb-2">Flexible Payment Options</h3>
+                        <p class="text-gray-700">Weekly payments, 50% installment, or full payment options available. Contact us to discuss which works best for you.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Single Session -->
+            <div class="bg-accent border-l-4 border-gray-400 p-6 rounded-lg">
+                <div class="flex items-start">
+                    <div class="bg-gray-700 text-white p-3 rounded-full mr-4 flex-shrink-0">
+                        <i class="fas fa-info text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-secondary mb-1">Single Session (Pay-Per-Session)</h3>
+                        <p class="text-gray-700"><span class="font-bold text-primary text-lg">₱2,500</span> per session (Subject to coach availability). <span class="font-semibold">Packages are recommended for better value.</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- City Packages -->
+    <section class="py-16 md:py-20 bg-accent">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl xs:text-4xl md:text-5xl font-bold text-secondary mb-4 font-heading section-title">CHOOSE YOUR CITY</h2>
+                <p class="text-gray-600 mt-12 max-w-3xl mx-auto">All-inclusive rates for premium personal training sessions. Packages valid only within the registered service area.</p>
+            </div>
+
+            <!-- City Tabs -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button class="city-tab bg-primary text-white px-6 py-3 rounded-full font-semibold shadow" data-city="paranaque">Parañaque</button>
+                <button class="city-tab bg-white text-secondary px-6 py-3 rounded-full font-semibold shadow border border-gray-200" data-city="laspinas">Las Piñas</button>
+                <button class="city-tab bg-white text-secondary px-6 py-3 rounded-full font-semibold shadow border border-gray-200" data-city="alabang">Alabang</button>
+                <button class="city-tab bg-white text-secondary px-6 py-3 rounded-full font-semibold shadow border border-gray-200" data-city="pasay">Pasay</button>
+                <button class="city-tab bg-white text-secondary px-6 py-3 rounded-full font-semibold shadow border border-gray-200" data-city="makati">Makati</button>
+                <button class="city-tab bg-white text-secondary px-6 py-3 rounded-full font-semibold shadow border border-gray-200" data-city="taguig">Taguig / BGC</button>
+            </div>
+
+            <!-- Parañaque -->
+            <div class="city-packages" id="city-paranaque">
+                <h3 class="text-2xl font-bold text-secondary text-center mb-8 flex items-center justify-center">
+                    <i class="fas fa-map-marker-alt text-primary mr-3"></i> PARAÑAQUE CITY — PACKAGES WITH FREE SESSIONS
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                    <!-- 10+2 -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱15,500</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 35 days</div>
+                            <h4 class="text-lg font-bold text-secondary">10 + 2 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">12 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Basic Progress Tracking</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">
+                            BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                    <!-- 16+2 -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱23,400</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 45 days</div>
+                            <h4 class="text-lg font-bold text-secondary">16 + 2 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">18 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progress Tracking</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">
+                            BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                    <!-- 20+2 MOST POPULAR -->
+                    <div class="package-card bg-white border-2 border-primary rounded-2xl p-6 shadow-xl relative">
+                        <div class="most-popular-badge">MOST POPULAR</div>
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱28,600</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 55 days</div>
+                            <h4 class="text-lg font-bold text-secondary">20 + 2 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">22 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Advanced Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Detailed Progress</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-primary hover:bg-red-700 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">
+                            BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                    <!-- 30+3 BEST CHOICE -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg relative">
+                        <div class="best-choice-badge">BEST CHOICE</div>
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱42,900</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 100 days</div>
+                            <h4 class="text-lg font-bold text-secondary">30 + 3 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">33 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Elite Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Extended Support</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">
+                            BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Las Piñas -->
+            <div class="city-packages hidden" id="city-laspinas">
+                <h3 class="text-2xl font-bold text-secondary text-center mb-8 flex items-center justify-center">
+                    <i class="fas fa-map-marker-alt text-primary mr-3"></i> LAS PIÑAS CITY — PRIME TRAINING PACKAGES
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱16,500</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 35 days</div>
+                            <h4 class="text-lg font-bold text-secondary">10 SESSIONS</h4>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱25,600</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 45 days</div>
+                            <h4 class="text-lg font-bold text-secondary">16 + 1 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">17 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="package-card bg-white border-2 border-primary rounded-2xl p-6 shadow-xl relative">
+                        <div class="most-popular-badge">MOST POPULAR</div>
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱31,000</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 55 days</div>
+                            <h4 class="text-lg font-bold text-secondary">20 + 2 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">22 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Advanced Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Detailed Progress</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-primary hover:bg-red-700 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg relative">
+                        <div class="best-choice-badge">BEST CHOICE</div>
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱45,000</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 100 days</div>
+                            <h4 class="text-lg font-bold text-secondary">30 + 3 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">33 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Elite Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Extended Support</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alabang -->
+            <div class="city-packages hidden" id="city-alabang">
+                <h3 class="text-2xl font-bold text-secondary text-center mb-8 flex items-center justify-center">
+                    <i class="fas fa-map-marker-alt text-primary mr-3"></i> ALABANG — SIGNATURE TRAINING PACKAGES
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱17,500</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 35 days</div>
+                            <h4 class="text-lg font-bold text-secondary">10 SESSIONS</h4>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱27,200</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 45 days</div>
+                            <h4 class="text-lg font-bold text-secondary">16 + 1 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">17 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="package-card bg-white border-2 border-primary rounded-2xl p-6 shadow-xl relative">
+                        <div class="most-popular-badge">MOST POPULAR</div>
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱34,000</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 55 days</div>
+                            <h4 class="text-lg font-bold text-secondary">20 + 2 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">22 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Advanced Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Detailed Progress</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-primary hover:bg-red-700 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg relative">
+                        <div class="best-choice-badge">BEST CHOICE</div>
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱49,500</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 100 days</div>
+                            <h4 class="text-lg font-bold text-secondary">30 + 3 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">33 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Elite Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Extended Support</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pasay -->
+            <div class="city-packages hidden" id="city-pasay">
+                <h3 class="text-2xl font-bold text-secondary text-center mb-8 flex items-center justify-center">
+                    <i class="fas fa-map-marker-alt text-primary mr-3"></i> PASAY CITY — PERSONAL TRAINING PACKAGES
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱18,850</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 35 days</div>
+                            <h4 class="text-lg font-bold text-secondary">10 SESSIONS</h4>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱28,800</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 45 days</div>
+                            <h4 class="text-lg font-bold text-secondary">16 + 1 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">17 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="package-card bg-white border-2 border-primary rounded-2xl p-6 shadow-xl relative">
+                        <div class="most-popular-badge">MOST POPULAR</div>
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱36,000</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 55 days</div>
+                            <h4 class="text-lg font-bold text-secondary">20 + 2 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">22 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Advanced Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Detailed Progress</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-primary hover:bg-red-700 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg relative">
+                        <div class="best-choice-badge">BEST CHOICE</div>
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱52,500</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 100 days</div>
+                            <h4 class="text-lg font-bold text-secondary">30 + 3 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">33 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Elite Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Extended Support</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Makati -->
+            <div class="city-packages hidden" id="city-makati">
+                <h3 class="text-2xl font-bold text-secondary text-center mb-8 flex items-center justify-center">
+                    <i class="fas fa-map-marker-alt text-primary mr-3"></i> MAKATI CITY — PRIME TRAINING PACKAGES
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱18,850</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 35 days</div>
+                            <h4 class="text-lg font-bold text-secondary">10 SESSIONS</h4>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱28,800</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 45 days</div>
+                            <h4 class="text-lg font-bold text-secondary">16 + 1 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">17 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="package-card bg-white border-2 border-primary rounded-2xl p-6 shadow-xl relative">
+                        <div class="most-popular-badge">MOST POPULAR</div>
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱36,000</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 55 days</div>
+                            <h4 class="text-lg font-bold text-secondary">20 + 2 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">22 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Advanced Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Detailed Progress</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-primary hover:bg-red-700 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg relative">
+                        <div class="best-choice-badge">BEST CHOICE</div>
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱52,500</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 100 days</div>
+                            <h4 class="text-lg font-bold text-secondary">30 + 3 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">33 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Elite Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Extended Support</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Taguig -->
+            <div class="city-packages hidden" id="city-taguig">
+                <h3 class="text-2xl font-bold text-secondary text-center mb-8 flex items-center justify-center">
+                    <i class="fas fa-map-marker-alt text-primary mr-3"></i> TAGUIG CITY (INCLUDING BGC) — TRAINING PACKAGES
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱18,500</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 35 days</div>
+                            <h4 class="text-lg font-bold text-secondary">10 SESSIONS</h4>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱28,800</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 45 days</div>
+                            <h4 class="text-lg font-bold text-secondary">16 + 1 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">17 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="package-card bg-white border-2 border-primary rounded-2xl p-6 shadow-xl relative">
+                        <div class="most-popular-badge">MOST POPULAR</div>
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱36,000</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 55 days</div>
+                            <h4 class="text-lg font-bold text-secondary">20 + 2 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">22 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Advanced Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Detailed Progress</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-primary hover:bg-red-700 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg relative">
+                        <div class="best-choice-badge">BEST CHOICE</div>
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱52,500</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 100 days</div>
+                            <h4 class="text-lg font-bold text-secondary">30 + 3 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">33 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> In-Person Training</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Elite Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Extended Support</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">BOOK CONSULTATION <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-center text-gray-600 text-sm mt-8 max-w-3xl mx-auto italic">Packages are valid only within the registered service area. Sessions are non-transferable and non-refundable.</p>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-secondary text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold font-heading mb-4">NOT SURE WHICH PACKAGE FITS YOU?</h2>
+            <p class="text-gray-300 mb-8 max-w-2xl mx-auto">Book a free fitness consultation and we'll help you choose the right training plan based on your goals, schedule, and location.</p>
+            <a href="index.html#contact" class="inline-block bg-primary hover:bg-red-700 text-white font-bold py-4 px-10 rounded-full text-lg transition transform hover:scale-105 shadow-lg">
+                BOOK A FREE FITNESS CONSULTATION <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row justify-between items-start mb-10">
+                <div class="mb-10 lg:mb-0">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="h-14 w-14 rounded-full bg-primary flex items-center justify-center">
+                            <span class="text-white font-heading text-2xl">EP</span>
+                        </div>
+                        <div>
+                            <span class="text-2xl font-bold text-white font-heading">EP FITNESS</span>
+                            <p class="text-gray-400 text-sm">by Coach Emman</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 max-w-md mb-6">Transforming bodies and lives through personalized fitness training, nutrition guidance, and physiotherapy support.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/EPFITNESSPH" target="_blank" class="bg-gray-800 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/ep_fitness" target="_blank" class="bg-gray-800 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-10">
+                    <div>
+                        <h4 class="font-bold text-lg mb-6">QUICK LINKS</h4>
+                        <ul class="space-y-3">
+                            <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                            <li><a href="index.html#about" class="text-gray-400 hover:text-white transition">About</a></li>
+                            <li><a href="index.html#services" class="text-gray-400 hover:text-white transition">Services</a></li>
+                            <li><a href="EmmanResults.html" class="text-gray-400 hover:text-white transition">Results</a></li>
+                            <li><a href="termsconditions.html" class="text-primary hover:text-white transition">Terms & Conditions</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg mb-6">PACKAGES</h4>
+                        <ul class="space-y-3">
+                            <li><a href="packages-personal-training.html" class="text-gray-400 hover:text-white transition">Personal Training</a></li>
+                            <li><a href="packages-online-coaching.html" class="text-gray-400 hover:text-white transition">Online Coaching</a></li>
+                            <li><a href="packages-nutrition.html" class="text-gray-400 hover:text-white transition">Nutrition</a></li>
+                            <li><a href="packages-physiotherapy.html" class="text-gray-400 hover:text-white transition">Physiotherapy</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg mb-6">CONTACT INFO</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-center"><i class="fas fa-phone text-primary mr-3"></i><span>+63-906-279-6854</span></li>
+                            <li class="flex items-center"><i class="fas fa-envelope text-primary mr-3"></i><span>epfitness24@gmail.com</span></li>
+                            <li class="flex items-center"><i class="fab fa-instagram text-primary mr-3"></i><span>@ep_fitness</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+                <p>&copy; 2026 EP Fitness by Coach Emman. All rights reserved.</p>
+                <p class="mt-2 text-sm">You can check <a style="text-decoration: underline;" href="termsconditions.html">Terms and Conditions</a> here.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton?.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+
+        // City tabs
+        document.querySelectorAll('.city-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const city = tab.dataset.city;
+                // Hide all city sections
+                document.querySelectorAll('.city-packages').forEach(el => el.classList.add('hidden'));
+                // Show selected
+                document.getElementById('city-' + city)?.classList.remove('hidden');
+                // Reset tab styles
+                document.querySelectorAll('.city-tab').forEach(t => {
+                    t.classList.remove('bg-primary', 'text-white');
+                    t.classList.add('bg-white', 'text-secondary', 'border', 'border-gray-200');
+                });
+                // Active tab styles
+                tab.classList.remove('bg-white', 'text-secondary', 'border', 'border-gray-200');
+                tab.classList.add('bg-primary', 'text-white');
+            });
+        });
+    </script>
+</body>
+</html>
