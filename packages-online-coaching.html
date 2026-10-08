@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Coaching Packages | EP Fitness</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                colors: { primary: '#e53935', secondary: '#212121', accent: '#f5f5f5', dark: '#1a1a1a', light: '#ffffff' },
+                fontFamily: { heading: ['Bebas Neue', 'sans-serif'], body: ['Montserrat', 'sans-serif'] },
+                screens: { 'xs': '480px' }
+            }}
+        }
+    </script>
+    <style>
+        body { font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; }
+        .mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .mobile-menu.open { max-height: 800px; transition: max-height 0.5s ease-in; }
+        .section-title { position: relative; display: inline-block; }
+        .section-title:after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background-color: #e53935; }
+        .package-card { transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .package-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .most-popular-badge { position: absolute; top: 20px; right: -35px; background: #e53935; color: white; padding: 5px 40px; font-size: 12px; font-weight: bold; transform: rotate(45deg); z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .best-choice-badge { position: absolute; top: 20px; right: -35px; background: #2e7d32; color: white; padding: 5px 40px; font-size: 12px; font-weight: bold; transform: rotate(45deg); z-index: 10; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .currency-tab { transition: all 0.2s ease; }
+    </style>
+</head>
+<body class="bg-light">
+
+    <!-- Navigation -->
+    <nav class="bg-white text-secondary shadow-lg sticky top-0 z-50 border-b-2 border-primary">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2"></div>
+            <div class="hidden md:flex space-x-8 font-semibold">
+                <a href="index.html" class="hover:text-primary transition transform hover:scale-105">HOME</a>
+                <div class="relative group">
+                    <button class="hover:text-primary transition transform hover:scale-105 flex items-center focus:outline-none">ABOUT <i class="fas fa-chevron-down ml-1 text-xs"></i></button>
+                    <div class="absolute left-0 mt-2 w-64 bg-white shadow-lg rounded-lg py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 border border-gray-200">
+                        <a href="index.html#about" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">About us</div></a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="index.html#coaches" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Meet the Coaches</div></a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="personaltrainingsection.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Personal Training Gallery</div></a>
+                    </div>
+                </div>
+                <a href="index.html#services" class="hover:text-primary transition transform hover:scale-105">SERVICES</a>
+                <a href="EmmanResults.html" class="hover:text-primary transition transform hover:scale-105">RESULTS</a>
+                <div class="relative group">
+                    <button class="text-primary transition transform hover:scale-105 flex items-center focus:outline-none">PACKAGES <i class="fas fa-chevron-down ml-1 text-xs"></i></button>
+                    <div class="absolute left-0 mt-2 w-64 bg-white shadow-lg rounded-lg py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 border border-gray-200">
+                        <a href="packages-personal-training.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Personal Training</div></a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="packages-online-coaching.html" class="block px-4 py-3 text-secondary bg-accent text-primary transition"><div class="font-semibold">Online Coaching</div></a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="packages-nutrition.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Nutrition Coaching</div></a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="packages-physiotherapy.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Physiotherapy</div></a>
+                    </div>
+                </div>
+                <a href="WorkOutPlans.html" class="hover:text-primary transition transform hover:scale-105">WORKOUT PLANS</a>
+                <a href="faqs.html" class="hover:text-primary transition transform hover:scale-105">FAQS</a>
+                <a href="index.html#contact" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-red-700 transition">CONTACT</a>
+            </div>
+            <button class="md:hidden text-secondary focus:outline-none" id="mobile-menu-button"><i class="fas fa-bars text-2xl"></i></button>
+        </div>
+        <div class="mobile-menu md:hidden bg-white px-4 border-t border-gray-200" id="mobile-menu">
+            <div class="flex flex-col space-y-3 py-3">
+                <a href="index.html" class="hover:text-primary transition py-2 font-semibold">HOME</a>
+                <a href="index.html#about" class="hover:text-primary transition py-2 font-semibold">ABOUT</a>
+                <a href="index.html#services" class="hover:text-primary transition py-2 font-semibold">SERVICES</a>
+                <a href="EmmanResults.html" class="hover:text-primary transition py-2 font-semibold">RESULTS</a>
+                <div class="border-t border-gray-200 pt-2 mt-2">
+                    <p class="text-xs text-primary font-bold px-2 mb-1">PACKAGES</p>
+                    <a href="packages-personal-training.html" class="hover:text-primary transition py-2 pl-4 font-semibold block">Personal Training</a>
+                    <a href="packages-online-coaching.html" class="hover:text-primary transition py-2 pl-4 font-semibold block">Online Coaching</a>
+                    <a href="packages-nutrition.html" class="hover:text-primary transition py-2 pl-4 font-semibold block">Nutrition Coaching</a>
+                    <a href="packages-physiotherapy.html" class="hover:text-primary transition py-2 pl-4 font-semibold block">Physiotherapy</a>
+                </div>
+                <a href="WorkOutPlans.html" class="hover:text-primary transition py-2 font-semibold">WORKOUT PLANS</a>
+                <a href="faqs.html" class="hover:text-primary transition py-2 font-semibold">FAQS</a>
+                <a href="index.html#contact" class="hover:text-primary transition py-2 font-semibold">CONTACT</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="bg-secondary text-white py-16 md:py-20">
+        <div class="container mx-auto px-4 text-center">
+            <div class="inline-flex items-center bg-primary/20 border border-primary px-4 py-2 rounded-full mb-6">
+                <i class="fas fa-laptop text-primary mr-2"></i>
+                <span class="text-primary font-bold text-sm tracking-wider">ONLINE COACHING</span>
+            </div>
+            <h1 class="text-4xl xs:text-5xl md:text-6xl font-bold font-heading mb-4">ONLINE COACHING PACKAGES</h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">Structured, personalized coaching — wherever you are. Two formats to choose from.</p>
+        </div>
+    </section>
+
+    <!-- Info Banner -->
+    <section class="py-10 bg-white">
+        <div class="container mx-auto px-4 max-w-5xl space-y-6">
+            <div class="bg-primary/10 border-l-4 border-primary p-6 rounded-lg">
+                <div class="flex items-start">
+                    <div class="bg-primary text-white p-3 rounded-full mr-4 flex-shrink-0"><i class="fas fa-credit-card text-xl"></i></div>
+                    <div>
+                        <h3 class="text-xl font-bold text-secondary mb-2">Flexible Payment Options</h3>
+                        <p class="text-gray-700">Weekly payments, 50% installment, or full payment options available. Contact us to discuss which works best for you.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg">
+                <div class="flex items-start">
+                    <div class="bg-blue-500 text-white p-3 rounded-full mr-4 flex-shrink-0"><i class="fas fa-globe text-xl"></i></div>
+                    <div>
+                        <h3 class="text-xl font-bold text-secondary mb-2">PHP vs USD Pricing</h3>
+                        <p class="text-gray-700">USD pricing accommodates time-zone differences, flexible scheduling, and extended coach availability beyond local hours.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Format 1: PDF & Spur.fit -->
+    <section class="py-16 md:py-20 bg-accent">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center bg-primary/20 border border-primary px-4 py-2 rounded-full mb-4">
+                    <i class="fas fa-file-pdf text-primary mr-2"></i>
+                    <span class="text-primary font-bold text-xs tracking-wider">FORMAT 1</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-secondary font-heading mb-3">PDF & SPUR.FIT COACHING</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto">Structured, app-based coaching with accountability and progress tracking. Perfect for self-directed clients who want expert programming.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- BASIC -->
+                <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg">
+                    <div class="text-center mb-8">
+                        <div class="text-3xl font-bold text-primary mb-2">₱3,000</div>
+                        <div class="text-gray-500 text-sm mb-4">Per Month</div>
+                        <h3 class="text-xl font-bold text-secondary">BASIC</h3>
+                        <p class="text-gray-600 mt-2 text-sm">Essential workout program</p>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-3"></i><span class="text-gray-700">4-Week Workout Program (PDF)</span></li>
+                    </ul>
+                    <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 rounded-xl transition transform hover:scale-105">
+                        CHOOSE THIS PACKAGE <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- STANDARD - MOST POPULAR -->
+                <div class="package-card bg-white border-2 border-primary rounded-2xl p-8 shadow-xl relative">
+                    <div class="most-popular-badge">MOST POPULAR</div>
+                    <div class="text-center mb-8">
+                        <div class="text-3xl font-bold text-primary mb-2">₱4,500</div>
+                        <div class="text-gray-500 text-sm mb-4">Per Month</div>
+                        <h3 class="text-xl font-bold text-secondary">STANDARD</h3>
+                        <p class="text-gray-600 mt-2 text-sm">Complete fitness support</p>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-3"></i><span class="text-gray-700">4-Week Workout Program (PDF)</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-3"></i><span class="text-gray-700">Nutrition Guidance</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-3"></i><span class="text-gray-700">Weekly Check-Ins</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-3"></i><span class="text-gray-700">Direct Chat Support <span class="text-xs text-gray-500">(Replies within working hours)</span></span></li>
+                    </ul>
+                    <a href="index.html#contact" class="block w-full text-center bg-primary hover:bg-red-700 text-white font-bold py-4 rounded-xl transition transform hover:scale-105">
+                        CHOOSE THIS PACKAGE <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- PREMIUM - BEST CHOICE -->
+                <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-8 shadow-lg relative">
+                    <div class="best-choice-badge">BEST CHOICE</div>
+                    <div class="text-center mb-8">
+                        <div class="text-3xl font-bold text-primary mb-2">₱6,500</div>
+                        <div class="text-gray-500 text-sm mb-4">Per Month</div>
+                        <h3 class="text-xl font-bold text-secondary">PREMIUM <span class="text-sm font-normal">(with Spur.fit)</span></h3>
+                        <p class="text-gray-600 mt-2 text-sm">Ultimate coaching experience</p>
+                    </div>
+                    <ul class="space-y-3 mb-8 text-sm">
+                        <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-3"></i><span class="text-gray-700">App-based coaching</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-3"></i><span class="text-gray-700">4-Week Workout Program</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-3"></i><span class="text-gray-700">Direct Chat Support <span class="text-xs text-gray-500">(working hours)</span></span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-3"></i><span class="text-gray-700">Built-in Progress Tracking</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-3"></i><span class="text-gray-700">Virtual Workout Videos</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-3"></i><span class="text-gray-700">Access to Spur.fit App</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-3"></i><span class="text-gray-700">Weekly Check-Ins</span></li>
+                    </ul>
+                    <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 rounded-xl transition transform hover:scale-105">
+                        CHOOSE THIS PACKAGE <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Format 2: 1-on-1 Live -->
+    <section class="py-16 md:py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center bg-primary/20 border border-primary px-4 py-2 rounded-full mb-4">
+                    <i class="fas fa-video text-primary mr-2"></i>
+                    <span class="text-primary font-bold text-xs tracking-wider">FORMAT 2</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-secondary font-heading mb-3">1-ON-1 LIVE ONLINE COACHING</h2>
+                <p class="text-gray-600 max-w-3xl mx-auto">Live Training via Zoom / Google Meet. Direct coaching, real-time feedback, and full accountability.</p>
+            </div>
+
+            <!-- Currency Toggle -->
+            <div class="flex justify-center gap-3 mb-10">
+                <button class="currency-tab bg-primary text-white px-8 py-3 rounded-full font-semibold shadow" data-currency="php">PHP</button>
+                <button class="currency-tab bg-white text-secondary px-8 py-3 rounded-full font-semibold shadow border border-gray-200" data-currency="usd">USD (International)</button>
+            </div>
+
+            <!-- PHP PACKAGES -->
+            <div id="packages-php">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                    <!-- 10+1 -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱12,100</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 35 days</div>
+                            <h4 class="text-lg font-bold text-secondary">10 + 1 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">11 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Live 1-on-1 via Zoom</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progress Tracking</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">CHOOSE PACKAGE <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <!-- 12+2 -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱15,400</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 45 days</div>
+                            <h4 class="text-lg font-bold text-secondary">12 + 2 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">14 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Live 1-on-1 via Zoom</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progress Tracking</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">CHOOSE PACKAGE <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <!-- 16+2 MOST POPULAR -->
+                    <div class="package-card bg-white border-2 border-primary rounded-2xl p-6 shadow-xl relative">
+                        <div class="most-popular-badge">MOST POPULAR</div>
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱19,800</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 55 days</div>
+                            <h4 class="text-lg font-bold text-secondary">16 + 2 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">18 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Live 1-on-1 via Zoom</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Detailed Progress</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Coaching Check-Ins</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-primary hover:bg-red-700 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">CHOOSE PACKAGE <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <!-- 30+2 BEST CHOICE -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg relative">
+                        <div class="best-choice-badge">BEST CHOICE</div>
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">₱27,500</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 100 days</div>
+                            <h4 class="text-lg font-bold text-secondary">30 + 2 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">32 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Live 1-on-1 via Zoom</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Advanced Analytics</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Priority Support</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">CHOOSE PACKAGE <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- USD PACKAGES -->
+            <div id="packages-usd" class="hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                    <!-- 10+1 -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">$275</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 35 days</div>
+                            <h4 class="text-lg font-bold text-secondary">10 + 1 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">11 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Live 1-on-1 via Zoom</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progress Tracking</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">CHOOSE PACKAGE <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <!-- 16+2 -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg">
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">$432</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 45 days</div>
+                            <h4 class="text-lg font-bold text-secondary">16 + 2 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">18 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Live 1-on-1 via Zoom</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progress & Check-Ins</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Priority Support</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">CHOOSE PACKAGE <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <!-- 20+2 MOST POPULAR -->
+                    <div class="package-card bg-white border-2 border-primary rounded-2xl p-6 shadow-xl relative">
+                        <div class="most-popular-badge">MOST POPULAR</div>
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">$506</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 55 days</div>
+                            <h4 class="text-lg font-bold text-secondary">20 + 2 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">22 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Live 1-on-1 via Zoom</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Detailed Progress</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Priority Support</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-primary hover:bg-red-700 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">CHOOSE PACKAGE <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                    <!-- 30+3 BEST CHOICE -->
+                    <div class="package-card bg-white border-2 border-gray-200 rounded-2xl p-6 shadow-lg relative">
+                        <div class="best-choice-badge">BEST CHOICE</div>
+                        <div class="text-center mb-6">
+                            <div class="text-3xl font-bold text-primary mb-1">$660</div>
+                            <div class="text-gray-500 text-xs mb-3">Valid 100 days</div>
+                            <h4 class="text-lg font-bold text-secondary">30 + 3 FREE</h4>
+                            <p class="text-gray-600 text-sm mt-1">33 Sessions Total</p>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-sm text-gray-700">
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Live 1-on-1 via Zoom</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Progressive Program</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Nutrition Education</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Advanced Analytics</li>
+                            <li class="flex items-start"><i class="fas fa-check text-primary mt-1 mr-2"></i> Priority Support</li>
+                        </ul>
+                        <a href="index.html#contact" class="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-xl transition transform hover:scale-105">CHOOSE PACKAGE <i class="fas fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-secondary text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold font-heading mb-4">READY TO START ONLINE COACHING?</h2>
+            <p class="text-gray-300 mb-8 max-w-2xl mx-auto">Book a free consultation and we'll match you with the right online coaching format.</p>
+            <a href="index.html#contact" class="inline-block bg-primary hover:bg-red-700 text-white font-bold py-4 px-10 rounded-full text-lg transition transform hover:scale-105 shadow-lg">
+                BOOK A FREE FITNESS CONSULTATION <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row justify-between items-start mb-10">
+                <div class="mb-10 lg:mb-0">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="h-14 w-14 rounded-full bg-primary flex items-center justify-center"><span class="text-white font-heading text-2xl">EP</span></div>
+                        <div><span class="text-2xl font-bold text-white font-heading">EP FITNESS</span><p class="text-gray-400 text-sm">by Coach Emman</p></div>
+                    </div>
+                    <p class="text-gray-400 max-w-md mb-6">Transforming bodies and lives through personalized fitness training, nutrition guidance, and physiotherapy support.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/EPFITNESSPH" target="_blank" class="bg-gray-800 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/ep_fitness" target="_blank" class="bg-gray-800 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-10">
+                    <div>
+                        <h4 class="font-bold text-lg mb-6">QUICK LINKS</h4>
+                        <ul class="space-y-3">
+                            <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                            <li><a href="index.html#about" class="text-gray-400 hover:text-white transition">About</a></li>
+                            <li><a href="index.html#services" class="text-gray-400 hover:text-white transition">Services</a></li>
+                            <li><a href="EmmanResults.html" class="text-gray-400 hover:text-white transition">Results</a></li>
+                            <li><a href="termsconditions.html" class="text-primary hover:text-white transition">Terms & Conditions</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg mb-6">PACKAGES</h4>
+                        <ul class="space-y-3">
+                            <li><a href="packages-personal-training.html" class="text-gray-400 hover:text-white transition">Personal Training</a></li>
+                            <li><a href="packages-online-coaching.html" class="text-gray-400 hover:text-white transition">Online Coaching</a></li>
+                            <li><a href="packages-nutrition.html" class="text-gray-400 hover:text-white transition">Nutrition</a></li>
+                            <li><a href="packages-physiotherapy.html" class="text-gray-400 hover:text-white transition">Physiotherapy</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg mb-6">CONTACT INFO</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-center"><i class="fas fa-phone text-primary mr-3"></i><span>+63-906-279-6854</span></li>
+                            <li class="flex items-center"><i class="fas fa-envelope text-primary mr-3"></i><span>epfitness24@gmail.com</span></li>
+                            <li class="flex items-center"><i class="fab fa-instagram text-primary mr-3"></i><span>@ep_fitness</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+                <p>&copy; 2026 EP Fitness by Coach Emman. All rights reserved.</p>
+                <p class="mt-2 text-sm">You can check <a style="text-decoration: underline;" href="termsconditions.html">Terms and Conditions</a> here.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton?.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+
+        // Currency toggle
+        document.querySelectorAll('.currency-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const cur = tab.dataset.currency;
+                document.getElementById('packages-php').classList.toggle('hidden', cur !== 'php');
+                document.getElementById('packages-usd').classList.toggle('hidden', cur !== 'usd');
+                document.querySelectorAll('.currency-tab').forEach(t => {
+                    t.classList.remove('bg-primary', 'text-white');
+                    t.classList.add('bg-white', 'text-secondary', 'border', 'border-gray-200');
+                });
+                tab.classList.remove('bg-white', 'text-secondary', 'border', 'border-gray-200');
+                tab.classList.add('bg-primary', 'text-white');
+            });
+        });
+    </script>
+</body>
+</html>
