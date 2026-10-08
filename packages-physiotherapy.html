@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physiotherapy Services | EP Fitness</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                colors: { primary: '#e53935', secondary: '#212121', accent: '#f5f5f5', dark: '#1a1a1a', light: '#ffffff' },
+                fontFamily: { heading: ['Bebas Neue', 'sans-serif'], body: ['Montserrat', 'sans-serif'] },
+                screens: { 'xs': '480px' }
+            }}
+        }
+    </script>
+    <style>
+        body { font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; }
+        .mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .mobile-menu.open { max-height: 800px; transition: max-height 0.5s ease-in; }
+        .section-title { position: relative; display: inline-block; }
+        .section-title:after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background-color: #e53935; }
+        .service-card { transition: all 0.3s ease; border-top: 4px solid transparent; }
+        .service-card:hover { border-top-color: #e53935; transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); }
+        .faq-item { transition: all 0.3s ease; }
+        .faq-item:hover { box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+    </style>
+</head>
+<body class="bg-light">
+
+    <!-- Navigation -->
+    <nav class="bg-white text-secondary shadow-lg sticky top-0 z-50 border-b-2 border-primary">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2"></div>
+            <div class="hidden md:flex space-x-8 font-semibold">
+                <a href="index.html" class="hover:text-primary transition transform hover:scale-105">HOME</a>
+                <div class="relative group">
+                    <button class="hover:text-primary transition transform hover:scale-105 flex items-center focus:outline-none">ABOUT <i class="fas fa-chevron-down ml-1 text-xs"></i></button>
+                    <div class="absolute left-0 mt-2 w-64 bg-white shadow-lg rounded-lg py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 border border-gray-200">
+                        <a href="index.html#about" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">About us</div></a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="index.html#coaches" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Meet the Coaches</div></a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="personaltrainingsection.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Personal Training Gallery</div></a>
+                    </div>
+                </div>
+                <a href="index.html#services" class="hover:text-primary transition transform hover:scale-105">SERVICES</a>
+                <a href="EmmanResults.html" class="hover:text-primary transition transform hover:scale-105">RESULTS</a>
+                <div class="relative group">
+                    <button class="text-primary transition transform hover:scale-105 flex items-center focus:outline-none">PACKAGES <i class="fas fa-chevron-down ml-1 text-xs"></i></button>
+                    <div class="absolute left-0 mt-2 w-64 bg-white shadow-lg rounded-lg py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 border border-gray-200">
+                        <a href="packages-personal-training.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Personal Training</div></a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="packages-online-coaching.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Online Coaching</div></a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="packages-nutrition.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Nutrition Coaching</div></a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="packages-physiotherapy.html" class="block px-4 py-3 text-secondary bg-accent text-primary transition"><div class="font-semibold">Physiotherapy</div></a>
+                    </div>
+                </div>
+                <a href="WorkOutPlans.html" class="hover:text-primary transition transform hover:scale-105">WORKOUT PLANS</a>
+                <a href="faqs.html" class="hover:text-primary transition transform hover:scale-105">FAQS</a>
+                <a href="index.html#contact" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-red-700 transition">CONTACT</a>
+            </div>
+            <button class="md:hidden text-secondary focus:outline-none" id="mobile-menu-button"><i class="fas fa-bars text-2xl"></i></button>
+        </div>
+        <div class="mobile-menu md:hidden bg-white px-4 border-t border-gray-200" id="mobile-menu">
+            <div class="flex flex-col space-y-3 py-3">
+                <a href="index.html" class="hover:text-primary transition py-2 font-semibold">HOME</a>
+                <a href="index.html#about" class="hover:text-primary transition py-2 font-semibold">ABOUT</a>
+                <a href="index.html#services" class="hover:text-primary transition py-2 font-semibold">SERVICES</a>
+                <a href="EmmanResults.html" class="hover:text-primary transition py-2 font-semibold">RESULTS</a>
+                <div class="border-t border-gray-200 pt-2 mt-2">
+                    <p class="text-xs text-primary font-bold px-2 mb-1">PACKAGES</p>
+                    <a href="packages-personal-training.html" class="hover:text-primary transition py-2 pl-4 font-semibold block">Personal Training</a>
+                    <a href="packages-online-coaching.html" class="hover:text-primary transition py-2 pl-4 font-semibold block">Online Coaching</a>
+                    <a href="packages-nutrition.html" class="hover:text-primary transition py-2 pl-4 font-semibold block">Nutrition Coaching</a>
+                    <a href="packages-physiotherapy.html" class="hover:text-primary transition py-2 pl-4 font-semibold block">Physiotherapy</a>
+                </div>
+                <a href="WorkOutPlans.html" class="hover:text-primary transition py-2 font-semibold">WORKOUT PLANS</a>
+                <a href="faqs.html" class="hover:text-primary transition py-2 font-semibold">FAQS</a>
+                <a href="index.html#contact" class="hover:text-primary transition py-2 font-semibold">CONTACT</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="bg-secondary text-white py-16 md:py-20">
+        <div class="container mx-auto px-4 text-center">
+            <div class="inline-flex items-center bg-primary/20 border border-primary px-4 py-2 rounded-full mb-6">
+                <i class="fas fa-user-md text-primary mr-2"></i>
+                <span class="text-primary font-bold text-sm tracking-wider">REHAB & RECOVERY</span>
+            </div>
+            <h1 class="text-4xl xs:text-5xl md:text-6xl font-bold font-heading mb-4">PHYSIOTHERAPY SERVICES</h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">Professional one-on-one physical therapy for recovery, rehabilitation, and performance. Home and condo services available.</p>
+        </div>
+    </section>
+
+    <!-- Therapist Intro -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <div class="bg-accent p-8 md:p-10 rounded-2xl shadow-lg border-l-4 border-primary">
+                <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+                    <div class="bg-primary text-white p-6 rounded-full flex-shrink-0">
+                        <i class="fas fa-user-md text-5xl"></i>
+                    </div>
+                    <div class="text-center md:text-left">
+                        <span class="text-primary font-bold tracking-wider text-sm">MEET YOUR THERAPIST</span>
+                        <h2 class="text-3xl font-bold text-secondary mt-1 mb-2">RALPH B.</h2>
+                        <p class="text-primary font-semibold mb-3">Licensed Physical Therapist</p>
+                        <p class="text-gray-700 italic mb-4">Professional care. Personalized treatment. Better outcomes.</p>
+                        <p class="text-gray-600">Ralph brings clinical expertise in rehabilitation, movement science, and injury management. Each session is tailored to your specific condition, goals, and recovery timeline.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Highlights -->
+    <section class="py-16 bg-accent">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-secondary font-heading section-title mb-8">WHAT WE HELP WITH</h2>
+                <p class="text-gray-600 mt-12 max-w-3xl mx-auto">Whether you're recovering from injury, managing chronic pain, or improving performance, our physiotherapy approach is built around your needs.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <div class="bg-white text-center p-6 rounded-xl shadow-md service-card">
+                    <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user-injured text-primary text-2xl"></i>
+                    </div>
+                    <h5 class="font-bold text-secondary mb-2">PAIN RELIEF</h5>
+                    <p class="text-sm text-gray-600">Reduce pain and inflammation.</p>
+                </div>
+                <div class="bg-white text-center p-6 rounded-xl shadow-md service-card">
+                    <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-person-walking text-primary text-2xl"></i>
+                    </div>
+                    <h5 class="font-bold text-secondary mb-2">MOBILITY & FLEXIBILITY</h5>
+                    <p class="text-sm text-gray-600">Improve movement and restore function.</p>
+                </div>
+                <div class="bg-white text-center p-6 rounded-xl shadow-md service-card">
+                    <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-dumbbell text-primary text-2xl"></i>
+                    </div>
+                    <h5 class="font-bold text-secondary mb-2">STRENGTH & REHAB</h5>
+                    <p class="text-sm text-gray-600">Rebuild strength and support long-term recovery.</p>
+                </div>
+                <div class="bg-white text-center p-6 rounded-xl shadow-md service-card">
+                    <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-running text-primary text-2xl"></i>
+                    </div>
+                    <h5 class="font-bold text-secondary mb-2">PERFORMANCE CARE</h5>
+                    <p class="text-sm text-gray-600">Enhance performance and prevent future injuries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who Physio Is For -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-secondary font-heading section-title mb-8">WHO PHYSIOTHERAPY IS FOR</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex items-start bg-accent p-5 rounded-xl">
+                    <div class="bg-primary text-white p-2 rounded-full mr-4 flex-shrink-0"><i class="fas fa-check"></i></div>
+                    <div><h4 class="font-bold text-secondary mb-1">Post-Injury Recovery</h4><p class="text-gray-600 text-sm">Structured rehab after sports, work, or accident-related injuries.</p></div>
+                </div>
+                <div class="flex items-start bg-accent p-5 rounded-xl">
+                    <div class="bg-primary text-white p-2 rounded-full mr-4 flex-shrink-0"><i class="fas fa-check"></i></div>
+                    <div><h4 class="font-bold text-secondary mb-1">Chronic Pain Management</h4><p class="text-gray-600 text-sm">Long-term strategies for back, neck, knee, and joint pain.</p></div>
+                </div>
+                <div class="flex items-start bg-accent p-5 rounded-xl">
+                    <div class="bg-primary text-white p-2 rounded-full mr-4 flex-shrink-0"><i class="fas fa-check"></i></div>
+                    <div><h4 class="font-bold text-secondary mb-1">Posture & Movement Correction</h4><p class="text-gray-600 text-sm">Fix desk-posture issues, muscle imbalances, and movement dysfunction.</p></div>
+                </div>
+                <div class="flex items-start bg-accent p-5 rounded-xl">
+                    <div class="bg-primary text-white p-2 rounded-full mr-4 flex-shrink-0"><i class="fas fa-check"></i></div>
+                    <div><h4 class="font-bold text-secondary mb-1">Athletes & Active Individuals</h4><p class="text-gray-600 text-sm">Improve performance, prevent injury, and stay in top condition.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Offered -->
+    <section class="py-16 bg-accent">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-secondary font-heading section-title mb-8">SERVICES OFFERED</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <div class="bg-white p-6 rounded-xl shadow-md service-card">
+                    <div class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center mb-4"><i class="fas fa-hands"></i></div>
+                    <h4 class="font-bold text-secondary mb-2">Manual Therapy</h4>
+                    <p class="text-gray-600 text-sm">Hands-on techniques to reduce pain, improve tissue mobility, and restore joint function.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md service-card">
+                    <div class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center mb-4"><i class="fas fa-circle-dot"></i></div>
+                    <h4 class="font-bold text-secondary mb-2">Cupping Therapy</h4>
+                    <p class="text-gray-600 text-sm">Traditional cupping for muscle tension, blood flow, and recovery support.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md service-card">
+                    <div class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center mb-4"><i class="fas fa-user-check"></i></div>
+                    <h4 class="font-bold text-secondary mb-2">Posture & Movement Correction</h4>
+                    <p class="text-gray-600 text-sm">Assessment and correction of posture and movement patterns for long-term health.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md service-card">
+                    <div class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center mb-4"><i class="fas fa-heart-pulse"></i></div>
+                    <h4 class="font-bold text-secondary mb-2">Injury Rehabilitation</h4>
+                    <p class="text-gray-600 text-sm">Progressive rehab programs for post-injury and post-surgery recovery.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md service-card">
+                    <div class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center mb-4"><i class="fas fa-person-walking"></i></div>
+                    <h4 class="font-bold text-secondary mb-2">Mobility & Flexibility</h4>
+                    <p class="text-gray-600 text-sm">Targeted work to improve range of motion and functional flexibility.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md service-card">
+                    <div class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center mb-4"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h4 class="font-bold text-secondary mb-2">Soft Tissue Therapy</h4>
+                    <p class="text-gray-600 text-sm">Release of muscle knots, tension, and soft tissue restrictions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Home/Condo Service + Rates CTA -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <div class="bg-secondary text-white p-10 rounded-2xl shadow-xl">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <div class="inline-flex items-center bg-primary/20 border border-primary px-3 py-1 rounded-full mb-4">
+                            <i class="fas fa-home text-primary mr-2 text-sm"></i>
+                            <span class="text-primary font-bold text-xs tracking-wider">HOME / CONDO SERVICE</span>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold font-heading mb-3">WE COME TO YOU</h3>
+                        <p class="text-gray-300 mb-4">We bring professional physiotherapy directly to your home or condo for your convenience and comfort. Ideal for post-surgery recovery, mobility limitations, or busy schedules.</p>
+                        <ul class="space-y-2 text-gray-300 text-sm">
+                            <li class="flex items-start"><i class="fas fa-check-circle text-primary mt-1 mr-2"></i> Metro Manila service areas</li>
+                            <li class="flex items-start"><i class="fas fa-check-circle text-primary mt-1 mr-2"></i> Flexible scheduling</li>
+                            <li class="flex items-start"><i class="fas fa-check-circle text-primary mt-1 mr-2"></i> Complete portable equipment</li>
+                        </ul>
+                    </div>
+                    <div class="text-center md:text-right">
+                        <div class="bg-primary/20 border border-primary rounded-xl p-6 mb-4">
+                            <p class="text-sm text-gray-300 mb-2">RATES & PACKAGES</p>
+                            <p class="text-2xl font-bold mb-3">Contact for Details</p>
+                            <p class="text-gray-300 text-sm">Session rates and package pricing are provided during your free consultation.</p>
+                        </div>
+                        <a href="index.html#contact" class="inline-block w-full bg-primary hover:bg-red-700 text-white font-bold py-4 px-8 rounded-xl transition transform hover:scale-105 shadow-lg">
+                            BOOK YOUR SESSION TODAY! <i class="fas fa-calendar-check ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 bg-accent">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-secondary font-heading section-title mb-8">FREQUENTLY ASKED QUESTIONS</h2>
+            </div>
+
+            <div class="space-y-4">
+                <details class="faq-item bg-white p-6 rounded-xl shadow-md">
+                    <summary class="font-bold text-secondary cursor-pointer flex justify-between items-center">
+                        Do I need a doctor's referral to book a session?
+                        <i class="fas fa-chevron-down text-primary"></i>
+                    </summary>
+                    <p class="text-gray-600 mt-4">No referral is required for an initial assessment. However, for post-surgical or specific medical conditions, we recommend bringing any relevant medical documents (prescriptions, imaging, or doctor's notes) so your therapist can tailor your program accordingly.</p>
+                </details>
+                <details class="faq-item bg-white p-6 rounded-xl shadow-md">
+                    <summary class="font-bold text-secondary cursor-pointer flex justify-between items-center">
+                        How long is each physiotherapy session?
+                        <i class="fas fa-chevron-down text-primary"></i>
+                    </summary>
+                    <p class="text-gray-600 mt-4">Initial assessment and treatment sessions typically last 60 minutes. Follow-up sessions may range from 45 to 60 minutes depending on your condition and treatment plan.</p>
+                </details>
+                <details class="faq-item bg-white p-6 rounded-xl shadow-md">
+                    <summary class="font-bold text-secondary cursor-pointer flex justify-between items-center">
+                        Do you offer home service?
+                        <i class="fas fa-chevron-down text-primary"></i>
+                    </summary>
+                    <p class="text-gray-600 mt-4">Yes. We offer home and condo visits within Metro Manila. This is ideal for patients with limited mobility, post-surgery recovery, or busy schedules. Service area and scheduling are confirmed during consultation.</p>
+                </details>
+                <details class="faq-item bg-white p-6 rounded-xl shadow-md">
+                    <summary class="font-bold text-secondary cursor-pointer flex justify-between items-center">
+                        How many sessions will I need?
+                        <i class="fas fa-chevron-down text-primary"></i>
+                    </summary>
+                    <p class="text-gray-600 mt-4">The number of sessions depends on your condition, goals, and response to treatment. Your therapist will discuss an estimated plan during your initial assessment and adjust as you progress.</p>
+                </details>
+                <details class="faq-item bg-white p-6 rounded-xl shadow-md">
+                    <summary class="font-bold text-secondary cursor-pointer flex justify-between items-center">
+                        What should I wear or bring?
+                        <i class="fas fa-chevron-down text-primary"></i>
+                    </summary>
+                    <p class="text-gray-600 mt-4">Wear comfortable, loose-fitting athletic clothing that allows access to the treatment area. Bring any medical documents, imaging, or prescriptions relevant to your condition.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="py-16 bg-secondary text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold font-heading mb-4">READY TO MOVE BETTER?</h2>
+            <p class="text-gray-300 mb-8 max-w-2xl mx-auto">Book a consultation with Ralph and start your recovery journey with a plan built around your needs.</p>
+            <a href="index.html#contact" class="inline-block bg-primary hover:bg-red-700 text-white font-bold py-4 px-10 rounded-full text-lg transition transform hover:scale-105 shadow-lg">
+                BOOK A FREE CONSULTATION <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white py-12 border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row justify-between items-start mb-10">
+                <div class="mb-10 lg:mb-0">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="h-14 w-14 rounded-full bg-primary flex items-center justify-center"><span class="text-white font-heading text-2xl">EP</span></div>
+                        <div><span class="text-2xl font-bold text-white font-heading">EP FITNESS</span><p class="text-gray-400 text-sm">by Coach Emman</p></div>
+                    </div>
+                    <p class="text-gray-400 max-w-md mb-6">Transforming bodies and lives through personalized fitness training, nutrition guidance, and physiotherapy support.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/EPFITNESSPH" target="_blank" class="bg-gray-800 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/ep_fitness" target="_blank" class="bg-gray-800 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-10">
+                    <div>
+                        <h4 class="font-bold text-lg mb-6">QUICK LINKS</h4>
+                        <ul class="space-y-3">
+                            <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                            <li><a href="index.html#about" class="text-gray-400 hover:text-white transition">About</a></li>
+                            <li><a href="index.html#services" class="text-gray-400 hover:text-white transition">Services</a></li>
+                            <li><a href="EmmanResults.html" class="text-gray-400 hover:text-white transition">Results</a></li>
+                            <li><a href="termsconditions.html" class="text-primary hover:text-white transition">Terms & Conditions</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg mb-6">PACKAGES</h4>
+                        <ul class="space-y-3">
+                            <li><a href="packages-personal-training.html" class="text-gray-400 hover:text-white transition">Personal Training</a></li>
+                            <li><a href="packages-online-coaching.html" class="text-gray-400 hover:text-white transition">Online Coaching</a></li>
+                            <li><a href="packages-nutrition.html" class="text-gray-400 hover:text-white transition">Nutrition</a></li>
+                            <li><a href="packages-physiotherapy.html" class="text-gray-400 hover:text-white transition">Physiotherapy</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg mb-6">CONTACT INFO</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-center"><i class="fas fa-phone text-primary mr-3"></i><span>+63-906-279-6854</span></li>
+                            <li class="flex items-center"><i class="fas fa-envelope text-primary mr-3"></i><span>epfitness24@gmail.com</span></li>
+                            <li class="flex items-center"><i class="fab fa-instagram text-primary mr-3"></i><span>@ep_fitness</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+                <p>&copy; 2026 EP Fitness by Coach Emman. All rights reserved.</p>
+                <p class="mt-2 text-sm">You can check <a style="text-decoration: underline;" href="termsconditions.html">Terms and Conditions</a> here.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton?.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+    </script>
+</body>
+</html>
