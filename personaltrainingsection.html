@@ -14,9 +14,9 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#e53935', // Red
-                        secondary: '#212121', // Black
-                        accent: '#f5f5f5', // Light gray
+                        primary: '#e53935',
+                        secondary: '#212121',
+                        accent: '#f5f5f5',
                         dark: '#1a1a1a',
                         light: '#ffffff',
                     },
@@ -36,40 +36,40 @@
             font-family: 'Montserrat', sans-serif;
             scroll-behavior: smooth;
         }
-        
+
         .hero-bg {
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(229, 57, 53, 0.8)), url('https://plus.unsplash.com/premium_photo-1674059549221-e2943b475f62?q=80&w=464&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
         }
-        
+
         .mobile-menu {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease-out;
         }
-        
+
         .mobile-menu.open {
-            max-height: 500px;
+            max-height: 800px;
             transition: max-height 0.5s ease-in;
         }
-        
+
         .gallery-image {
             transition: all 0.3s ease;
             cursor: pointer;
         }
-        
+
         .gallery-image:hover {
             transform: scale(1.05);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
-        
+
         .section-title {
             position: relative;
             display: inline-block;
         }
-        
+
         .section-title:after {
             content: '';
             position: absolute;
@@ -104,12 +104,12 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             background-color: #000;
         }
-        
+
         .video-wrapper:hover {
             transform: scale(1.03);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
         }
-        
+
         .video-wrapper iframe {
             position: absolute;
             top: 50%;
@@ -136,87 +136,58 @@
     </style>
 </head>
 <body class="bg-light">
+
     <!-- Navigation -->
     <nav class="bg-white text-secondary shadow-lg sticky top-0 z-50 border-b-2 border-primary">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <!-- logo placeholder (unchanged) -->
-            </div>
+            <div class="flex items-center space-x-2"></div>
             <div class="hidden md:flex space-x-8 font-semibold">
                 <a href="index.html" class="hover:text-primary transition transform hover:scale-105">HOME</a>
-                <!-- ABOUT with Dropdown -->
                 <div class="relative group">
-                    <button class="hover:text-primary transition transform hover:scale-105 flex items-center focus:outline-none">
-                        ABOUT
-                        <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                    </button>
-                    <!-- Dropdown Menu -->
+                    <button class="hover:text-primary transition transform hover:scale-105 flex items-center focus:outline-none">ABOUT <i class="fas fa-chevron-down ml-1 text-xs"></i></button>
                     <div class="absolute left-0 mt-2 w-64 bg-white shadow-lg rounded-lg py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 border border-gray-200">
-                        <a href="index.html#about" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition flex items-center">
-                            <div>
-                                <div class="font-semibold">About us</div>
-                            </div>
-                        </a>
+                        <a href="index.html#about" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">About us</div></a>
                         <div class="border-t border-gray-100 my-1"></div>
-                        <a href="index.html#coaches" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition flex items-center">
-                            <div>
-                                <div class="font-semibold">Meet the Coaches</div>
-                            </div>
-                        </a>
+                        <a href="index.html#coaches" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Meet the Team</div></a>
                         <div class="border-t border-gray-100 my-1"></div>
-                        <a href="personaltrainingsection.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition flex items-center">
-                            <div>
-                                <div class="font-semibold">Personal Training Gallery</div>
-                            </div>
-                        </a>
+                        <a href="personaltrainingsection.html" class="block px-4 py-3 text-secondary bg-accent text-primary transition"><div class="font-semibold">Training Gallery</div></a>
                     </div>
                 </div>
                 <a href="index.html#services" class="hover:text-primary transition transform hover:scale-105">SERVICES</a>
                 <a href="EmmanResults.html" class="hover:text-primary transition transform hover:scale-105">RESULTS</a>
-                <a href="index.html#packages" class="hover:text-primary transition transform hover:scale-105">PACKAGES</a>
+                <div class="relative group">
+                    <button class="hover:text-primary transition transform hover:scale-105 flex items-center focus:outline-none">PACKAGES <i class="fas fa-chevron-down ml-1 text-xs"></i></button>
+                    <div class="absolute left-0 mt-2 w-64 bg-white shadow-lg rounded-lg py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 border border-gray-200">
+                        <a href="packages-personal-training.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Personal Training</div></a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="packages-online-coaching.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Online Coaching</div></a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="packages-nutrition.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Nutrition Coaching</div></a>
+                        <div class="border-t border-gray-100 my-1"></div>
+                        <a href="packages-physiotherapy.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition"><div class="font-semibold">Physiotherapy</div></a>
+                    </div>
+                </div>
                 <a href="WorkOutPlans.html" class="hover:text-primary transition transform hover:scale-105">WORKOUT PLANS</a>
                 <a href="faqs.html" class="hover:text-primary transition transform hover:scale-105">FAQS</a>
                 <a href="index.html#contact" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-red-700 transition">CONTACT</a>
             </div>
-            <button class="md:hidden text-secondary focus:outline-none" id="mobile-menu-button">
-                <i class="fas fa-bars text-2xl"></i>
-            </button>
+            <button class="md:hidden text-secondary focus:outline-none" id="mobile-menu-button"><i class="fas fa-bars text-2xl"></i></button>
         </div>
         <!-- Mobile Menu -->
         <div class="mobile-menu md:hidden bg-white px-4 border-t border-gray-200" id="mobile-menu">
             <div class="flex flex-col space-y-3 py-3">
                 <a href="index.html" class="hover:text-primary transition py-2 font-semibold">HOME</a>
-                <!-- ABOUT with Dropdown -->
-                <div class="relative group">
-                    <button class="hover:text-primary transition py-2 font-semibold">
-                        ABOUT
-                        <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                    </button>
-                    <!-- Dropdown Menu -->
-                    <div class="absolute left-0 mt-2 w-64 bg-white shadow-lg rounded-lg py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform -translate-y-2 group-hover:translate-y-0 border border-gray-200">
-                        <a href="index.html#about" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition flex items-center">
-                            <div>
-                                <div class="font-semibold">About us</div>
-                            </div>
-                        </a>
-                        <div class="border-t border-gray-100 my-1"></div>
-                        <a href="index.html#coaches" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition flex items-center">
-                            <div>
-                                <div class="font-semibold">Meet the Coaches</div>
-                            </div>
-                        </a>
-                        <div class="border-t border-gray-100 my-1"></div>
-                        <a href="personaltrainingsection.html" class="block px-4 py-3 text-secondary hover:bg-accent hover:text-primary transition flex items-center">
-                            <div>
-                                <div class="font-semibold">Personal Training Gallery</div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+                <a href="index.html#about" class="hover:text-primary transition py-2 font-semibold">ABOUT</a>
                 <a href="index.html#services" class="hover:text-primary transition py-2 font-semibold">SERVICES</a>
                 <a href="EmmanResults.html" class="hover:text-primary transition py-2 font-semibold">RESULTS</a>
-                <a href="index.html#packages" class="hover:text-primary transition py-2 font-semibold">PACKAGES</a>
-                <a href="WorkOutPlans.html" class="hover:text-primary transition py-2 font-semibold">WORK OUT PLANS</a>
+                <div class="border-t border-gray-200 pt-2 mt-2">
+                    <p class="text-xs text-primary font-bold px-2 mb-1">PACKAGES</p>
+                    <a href="packages-personal-training.html" class="hover:text-primary transition py-2 pl-4 font-semibold block">Personal Training</a>
+                    <a href="packages-online-coaching.html" class="hover:text-primary transition py-2 pl-4 font-semibold block">Online Coaching</a>
+                    <a href="packages-nutrition.html" class="hover:text-primary transition py-2 pl-4 font-semibold block">Nutrition Coaching</a>
+                    <a href="packages-physiotherapy.html" class="hover:text-primary transition py-2 pl-4 font-semibold block">Physiotherapy</a>
+                </div>
+                <a href="WorkOutPlans.html" class="hover:text-primary transition py-2 font-semibold">WORKOUT PLANS</a>
                 <a href="faqs.html" class="hover:text-primary transition py-2 font-semibold">FAQS</a>
                 <a href="index.html#contact" class="hover:text-primary transition py-2 font-semibold">CONTACT</a>
             </div>
@@ -271,41 +242,32 @@
             </div>
             <!-- ===================== END VIDEO GALLERY SECTION ===================== -->
 
-            <!-- Image Grid - 8 Images + additional (original list) -->
+            <!-- Image Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                <!-- Image 1 -->
                 <div class="gallery-image overflow-hidden rounded-lg bg-gray-100">
                     <img src="training1.jpeg" alt="One-on-One Personal Training Session" class="w-full h-64 object-cover">
                 </div>
-                <!-- Image 2 -->
                 <div class="gallery-image overflow-hidden rounded-lg bg-gray-100">
                     <img src="training2.jpeg" alt="Strength Training Session" class="w-full h-64 object-cover">
                 </div>
-                <!-- Image 3 -->
                 <div class="gallery-image overflow-hidden rounded-lg bg-gray-100">
                     <img src="training3.jpg" alt="Cardio Training Session" class="w-full h-64 object-cover">
                 </div>
-                <!-- Image 4 -->
                 <div class="gallery-image overflow-hidden rounded-lg bg-gray-100">
                     <img src="training4.jpeg" alt="Functional Training Session" class="w-full h-64 object-cover">
                 </div>
-                <!-- Image 5 -->
                 <div class="gallery-image overflow-hidden rounded-lg bg-gray-100">
                     <img src="training5.jpeg" alt="Weight Training Session" class="w-full h-64 object-cover">
                 </div>
-                <!-- Image 6 -->
                 <div class="gallery-image overflow-hidden rounded-lg bg-gray-100">
                     <img src="training6.jpeg" alt="Flexibility Training Session" class="w-full h-64 object-cover">
                 </div>
-                <!-- Image 7 -->
                 <div class="gallery-image overflow-hidden rounded-lg bg-gray-100">
                     <img src="training7.jpeg" alt="Core Training Session" class="w-full h-64 object-cover">
                 </div>
-                <!-- Image 8 -->
                 <div class="gallery-image overflow-hidden rounded-lg bg-gray-100">
                     <img src="training.jpeg" alt="Recovery Session" class="w-full h-64 object-cover">
                 </div>
-                <!-- additional images (original) -->
                 <div class="gallery-image overflow-hidden rounded-lg bg-gray-100">
                     <img src="result12.jpg" alt="Training result" class="w-full h-64 object-cover">
                 </div>
@@ -363,27 +325,21 @@
 
             <!-- Physiotherapy Image Grid (9 images) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-                <!-- Physio 1 -->
                 <div class="gallery-image overflow-hidden rounded-lg bg-gray-100 shadow-sm">
                     <img src="physio1.jpg" alt="Physiotherapy session - manual therapy" class="w-full h-64 object-cover">
                 </div>
-                <!-- Physio 2 -->
                 <div class="gallery-image overflow-hidden rounded-lg bg-gray-100 shadow-sm">
                     <img src="physio2.jpg" alt="Physiotherapy session - rehabilitation exercise" class="w-full h-64 object-cover">
                 </div>
-                <!-- Physio 3 -->
                 <div class="gallery-image overflow-hidden rounded-lg bg-gray-100 shadow-sm">
                     <img src="physio3.jpg" alt="Physiotherapy session - ultrasound therapy" class="w-full h-64 object-cover">
                 </div>
-                <!-- Physio 4 -->
                 <div class="gallery-image overflow-hidden rounded-lg bg-gray-100 shadow-sm">
                     <img src="physio4.jpg" alt="Physiotherapy session - joint mobilization" class="w-full h-64 object-cover">
                 </div>
-                <!-- Physio 5 -->
                 <div class="gallery-image overflow-hidden rounded-lg bg-gray-100 shadow-sm">
                     <img src="physio5.jpg" alt="Physiotherapy session - patient assessment" class="w-full h-64 object-cover">
                 </div>
-                <!-- Physio 6 -->
                 <div class="gallery-image overflow-hidden rounded-lg bg-gray-100 shadow-sm">
                     <img src="physio6.jpg" alt="Physiotherapy session - recovery training" class="w-full h-64 object-cover">
                 </div>
@@ -398,9 +354,13 @@
                 </div>
             </div>
 
-            <!-- Optional small note / CTA -->
             <div class="text-center mt-8">
                 <p class="text-gray-500 text-sm italic">* Individual treatment plans tailored to each patient's needs. Contact us for more details.</p>
+                <div class="mt-6">
+                    <a href="packages-physiotherapy.html" class="inline-block bg-primary hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full transition transform hover:scale-105 shadow-lg">
+                        VIEW PHYSIOTHERAPY SERVICES <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -419,19 +379,12 @@
                             <p class="text-gray-400 text-sm">by Coach Emman</p>
                         </div>
                     </div>
-                    <p class="text-gray-400 max-w-md mb-6">
-                        Transforming bodies and lives through personalized fitness training and nutrition guidance.
-                    </p>
+                    <p class="text-gray-400 max-w-md mb-6">Transforming bodies and lives through personalized fitness training, nutrition guidance, and physiotherapy support.</p>
                     <div class="flex space-x-4">
-                        <a href="https://www.facebook.com/EPFITNESSPH" target="_blank" class="bg-gray-800 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="https://www.instagram.com/ep_fitness?fbclid=IwY2xjawPp39xleHRuA2FlbQIxMABicmlkETFmeGhpcDlFcGk3YTJPVUFjc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHkAUgf4wea68iDTybiDRktUsl6_xBuzp67CnkvjpZ7nGGIeVHjFC6l90kqD8_aem_8tOEmyL4NgoiTEyb_Zgrcw" target="_blank" class="bg-gray-800 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition">
-                            <i class="fab fa-instagram"></i>
-                        </a>
+                        <a href="https://www.facebook.com/EPFITNESSPH" target="_blank" class="bg-gray-800 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/ep_fitness" target="_blank" class="bg-gray-800 hover:bg-primary w-10 h-10 rounded-full flex items-center justify-center transition"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
-                
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-10">
                     <div>
                         <h4 class="font-bold text-lg mb-6">QUICK LINKS</h4>
@@ -439,49 +392,34 @@
                             <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
                             <li><a href="index.html#about" class="text-gray-400 hover:text-white transition">About</a></li>
                             <li><a href="index.html#services" class="text-gray-400 hover:text-white transition">Services</a></li>
-                            <li><a href="EmmanResults.html" class="text-gray-400 hover:text-white transition">RESULTS</a></li>
-                            <li><a href="index.html#packages" class="text-gray-400 hover:text-white transition">Packages</a></li>
+                            <li><a href="EmmanResults.html" class="text-gray-400 hover:text-white transition">Results</a></li>
+                            <li><a href="WorkOutPlans.html" class="text-gray-400 hover:text-white transition">Workout Plans</a></li>
                             <li><a href="termsconditions.html" class="text-primary hover:text-white transition">Terms & Conditions</a></li>
                         </ul>
                     </div>
-                    
                     <div>
-                        <h4 class="font-bold text-lg mb-6">SERVICES</h4>
+                        <h4 class="font-bold text-lg mb-6">PACKAGES</h4>
                         <ul class="space-y-3">
-                            <li><a href="#services" class="text-gray-400 hover:text-white transition">Personal Training</a></li>
-                            <li><a href="#services" class="text-gray-400 hover:text-white transition">Online Coaching</a></li>
-                            <li><a href="#services" class="text-gray-400 hover:text-white transition">Nutrition Coaching</a></li>
-                            <li><a href="#services" class="text-gray-400 hover:text-white transition">Meal Planning</a></li>
+                            <li><a href="packages-personal-training.html" class="text-gray-400 hover:text-white transition">Personal Training</a></li>
+                            <li><a href="packages-online-coaching.html" class="text-gray-400 hover:text-white transition">Online Coaching</a></li>
+                            <li><a href="packages-nutrition.html" class="text-gray-400 hover:text-white transition">Nutrition Coaching</a></li>
+                            <li><a href="packages-physiotherapy.html" class="text-gray-400 hover:text-white transition">Physiotherapy</a></li>
                         </ul>
                     </div>
-                    
                     <div>
                         <h4 class="font-bold text-lg mb-6">CONTACT INFO</h4>
                         <ul class="space-y-3">
-                            <li class="flex items-center">
-                                <i class="fas fa-phone text-primary mr-3"></i>
-                                <span>+63-906-279-6854 (Coach Emman)</span>
-                            </li>
-                            <li class="flex items-center">
-                                <i class="fas fa-phone text-primary mr-3"></i>
-                                <span>+63-906-333-1003 (Coach EJ)</span>
-                            </li>
-                            <li class="flex items-center">
-                                <i class="fas fa-envelope text-primary mr-3"></i>
-                                <span>epfitness24@gmail.com</span>
-                            </li>
-                            <li class="flex items-center">
-                                <i class="fab fa-instagram text-primary mr-3"></i>
-                                <span>@ep_fitness</span>
-                            </li>
+                            <li class="flex items-center"><i class="fas fa-phone text-primary mr-3"></i><span>+63-906-279-6854</span></li>
+                            <li class="flex items-center"><i class="fas fa-phone text-primary mr-3"></i><span>+63-906-333-1003</span></li>
+                            <li class="flex items-center"><i class="fas fa-envelope text-primary mr-3"></i><span>epfitness24@gmail.com</span></li>
+                            <li class="flex items-center"><i class="fab fa-instagram text-primary mr-3"></i><span>@ep_fitness</span></li>
                         </ul>
                     </div>
                 </div>
             </div>
-            
             <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
-                <p>&copy; 2023 EP Fitness by Coach Emman. All rights reserved.</p>
-                <p class="mt-2 text-sm">you can check <a style="text-decoration: underline;" href="termsconditions.html">Terms and Conditions</a> here.</p>
+                <p>&copy; 2026 EP Fitness by Coach Emman. All rights reserved.</p>
+                <p class="mt-2 text-sm">You can check <a style="text-decoration: underline;" href="termsconditions.html">Terms and Conditions</a> here.</p>
             </div>
         </div>
     </footer>
@@ -490,41 +428,37 @@
         // Mobile menu toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-        
+
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('open');
         });
-        
+
         // Close mobile menu when clicking on a link
         document.querySelectorAll('#mobile-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.remove('open');
             });
         });
-        
+
         // Image hover effect (applied to all .gallery-image)
         document.querySelectorAll('.gallery-image').forEach(image => {
             image.addEventListener('mouseenter', () => {
                 image.style.transform = 'scale(1.05)';
                 image.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.2)';
             });
-            
             image.addEventListener('mouseleave', () => {
                 image.style.transform = 'scale(1)';
                 image.style.boxShadow = 'none';
             });
         });
-        
+
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                
                 const targetId = this.getAttribute('href');
                 if (targetId === '#') return;
-                
                 const targetElement = document.querySelector(targetId);
-                
                 if (targetElement) {
                     window.scrollTo({
                         top: targetElement.offsetTop - 80,
